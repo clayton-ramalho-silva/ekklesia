@@ -24,7 +24,7 @@ class UpdateInterviewRequest extends FormRequest
         return [
             'outros_idiomas' => 'nullable|string',
             'apresentacao_pessoal' => 'nullable|string',
-            'saude_candidato' => 'nullable|string|max:255',
+            'saude_candidato' => 'nullable|string',
             'vacina_covid' => 'nullable|string|max:255',
             'qual_formadora' => 'nullable|string',
             'experiencia_profissional' => 'nullable|string',

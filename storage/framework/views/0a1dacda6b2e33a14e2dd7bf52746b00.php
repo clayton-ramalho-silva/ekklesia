@@ -515,35 +515,7 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
 
-                            <div class="col-3 form-campo">
-                                <div class="mb-3">
-                                    <input type="text" placeholder="Instagram (opcional)" class="floatlabel form-control" id="instagram" value="<?php echo e(old('instagram')); ?>" name="instagram">
-                                    <?php $__errorArgs = ['instagram'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> <div class="alert alert-danger"><?php echo e($message); ?></div> <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                </div>
-                            </div>
-
-                            <div class="col-3 form-campo">
-                                <div class="mb-3">
-                                    <input type="text" placeholder="LinkedIn (opcional)" class="floatlabel form-control" id="linkedin" value="<?php echo e(old('linkedin')); ?>" name="linkedin">
-                                    <?php $__errorArgs = ['linkedin'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> <div class="alert alert-danger"><?php echo e($message); ?></div> <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                </div>
-                            </div> 
-
-                            <div class="col-4 form-campo">
+                            <div class="col-6 form-campo">
                                 <div class="mb-3">
                                     <input type="text" placeholder="Telefone Celular(Whatsapp)" class="floatlabel form-control" id="telefone_celular" value="<?php echo e(old('telefone_celular')); ?>" name="telefone_celular" >
                                     <?php $__errorArgs = ['telefone_celular'];
@@ -557,7 +529,7 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
 
-                            <div class="col-4 form-campo">
+                            <div class="col-6 form-campo">
                                 <div class="mb-3">
                                     <input type="text" placeholder="Telefone para recado" class="floatlabel form-control" id="telefone_residencial" value="<?php echo e(old('telefone_residencial')); ?>" name="telefone_residencial" >
                                     <?php $__errorArgs = ['telefone_residencial'];
@@ -571,7 +543,7 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
 
-                            <div class="col-4 form-campo">
+                            <div class="col-6 form-campo">
                                 <div class="mb-3">
                                     <input type="text" placeholder="Nome para recado" class="floatlabel form-control" id="nome_contato" value="<?php echo e(old('nome_contato')); ?>" name="nome_contato" >
                                     <?php $__errorArgs = ['nome_contato'];
@@ -584,6 +556,36 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
+
+                            <div class="col-6 form-campo">
+                                <div class="mb-3">
+                                    <input type="text" placeholder="Instagram (opcional)" class="floatlabel form-control" id="instagram" value="<?php echo e(old('instagram')); ?>" name="instagram">
+                                    <?php $__errorArgs = ['instagram'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <div class="alert alert-danger"><?php echo e($message); ?></div> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                </div>
+                            </div>
+
+                            <div class="col-6 form-campo">
+                                <div class="mb-3">
+                                    <input type="text" placeholder="LinkedIn (opcional)" class="floatlabel form-control" id="linkedin" value="<?php echo e(old('linkedin')); ?>" name="linkedin">
+                                    <?php $__errorArgs = ['linkedin'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <div class="alert alert-danger"><?php echo e($message); ?></div> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                </div>
+                            </div>                         
+
+                            
 
                             <h4 class="fw-normal mb-4 mt-4">Mais Informações</h4>
 
