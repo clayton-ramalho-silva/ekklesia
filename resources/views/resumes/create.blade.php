@@ -329,40 +329,42 @@
                                 </div>
                             </div>
 
-                            <div class="col-3 form-campo">
-                                <div class="mb-3">
-                                    <input type="text" placeholder="Instagram (opcional)" class="floatlabel form-control" id="instagram" value="{{ old('instagram')}}" name="instagram">
-                                    @error('instagram') <div class="alert alert-danger">{{ $message }}</div> @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-3 form-campo">
-                                <div class="mb-3">
-                                    <input type="text" placeholder="LinkedIn (opcional)" class="floatlabel form-control" id="linkedin" value="{{ old('linkedin')}}" name="linkedin">
-                                    @error('linkedin') <div class="alert alert-danger">{{ $message }}</div> @enderror
-                                </div>
-                            </div> 
-
-                            <div class="col-4 form-campo">
+                            <div class="col-6 form-campo">
                                 <div class="mb-3">
                                     <input type="text" placeholder="Telefone Celular(Whatsapp)" class="floatlabel form-control" id="telefone_celular" value="{{ old('telefone_celular')}}" name="telefone_celular" >
                                     @error('telefone_celular') <div class="alert alert-danger">{{ $message }}</div> @enderror
                                 </div>
                             </div>
 
-                            <div class="col-4 form-campo">
+                            <div class="col-6 form-campo">
                                 <div class="mb-3">
                                     <input type="text" placeholder="Telefone para recado" class="floatlabel form-control" id="telefone_residencial" value="{{ old('telefone_residencial')}}" name="telefone_residencial" >
                                     @error('telefone_residencial') <div class="alert alert-danger">{{ $message }}</div> @enderror
                                 </div>
                             </div>
 
-                            <div class="col-4 form-campo">
+                            <div class="col-6 form-campo">
                                 <div class="mb-3">
                                     <input type="text" placeholder="Nome para recado" class="floatlabel form-control" id="nome_contato" value="{{ old('nome_contato')}}" name="nome_contato" >
                                     @error('nome_contato') <div class="alert alert-danger">{{ $message }}</div> @enderror
                                 </div>
                             </div>
+
+                            <div class="col-6 form-campo">
+                                <div class="mb-3">
+                                    <input type="text" placeholder="Instagram (opcional)" class="floatlabel form-control" id="instagram" value="{{ old('instagram')}}" name="instagram">
+                                    @error('instagram') <div class="alert alert-danger">{{ $message }}</div> @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-6 form-campo">
+                                <div class="mb-3">
+                                    <input type="text" placeholder="LinkedIn (opcional)" class="floatlabel form-control" id="linkedin" value="{{ old('linkedin')}}" name="linkedin">
+                                    @error('linkedin') <div class="alert alert-danger">{{ $message }}</div> @enderror
+                                </div>
+                            </div>                         
+
+                            
 
                             <h4 class="fw-normal mb-4 mt-4">Mais Informações</h4>
 
