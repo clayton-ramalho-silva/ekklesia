@@ -257,6 +257,7 @@
 
             <ul class="tit-lista">
                 {{-- Campos Currículo --}}
+                <li class="col-inscricao">Entrevista</li> 
                 <li class="col-nome">Nome</li> 
                 <li class="col-cpf">CPF</li>
                 <li class="col-cnh">CNH</li>
@@ -347,13 +348,17 @@
                         //Verifica se a idade é maior que 22 anos e 8 meses
                         $idadeEmMeses = $idadeDiff ? ($idadeDiff->y * 12 + $idadeDiff->m) : 0;
                         $limiteEmMeses = (22 * 12) + 8;
+                        // dd($resume->interview->created_at->format('d/m/Y'));
                     @endphp
-                    <li class="col-nome">
+                    <li class="col-inscricao">
                         <div class="col-icon">
-                            <b>Nome</b>
+                            {{-- <b>Nome</b> --}}
                             <svg class="ico-lista" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path fill="none" d="M0 0h24v24H0z"></path><path d="M3 19V5.7a1 1 0 0 1 .658-.94l9.671-3.516a.5.5 0 0 1 .671.47v4.953l6.316 2.105a1 1 0 0 1 .684.949V19h2v2H1v-2h2zm2 0h7V3.855L5 6.401V19zm14 0v-8.558l-5-1.667V19h5z"></path></g></svg>
-
+    
                         </div>
+                        {{ $resume->interview->created_at->format('d/m/Y') }}
+                    </li>
+                    <li class="col-nome">                        
                         <div class="col-info">
                             <span class="info-nome">
                                 <strong>{{ $resume->informacoesPessoais->nome ?? '' }}</strong>
@@ -976,6 +981,14 @@ $(document).on('click', '.remove-filter', function(){
     width: fit-content;
 }
 
+/* coluna data inscricao */
+.col-icon{
+margin-right: 10px;
+}
+
+.col-inscricao{
+    width: 130px;
+}
 
 /* coluna nome */
 .col-nome{
@@ -984,7 +997,7 @@ $(document).on('click', '.remove-filter', function(){
 
 .col-info{
     position: relative;
-    margin-left: 15px;
+    /* margin-left: 15px; */
 }
 
 p.badge{
