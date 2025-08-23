@@ -4,6 +4,7 @@
   <!-- Template Stylesheet -->
   <link href="<?php echo e(asset('css/style.css')); ?>" rel="stylesheet">
   <link href="<?php echo e(asset('css/estilos.css')); ?>" type="text/css" rel="stylesheet"> <meta charset="utf-8">
+  
 
   <style>
 .btInt.btHistorico{

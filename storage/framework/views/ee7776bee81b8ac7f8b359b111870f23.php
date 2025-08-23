@@ -223,42 +223,42 @@
         <div class="table-container lista-curriculos">
             
             <ul class="tit-lista">
-                <li class="col-inscricao">Inscrição</li> 
-                <li class="col-nome">Nome</li> 
-                <li class="col-cpf">CPF</li>
-                <li class="col-cnh">CNH</li>
-                <li class="col-tipo_cnh">Tipo CNH</li>
-                <li class="col-data_nascimento">Data de Nascimento</li>
-                <li class="col-nacionalidade">Nacionalidade</li>
-                <li class="col-estado_civil">Estado Civil</li>
-                <li class="col-possui_filhos">Possui filhos?</li>
-                <li class="col-filhos_sim">Qual idade deles?</li>
-                <li class="col-genero">Gênero</li>
-                <li class="col-genero_outro">Qual seu gênero?</li>
-                <li class="col-pcd">PCD</li>
-                <li class="col-pcd_sim">Número CID</li>
-                <li class="col-reservista">Reservista</li>
-                <li class="col-endereco">Endereço</li>
-                <li class="col-cidade">Cidade</li>
-                <li class="col-uf">UF</li>
-                <li class="col-email">E-mail</li>
-                <li class="col-telefone_celular">Telefone Celular</li>
-                <li class="col-telefone_recado">Telefone Recado</li>
-                <li class="col-nome_recado">Nome Recado</li>
-                <li class="col-instagram">Instagram</li>
-                <li class="col-linkedin">Linkedin</li>
-                <li class="col-vaga">Tipo de vaga</li>
-                <li class="col-experiencia_profissional">Experiencia Profissional</li>
-                <li class="col-formacao">Formação</li>
-                <li class="col-formacao_complemento">Formação Complemento</li>
-                <li class="col-superior_periodo">Qual o Período?</li>
-                <li class="col-jovem-aprendiz">Já foi jovem aprendiz?</li>
-                <li class="col-informatica">Possui conhecimento no pacote Office (Excel/Word)?</li>
-                <li class="col-ingles">Inglês</li>
-                <li class="col-cras">Família atendida por algum equipamento Público?</li>
-                <li class="col-tamanho_uniforme">Fonte Currículo</li>
-                <li class="col-entrevistado">Entrevistado</li>
-                <li class="col-status">Status</li>
+                <li class="col-inscricao sortable" data-column="inscricao" data-type="date">Inscrição</li> 
+                <li class="col-nome sortable" data-column="nome" data-type="text">Nome</li> 
+                <li class="col-cpf sortable" data-column="cpf" data-type="text">CPF</li>
+                <li class="col-cnh sortable" data-column="cnh" data-type="text">CNH</li>
+                <li class="col-tipo_cnh sortable" data-column="tipo_cnh" data-type="text">Tipo CNH</li>
+                <li class="col-data_nascimento sortable" data-column="data_nascimento" data-type="text">Data de Nascimento</li>
+                <li class="col-nacionalidade sortable" data-column="nacionalidade" data-type="text">Nacionalidade</li>
+                <li class="col-estado_civil sortable" data-column="estado_civil" data-type="text">Estado Civil</li>
+                <li class="col-possui_filhos sortable" data-column="possui_filhos" data-type="text">Possui filhos?</li>
+                <li class="col-filhos_sim sortable" data-column="filhos_sim" data-type="text">Qual idade deles?</li>
+                <li class="col-genero sortable" data-column="genero" data-type="text">Gênero</li>
+                <li class="col-genero_outro sortable" data-column="genero_outro" data-type="text">Qual seu gênero?</li>
+                <li class="col-pcd sortable" data-column="pcd" data-type="text">PCD</li>
+                <li class="col-pcd_sim sortable" data-column="pcd_sim" data-type="text">Número CID</li>
+                <li class="col-reservista sortable" data-column="reservista" data-type="text">Reservista</li>
+                <li class="col-endereco sortable" data-column="endereco" data-type="text">Endereço</li>
+                <li class="col-cidade sortable" data-column="cidade" data-type="text">Cidade</li>
+                <li class="col-uf sortable" data-column="uf" data-type="text">UF</li>
+                <li class="col-email sortable" data-column="email" data-type="text">E-mail</li>
+                <li class="col-telefone_celular sortable" data-column="telefone_celular" data-type="text">Telefone Celular</li>
+                <li class="col-telefone_recado sortable" data-column="telefone_recado" data-type="text">Telefone Recado</li>
+                <li class="col-nome_recado sortable" data-column="nome_recado" data-type="text">Nome Recado</li>
+                <li class="col-instagram sortable" data-column="instagram" data-type="text">Instagram</li>
+                <li class="col-linkedin sortable" data-column="linkedin" data-type="text">Linkedin</li>
+                <li class="col-vaga sortable" data-column="vaga" data-type="text">Tipo de vaga</li>
+                <li class="col-experiencia_profissional sortable" data-column="experiencia_profissional" data-type="text">Experiencia Profissional</li>
+                <li class="col-formacao sortable" data-column="formacao" data-type="text">Formação</li>
+                <li class="col-formacao_complemento sortable" data-column="formacao_complemento" data-type="text">Formação Complemento</li>
+                <li class="col-superior_periodo sortable" data-column="superior_periodo" data-type="text">Qual o Período?</li>
+                <li class="col-jovem-aprendiz sortable" data-column="jovem-aprendiz" data-type="text">Já foi jovem aprendiz?</li>
+                <li class="col-informatica sortable" data-column="informatica" data-type="text">Possui conhecimento no pacote Office (Excel/Word)?</li>
+                <li class="col-ingles sortable" data-column="ingles" data-type="text">Inglês</li>
+                <li class="col-cras sortable" data-column="cras" data-type="text">Família atendida por algum equipamento Público?</li>
+                <li class="col-tamanho_uniforme sortable" data-column="tamanho_uniforme" data-type="text">Fonte Currículo</li>
+                <li class="col-entrevistado sortable" data-column="entrevistado" data-type="text">Entrevistado</li>
+                <li class="col-status sortable" data-column="status" data-type="text">Status</li>
             </ul>
 
             <?php if($resumes->count() > 0): ?>
@@ -497,6 +497,8 @@
 
     </article>
 
+    
+
     <article class="f4 bts-interna">
         <a href="<?php echo e(route('resumes.create')); ?>" class="btInt btCadastrar">Cadastrar <small>Criar um novo currículo</small></a>
         <?php if(Auth::user()->email === 'marketing@asppe.org' || Auth::user()->email === 'clayton@email.com'): ?>
@@ -598,6 +600,161 @@ $(document).on('click', '.remove-filter', function(){
     window.location.href = url.pathname + '?' + params.toString();
 
 });
+
+//////////
+class TableSorter {
+    constructor(containerSelector) {
+        this.container = document.querySelector(containerSelector);
+        this.headerRow = this.container.querySelector('.tit-lista');
+        this.dataRows = Array.from(this.container.querySelectorAll('ul:not(.tit-lista)'));
+        this.currentSort = { column: null, direction: null };
+        
+        this.init();
+    }
+    
+    init() {
+        // Adicionar event listeners para cada coluna ordenável
+        const sortableHeaders = this.headerRow.querySelectorAll('.sortable');
+        
+        sortableHeaders.forEach(header => {
+            header.addEventListener('click', (e) => {
+                this.handleSort(e.target);
+            });
+        });
+    }
+    
+    handleSort(clickedHeader) {
+        const column = clickedHeader.dataset.column;
+        const dataType = clickedHeader.dataset.type || 'text';
+        
+        // Determinar direção da ordenação
+        let direction = 'asc';
+        if (this.currentSort.column === column) {
+            direction = this.currentSort.direction === 'asc' ? 'desc' : 'asc';
+        }
+        
+        // Remover classes de ordenação de todos os headers
+        this.headerRow.querySelectorAll('.sortable').forEach(h => {
+            h.classList.remove('asc', 'desc');
+        });
+        
+        // Adicionar classe ao header atual
+        clickedHeader.classList.add(direction);
+        
+        // Realizar a ordenação
+        this.sortData(column, direction, dataType);
+        
+        // Atualizar estado atual
+        this.currentSort = { column, direction };
+    }
+    
+    sortData(column, direction, dataType) {
+        // Adicionar classe visual durante ordenação
+        this.container.classList.add('sorting');
+        
+        const columnIndex = this.getColumnIndex(column);
+        
+        // Ordenar os dados
+        this.dataRows.sort((a, b) => {
+            const aValue = this.getCellValue(a, columnIndex);
+            const bValue = this.getCellValue(b, columnIndex);
+            
+            let comparison = this.compareValues(aValue, bValue, dataType);
+            
+            return direction === 'desc' ? -comparison : comparison;
+        });
+        
+        // Reordenar os elementos no DOM
+        setTimeout(() => {
+            this.dataRows.forEach(row => {
+                this.container.appendChild(row);
+            });
+            
+            // Remover classe visual
+            this.container.classList.remove('sorting');
+        }, 100);
+    }
+    
+    getColumnIndex(column) {
+        const headers = Array.from(this.headerRow.children);
+        return headers.findIndex(header => header.dataset.column === column);
+    }
+    
+    getCellValue(row, columnIndex) {
+        const cell = row.children[columnIndex];
+        if (!cell) return '';
+        
+        // Para colunas com estrutura complexa (como nome com badge)
+        if (cell.querySelector('.info-nome strong')) {
+            return cell.querySelector('.info-nome strong').textContent.trim();
+        }
+        
+        // Para colunas com ícones de status
+        if (cell.textContent.includes('Disponível')) return 'Disponível';
+        if (cell.textContent.includes('Em processo')) return 'Em processo';
+        if (cell.textContent.includes('Contratado')) return 'Contratado';
+        if (cell.textContent.includes('Inativo')) return 'Inativo';
+        
+        return cell.textContent.trim();
+    }
+    
+    compareValues(a, b, dataType) {
+        if (a === '' && b === '') return 0;
+        if (a === '') return 1;
+        if (b === '') return -1;
+        
+        switch (dataType) {
+            case 'date':
+                return this.compareDates(a, b);
+            case 'number':
+                return this.compareNumbers(a, b);
+            case 'text':
+            default:
+                return a.localeCompare(b, 'pt-BR', { 
+                    numeric: true, 
+                    sensitivity: 'base' 
+                });
+        }
+    }
+    
+    compareDates(a, b) {
+        // Converte datas no formato DD/MM/YYYY para objeto Date
+        const parseDate = (dateStr) => {
+            if (!dateStr || dateStr === '-') return new Date(0);
+            const parts = dateStr.split('/');
+            if (parts.length === 3) {
+                return new Date(parts[2], parts[1] - 1, parts[0]);
+            }
+            return new Date(dateStr);
+        };
+        
+        const dateA = parseDate(a);
+        const dateB = parseDate(b);
+        
+        return dateA.getTime() - dateB.getTime();
+    }
+    
+    compareNumbers(a, b) {
+        const numA = parseFloat(a.replace(/[^\d.-]/g, '')) || 0;
+        const numB = parseFloat(b.replace(/[^\d.-]/g, '')) || 0;
+        return numA - numB;
+    }
+}
+
+// Inicializar o sistema de ordenação quando o DOM estiver carregado
+document.addEventListener('DOMContentLoaded', function() {
+    const sorter = new TableSorter('.lista-curriculos');
+    
+    console.log('Sistema de ordenação inicializado!');
+});
+
+// Função auxiliar para reinicializar após mudanças AJAX (se necessário)
+window.reinitTableSorter = function() {
+    new TableSorter('.lista-curriculos');
+};
+
+
+
 
 </script>
 <?php $__env->stopPush(); ?>
@@ -808,20 +965,57 @@ flex-wrap: nowrap;
 }
 
 
+
+
+
+
+
+
+/* Tabela nova */
+#tabela-curriculo tbody tr:nth-child(even){
+    background-color: #FCFCFC;
+}
+
+#tabela-curriculo tbody tr{
+    border-radius: 50px;
+}
+#tabela-curriculo tbody tr:hover{
+    background-color: #f7f7f7 !important;
+}
+
+
+#tabela-curriculo thead tr,
+#tabela-curriculo tbody tr{
+    display: flex;
+    align-items: center;
+}
+
+
+
+
+
+
+
 /* coluna data inscricao */
+
+
+
 .col-icon{
 margin-right: 10px;
 }
 
 .col-inscricao{
     width: 130px;
+    
 }
+
 
 
 
 /* coluna nome */
 .col-nome{
-    width: 400px;
+    min-width: 350px !important;
+    
 }
 
 .col-info{
@@ -837,7 +1031,7 @@ p.badge{
 
 /* coluna email */
 .col-email{
-    width: 250px;
+    min-width: 350px !important;
 }
 
 .col-data_nascimento{
@@ -864,17 +1058,18 @@ p.badge{
     width: 190px;
 }
 .col-telefone_celular{
-    width: 160px;
+    min-width: 200px !important;
 }
 .col-telefone_recado{
-    width: 160px;
+    min-width: 200px !important;
 }
 .col-nome_recado{
-    width: 160px;
+    min-width: 200px !important;
 }
 
 .col-endereco{
-    width: 200px;
+    width: 300px;
+    min-width: 300px !important;
     white-space: pre-wrap;
 }
 .col-cidade{
@@ -887,8 +1082,8 @@ p.badge{
 
 /* coluna vaga */
 .col-vaga{
-    width: 200px;
-    max-width: 200px;
+    width: 350px;
+    min-width: 350px !important;
     overflow: hidden;
 }
 
@@ -898,8 +1093,8 @@ p.badge{
 }
 
 .col-experiencia_profissional{
-    width: 200px;
-    max-width: 200px;
+    width: 350px;
+    min-width: 350px !important;
     overflow: hidden;
 }
 
@@ -929,23 +1124,26 @@ p.badge{
 }
 
 .col-jovem-aprendiz{
-    width: 200px;
+    min-width: 300px !important;
 }
 
 .col-formacao{
-    width: 240px;
+    min-width: 350px !important;
+    white-space: pre-wrap;
 }
 
 .col-formacao_complemento{
-    width: 240px;
+    min-width: 350px !important;
     white-space: pre-wrap;
 }
 .col-informatica{
-    width: 200px;
+    min-width: 350px !important;
     white-space: pre-wrap;
 }
 .col-ingles{
-    width: 100px;
+    min-width: 350px !important;
+    white-space: pre-wrap;
+
 }
 .col-entrevistado{
     width: 115px;
@@ -977,6 +1175,129 @@ p.badge{
     white-space: pre-wrap;
 }
 
+/******** CSS Personalizado **********/
+        .sortable {
+            cursor: pointer;
+            position: relative;
+            padding-right: 20px;
+            user-select: none;
+        }
+        
+        .sortable:hover {
+            /* background-color: #f8f9fa; */
+        }
+        
+        .sortable::after {
+            content: "↕";
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.5;
+            font-size: 20px;
+        }
+        
+        .sortable.asc::after {
+            content: "↑";
+            opacity: 1;
+            color: #007bff;
+        }
+        
+        .sortable.desc::after {
+            content: "↓";
+            opacity: 1;
+            color: #007bff;
+        }
+        
+        /* Animação suave para reordenação */
+        .lista-curriculos ul {
+            transition: all 0.3s ease;
+        }
+        
+        /* Destaque visual durante ordenação */
+        .sorting {
+            opacity: 0.7;
+        }
+        
+        /* Estilos base para demonstração */
+        /* .table-container {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow-x: auto;
+        } */
+        
+        .tit-lista {
+            /* background-color: #f8f9fa; */
+            font-weight: bold;
+            /* border-bottom: 2px solid #ddd; */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            list-style: none;
+        }
+        
+        .tit-lista li {
+            padding: 10px 8px;
+            /* border-right: 1px solid #ddd; */
+            flex: 1;
+            min-width: 100px;
+        }
+        
+        .lista-curriculos ul:not(.tit-lista) {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            list-style: none;
+            /* border-bottom: 1px solid #eee; */
+        }
+        
+        .lista-curriculos ul:not(.tit-lista):hover {
+            /* background-color: #f8f9fa; */
+        }
+        
+        .lista-curriculos ul:not(.tit-lista) li {
+            padding: 8px;
+            /* border-right: 1px solid #eee; */
+            flex: 1;
+            min-width: 100px;
+            /* font-size: 12px; */
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        .bg-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .bg-light {
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        
+        .text-success {
+            color: #28a745;
+        }
+        
+        .text-danger {
+            color: #dc3545;
+        }
+        
+        .fw-bold {
+            font-weight: bold;
+        }
+        
+        /* Indicadores de status */
+        /* .status-ativo::before { content: "●"; color: #28a745; margin-right: 5px; }
+        .status-inativo::before { content: "●"; color: #6c757d; margin-right: 5px; }
+        .status-em-processo::before { content: "●"; color: #ffc107; margin-right: 5px; }
+        .status-contratado::before { content: "●"; color: #007bff; margin-right: 5px; } */
 
 </style>
 <?php $__env->stopPush(); ?>
