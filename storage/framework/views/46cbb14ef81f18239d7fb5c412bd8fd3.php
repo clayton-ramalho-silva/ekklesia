@@ -230,69 +230,69 @@
 
             <ul class="tit-lista">
                 
-                <li class="col-inscricao">Entrevista</li> 
-                <li class="col-nome">Nome</li> 
-                <li class="col-cpf">CPF</li>
-                <li class="col-cnh">CNH</li>
-                <li class="col-tipo_cnh">Tipo CNH</li>
-                <li class="col-data_nascimento">Data de Nascimento</li>
-                <li class="col-nacionalidade">Nacionalidade</li>
-                <li class="col-estado_civil">Estado Civil</li>
-                <li class="col-possui_filhos">Possui filhos?</li>
-                <li class="col-filhos_sim">Qual idade deles?</li>
-                <li class="col-genero">Gênero</li>
-                <li class="col-genero_outro">Qual seu gênero?</li>
-                <li class="col-pcd">PCD</li>
-                <li class="col-pcd_sim">Número CID</li>
-                <li class="col-reservista">Reservista</li>
-                <li class="col-endereco">Endereço</li>
-                <li class="col-cidade">Cidade</li>
-                <li class="col-uf">UF</li>
-                <li class="col-email">E-mail</li>
-                <li class="col-telefone_celular">Telefone Celular</li>
-                <li class="col-telefone_recado">Telefone Recado</li>
-                <li class="col-nome_recado">Nome Recado</li>
-                <li class="col-instagram">Instagram</li>
-                <li class="col-linkedin">Linkedin</li>
-                <li class="col-vaga">Tipo de vaga</li>
-                <li class="col-experiencia_profissional">Experiencia Profissional</li>
-                <li class="col-formacao">Formação</li>
-                <li class="col-formacao_complemento">Formação Complemento</li>
-                <li class="col-superior_periodo">Qual o Período?</li>
+                <li class="col-entrevista sortable" data-column="entrevista" data-type="date">Entrevista</li> 
+                <li class="col-nome sortable" data-column="nome" data-type="text">Nome</li> 
+                <li class="col-cpf sortable" data-column="cpf" data-type="text">CPF</li>
+                <li class="col-cnh sortable" data-column="cnh" data-type="text">CNH</li>
+                <li class="col-tipo_cnh sortable" data-column="tipo_cnh" data-type="text">Tipo CNH</li>
+                <li class="col-data_nascimento sortable" data-column="data_nascimento" data-type="text">Data de Nascimento</li>
+                <li class="col-nacionalidade sortable" data-column="nacionalidade" data-type="text">Nacionalidade</li>
+                <li class="col-estado_civil sortable" data-column="estado_civil" data-type="text">Estado Civil</li>
+                <li class="col-possui_filhos sortable" data-column="possui_filhos" data-type="text">Possui filhos?</li>
+                <li class="col-filhos_sim sortable" data-column="filhos_sim" data-type="text">Qual idade deles?</li>
+                <li class="col-genero sortable" data-column="genero" data-type="text">Gênero</li>
+                <li class="col-genero_outro sortable" data-column="genero_outro" data-type="text">Qual seu gênero?</li>
+                <li class="col-pcd sortable" data-column="pcd" data-type="text">PCD</li>
+                <li class="col-pcd_sim sortable" data-column="pcd_sim" data-type="text">Número CID</li>
+                <li class="col-reservista sortable" data-column="reservista" data-type="text">Reservista</li>
+                <li class="col-endereco sortable" data-column="endereco" data-type="text">Endereço</li>
+                <li class="col-cidade sortable" data-column="cidade" data-type="text">Cidade</li>
+                <li class="col-uf sortable" data-column="uf" data-type="text">UF</li>
+                <li class="col-email sortable" data-column="email" data-type="text">E-mail</li>
+                <li class="col-telefone_celular sortable" data-column="telefone_celular" data-type="text">Telefone Celular</li>
+                <li class="col-telefone_recado sortable" data-column="telefone_recado" data-type="text">Telefone Recado</li>
+                <li class="col-nome_recado sortable" data-column="nome_recado" data-type="text">Nome Recado</li>
+                <li class="col-instagram sortable" data-column="instagram" data-type="text">Instagram</li>
+                <li class="col-linkedin sortable" data-column="linkedin" data-type="text">Linkedin</li>
+                <li class="col-vaga sortable" data-column="vaga" data-type="text">Tipo de vaga</li>
+                <li class="col-experiencia_profissional sortable" data-column="experiencia_profissional" data-type="text">Experiencia Profissional</li>
+                <li class="col-formacao sortable" data-column="formacao" data-type="text">Formação</li>
+                <li class="col-formacao_complemento sortable" data-column="formacao_complemento" data-type="text">Formação Complemento</li>
+                <li class="col-superior_periodo sortable" data-column="superior_periodo" data-type="text">Qual o Período?</li>
                 
-                <li class="col-informatica">Possui conhecimento no pacote Office (Excel/Word)?</li>
-                <li class="col-ingles">Inglês</li>
-                <li class="col-cras">Família atendida por algum equipamento Público?</li>
-                <li class="col-tamanho_uniforme">Fonte Currículo</li>                                             
+                <li class="col-informatica sortable" data-column="informatica" data-type="text">Possui conhecimento no pacote Office (Excel/Word)?</li>
+                <li class="col-ingles sortable" data-column="ingles" data-type="text">Inglês</li>
+                <li class="col-cras sortable" data-column="cras" data-type="text">Família atendida por algum equipamento Público?</li>
+                <li class="col-tamanho_uniforme sortable" data-column="tamanho_uniforme" data-type="text">Fonte Currículo</li>                                             
                 
 
                 
-                <li class="col-idiomas">Outros idiomas?</li>
-                <li class="col-apresentacao-pessoal">Apresentação Pessoal</li>
-                <li class="col-saude">Saúde</li>
-                <li class="col-vacina">Vacina COVID</li>
-                <li class="col-jovem-aprendiz">Já foi jovem aprendiz?</li>
-                <li class="col-formadora">Formadora</li>
-                <li class="col-experiencia-profissional">Expreriência Profissional</li>
-                <li class="col-demissao">Por qual motivo pediria demissão?</li>
-                <li class="col-caracteristicas-positivas">Características Positivas</li>
-                <li class="col-habilidades">Habilidades</li>
-                <li class="col-pontos-melhoria">Pontos de Melhoria</li>
-                <li class="col-rotina">Qual sua rotina?</li>
-                <li class="col-disponibilidade-horario">Disponibilidade de Horário</li>
-                <li class="col-familia">Família</li>
-                <li class="col-renda_familiar">Renda Familiar</li>
-                <li class="col-cras">Família recebe benefício?</li>
-                <li class="col-objetivo-longo-prazo">Objetivos longo prazo</li>
-                <li class="col-porque-gostaria-jovem-aprendiz">Por que ser Jovem Aprendiz?</li>
-                <li class="col-fonte-curriculo">Fonte Captação Currículo</li>
-                <li class="col-perfil-stacasa">Perfil Sta. Casa</li>
-                <li class="col-classificacao">Classificação</li>
-                <li class="col-status">Status</li>
-                <li class="col-entrevistado">Entrevistado?</li>                
-                <li class="col-parecer">Parecer do RH</li>
-                <li class="col-obs-entrevista">Entrevistas</li>
-                <li class="col-obs_rh">Observações RH</li>
+                <li class="col-idiomas sortable" data-column="idiomas" data-type="text">Outros idiomas?</li>
+                <li class="col-apresentacao-pessoal sortable" data-column="apresentacao-pessoal" data-type="text">Apresentação Pessoal</li>
+                <li class="col-saude sortable" data-column="saude" data-type="text">Saúde</li>
+                <li class="col-vacina sortable" data-column="vacina" data-type="text">Vacina COVID</li>
+                <li class="col-jovem-aprendiz sortable" data-column="jovem-aprendiz" data-type="text">Já foi jovem aprendiz?</li>
+                <li class="col-formadora sortable" data-column="formadora" data-type="text">Formadora</li>
+                <li class="col-experiencia-profissional sortable" data-column="experiencia-profissional" data-type="text">Expreriência Profissional</li>
+                <li class="col-demissao sortable" data-column="demissao" data-type="text">Por qual motivo pediria demissão?</li>
+                <li class="col-caracteristicas-positivas sortable" data-column="caracteristicas-positivas" data-type="text">Características Positivas</li>
+                <li class="col-habilidades sortable" data-column="habilidades" data-type="text">Habilidades</li>
+                <li class="col-pontos-melhoria sortable" data-column="pontos-melhoria" data-type="text">Pontos de Melhoria</li>
+                <li class="col-rotina sortable" data-column="rotina" data-type="text">Qual sua rotina?</li>
+                <li class="col-disponibilidade-horario sortable" data-column="disponibilidade-horario" data-type="text">Disponibilidade de Horário</li>
+                <li class="col-familia sortable" data-column="familia" data-type="text">Família</li>
+                <li class="col-renda_familiar sortable" data-column="renda_familiar" data-type="text">Renda Familiar</li>
+                <li class="col-cras sortable" data-column="cras" data-type="text">Família recebe benefício?</li>
+                <li class="col-objetivo-longo-prazo sortable" data-column="objetivo-longo-prazo" data-type="text">Objetivos longo prazo</li>
+                <li class="col-porque-gostaria-jovem-aprendiz sortable" data-column="porque-gostaria-jovem-aprendiz" data-type="text">Por que ser Jovem Aprendiz?</li>
+                <li class="col-fonte-curriculo sortable" data-column="fonte-curriculo" data-type="text">Fonte Captação Currículo</li>
+                <li class="col-perfil-stacasa sortable" data-column="perfil-stacasa" data-type="text">Perfil Sta. Casa</li>
+                <li class="col-classificacao sortable" data-column="classificacao" data-type="text">Classificação</li>
+                <li class="col-status sortable" data-column="status" data-type="text">Status</li>
+                <li class="col-entrevistado sortable" data-column="entrevistado" data-type="text">Entrevistado?</li>                
+                <li class="col-parecer sortable" data-column="parecer" data-type="text">Parecer do RH</li>
+                <li class="col-obs-entrevista sortable" data-column="obs-entrevista" data-type="text">Entrevistas</li>
+                <li class="col-obs_rh sortable" data-column="obs_rh" data-type="text">Observações RH</li>
 
 
                 
@@ -303,7 +303,8 @@
             <?php if($resumes->count() > 0): ?>
 
                 <?php $__currentLoopData = $resumes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $resume): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
-                <ul onclick="window.open('<?php echo e(route('interviews.show', $resume->interview->id)); ?>', '_blank')" title="Ver ou Editar Entrevista">               
+                
+                <ul class="row-list" onclick="window.open('<?php echo e(route('interviews.show', $resume->interview->id)); ?>', '_blank')" title="Ver ou Editar Entrevista">               
                 
                    
                     <?php                       
@@ -317,7 +318,7 @@
                         $limiteEmMeses = (22 * 12) + 8;
                         // dd($resume->interview->created_at->format('d/m/Y'));
                     ?>
-                    <li class="col-inscricao">
+                    <li class="col-entrevista">
                         <div class="col-icon">
                             
                             <svg class="ico-lista" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path fill="none" d="M0 0h24v24H0z"></path><path d="M3 19V5.7a1 1 0 0 1 .658-.94l9.671-3.516a.5.5 0 0 1 .671.47v4.953l6.316 2.105a1 1 0 0 1 .684.949V19h2v2H1v-2h2zm2 0h7V3.855L5 6.401V19zm14 0v-8.558l-5-1.667V19h5z"></path></g></svg>
@@ -357,7 +358,7 @@
                         <?php echo e($resume->informacoesPessoais->cnh ?? ''); ?>
 
                     </li>
-                    <li class="col-tipo_cnh"><?php echo e($resume->informacoesPessoais->tipo_cnh ?? ''); ?></li>
+                    <li class="col-tipo_cnh"><?php echo e($resume->informacoesPessoais->tipo_cnh ?? 'N/A'); ?></li>
                      <li class="col-data_nascimento">                        
                         <?php echo e($resume->informacoesPessoais->data_nascimento->format('d/m/Y') ?? ''); ?>
 
@@ -670,6 +671,159 @@ $(document).on('click', '.remove-filter', function(){
 });
 
 
+//////////
+class TableSorter {
+    constructor(containerSelector) {
+        this.container = document.querySelector(containerSelector);
+        this.headerRow = this.container.querySelector('.tit-lista');
+        this.dataRows = Array.from(this.container.querySelectorAll('ul:not(.tit-lista)'));
+        this.currentSort = { column: null, direction: null };
+        
+        this.init();
+    }
+    
+    init() {
+        // Adicionar event listeners para cada coluna ordenável
+        const sortableHeaders = this.headerRow.querySelectorAll('.sortable');
+        
+        sortableHeaders.forEach(header => {
+            header.addEventListener('click', (e) => {
+                this.handleSort(e.target);
+            });
+        });
+    }
+    
+    handleSort(clickedHeader) {
+        const column = clickedHeader.dataset.column;
+        const dataType = clickedHeader.dataset.type || 'text';
+        
+        // Determinar direção da ordenação
+        let direction = 'asc';
+        if (this.currentSort.column === column) {
+            direction = this.currentSort.direction === 'asc' ? 'desc' : 'asc';
+        }
+        
+        // Remover classes de ordenação de todos os headers
+        this.headerRow.querySelectorAll('.sortable').forEach(h => {
+            h.classList.remove('asc', 'desc');
+        });
+        
+        // Adicionar classe ao header atual
+        clickedHeader.classList.add(direction);
+        
+        // Realizar a ordenação
+        this.sortData(column, direction, dataType);
+        
+        // Atualizar estado atual
+        this.currentSort = { column, direction };
+    }
+    
+    sortData(column, direction, dataType) {
+        // Adicionar classe visual durante ordenação
+        this.container.classList.add('sorting');
+        
+        const columnIndex = this.getColumnIndex(column);
+        
+        // Ordenar os dados
+        this.dataRows.sort((a, b) => {
+            const aValue = this.getCellValue(a, columnIndex);
+            const bValue = this.getCellValue(b, columnIndex);
+            
+            let comparison = this.compareValues(aValue, bValue, dataType);
+            
+            return direction === 'desc' ? -comparison : comparison;
+        });
+        
+        // Reordenar os elementos no DOM
+        setTimeout(() => {
+            this.dataRows.forEach(row => {
+                this.container.appendChild(row);
+            });
+            
+            // Remover classe visual
+            this.container.classList.remove('sorting');
+        }, 100);
+    }
+    
+    getColumnIndex(column) {
+        const headers = Array.from(this.headerRow.children);
+        return headers.findIndex(header => header.dataset.column === column);
+    }
+    
+    getCellValue(row, columnIndex) {
+        const cell = row.children[columnIndex];
+        if (!cell) return '';
+        
+        // Para colunas com estrutura complexa (como nome com badge)
+        if (cell.querySelector('.info-nome strong')) {
+            return cell.querySelector('.info-nome strong').textContent.trim();
+        }
+        
+        // Para colunas com ícones de status
+        if (cell.textContent.includes('Disponível')) return 'Disponível';
+        if (cell.textContent.includes('Em processo')) return 'Em processo';
+        if (cell.textContent.includes('Contratado')) return 'Contratado';
+        if (cell.textContent.includes('Inativo')) return 'Inativo';
+        
+        return cell.textContent.trim();
+    }
+    
+    compareValues(a, b, dataType) {
+        if (a === '' && b === '') return 0;
+        if (a === '') return 1;
+        if (b === '') return -1;
+        
+        switch (dataType) {
+            case 'date':
+                return this.compareDates(a, b);
+            case 'number':
+                return this.compareNumbers(a, b);
+            case 'text':
+            default:
+                return a.localeCompare(b, 'pt-BR', { 
+                    numeric: true, 
+                    sensitivity: 'base' 
+                });
+        }
+    }
+    
+    compareDates(a, b) {
+        // Converte datas no formato DD/MM/YYYY para objeto Date
+        const parseDate = (dateStr) => {
+            if (!dateStr || dateStr === '-') return new Date(0);
+            const parts = dateStr.split('/');
+            if (parts.length === 3) {
+                return new Date(parts[2], parts[1] - 1, parts[0]);
+            }
+            return new Date(dateStr);
+        };
+        
+        const dateA = parseDate(a);
+        const dateB = parseDate(b);
+        
+        return dateA.getTime() - dateB.getTime();
+    }
+    
+    compareNumbers(a, b) {
+        const numA = parseFloat(a.replace(/[^\d.-]/g, '')) || 0;
+        const numB = parseFloat(b.replace(/[^\d.-]/g, '')) || 0;
+        return numA - numB;
+    }
+}
+
+// Inicializar o sistema de ordenação quando o DOM estiver carregado
+document.addEventListener('DOMContentLoaded', function() {
+    const sorter = new TableSorter('.lista-entrevistas');
+    
+    console.log('Sistema de ordenação inicializado!');
+});
+
+// Função auxiliar para reinicializar após mudanças AJAX (se necessário)
+window.reinitTableSorter = function() {
+    new TableSorter('.lista-entrevistas');
+};
+
+
 </script>
 <?php $__env->stopPush(); ?>
 
@@ -740,7 +894,7 @@ $(document).on('click', '.remove-filter', function(){
     border: 1px solid #ddd;
     color: #007bff;
     text-decoration: none;
-    transition: background-color 0.2s;
+    transition: 0.2s;
 }
 
 .page-item.active .page-link {
@@ -935,13 +1089,14 @@ $(document).on('click', '.remove-filter', function(){
 margin-right: 10px;
 }
 
-.col-inscricao{
-    width: 130px;
+.col-entrevista{
+    min-width: 185px !important;
+    
 }
 
 /* coluna nome */
 .col-nome{
-    width: 400px;
+    min-width: 350px !important;
 }
 
 .col-info{
@@ -957,59 +1112,81 @@ p.badge{
 
 /* coluna email */
 .col-email{
-    width: 250px;
+    min-width: 350px !important;
+    max-width: 350px !important;
+
 }
 
 .col-data_nascimento{
-    width: 160px;
+    min-width: 190px !important;
+    max-width: 190px !important;
 }
 
 .col-rg{
     width: 160px;
 }
 .col-cpf{
-    width: 160px;
+    min-width: 160px !important;
+    max-width: 160px !important;
 }
 
 .col-estado_civil{
-    width: 160px;
+    min-width: 160px !important;
+    max-width: 160px !important;
 }
 .col-possui_filhos{
-    width: 160px;
+    min-width: 160px !important;
+    max-width: 160px !important;
 }
+
+.col-filhos_sim{
+    min-width: 180px !important;
+    max-width: 180px !important;
+}
+
 .col-instagram{
-    width: 160px;
+   min-width: 160px !important;
+    max-width: 160px !important;
 }
 .col-linkedin{
-    width: 190px;
+   min-width: 160px !important;
+    max-width: 160px !important;
 }
 .col-telefone_celular{
-    width: 160px;
+    min-width: 200px !important;
+    max-width: 200px !important;
 }
 .col-telefone_recado{
-    width: 160px;
+    min-width: 200px !important;
+    max-width: 200px !important;
 }
 .col-nome_recado{
-    width: 160px;
+    min-width: 200px !important;
+    max-width: 200px !important;
 }
 
 .col-endereco{
-    width: 200px;
+    min-width: 300px !important;
+    max-width: 300px !important;
     white-space: pre-wrap;
 }
 .col-cidade{
-    width: 100px;
+    min-width: 150px !important;
+    max-width: 150px !important;
     white-space: pre-wrap;
 }
 .col-uf{
-    width: 50px;
+    min-width: 50px !important;
+    max-width: 50px !important;
+    white-space: pre-wrap;
 }
+
 
 
 /* coluna vaga */
 .col-vaga{
-    width: 200px;
-    max-width: 200px;
+    max-width: 350px !important;
+    min-width: 350px !important;
     overflow: hidden;
 }
 
@@ -1019,8 +1196,8 @@ p.badge{
 }
 
 .col-experiencia_profissional{
-    width: 200px;
-    max-width: 200px;
+    min-width: 350px !important;
+    max-width: 350px !important;
     overflow: hidden;
 }
 
@@ -1030,43 +1207,83 @@ p.badge{
 }
 
 .col-tamanho_uniforme{
-    width: 200px;
+    min-width: 200px !important;
+    max-width: 200px !important;
 }
 
 
 /* coluna cnh */
 .col-cnh{
-    width: 100px;
+    min-width: 100px !important;
+    max-width: 100px !important;
+    
 }
 
+.col-tipo_cnh{
+    min-width: 100px !important;
+    max-width: 100px !important;
+    
+}
+.col-nacionalidade{
+    min-width: 160px !important;
+    max-width: 160px !important;
+    
+}
 /* coluna genero */
 .col-genero{
-    width: 100px;
+    min-width: 100px !important;
+    max-width: 100px !important;
 }
+
+.col-genero_outro{
+    min-width: 180px !important;
+    max-width: 180px !important;
+}
+
+
+.col-pcd{
+    min-width: 100px !important;
+    max-width: 100px !important;
+}
+.col-pcd_sim{
+    min-width: 180px !important;
+    max-width: 180px !important;
+}
+
 
 /* coluna reservista */
 .col-reservista{
-    width: 115px;
+    min-width: 120px !important;
+    max-width: 120px !important;
 }
 
 .col-jovem-aprendiz{
-    width: 200px;
+    min-width: 350px !important;
+    max-width: 350px !important;
+    white-space: pre-wrap;
 }
 
 .col-formacao{
-    width: 240px;
+    min-width: 350px !important;
+    max-width: 350px !important;
+    white-space: pre-wrap;
 }
 
 .col-formacao_complemento{
-    width: 240px;
+    min-width: 350px !important;
+    max-width: 350px !important;
     white-space: pre-wrap;
 }
 .col-informatica{
-    width: 200px;
+    min-width: 350px !important;
+    max-width: 350px !important;
     white-space: pre-wrap;
 }
 .col-ingles{
-    width: 100px;
+    min-width: 350px !important;
+    max-width: 350px !important;
+    white-space: pre-wrap;
+
 }
 
 
@@ -1077,33 +1294,40 @@ p.badge{
 
 /* coluna genero */
 .col-obs{
-    width: 175px;
+    min-width: 175px !important;
+    max-width: 175px !important;
     white-space: pre-wrap;
 }
 
 /* coluna reservista */
 .col-saude{
-    width: 150px;
+    min-width: 120px !important;
+    max-width: 120px !important;
     overflow: hidden;
     white-space: pre-wrap;
 }
 
 .col-vacina{
-    width: 120px;
+    min-width: 120px !important;
+    max-width: 120px !important;
     white-space: pre-wrap;
 }
 
 .col-perfil{
-    width: 175px;
+    min-width: 175px !important;
+    max-width: 175px !important;
 }
 .col-perfil-stacasa{
-    width: 125px;
+    min-width: 150px !important;
+    max-width: 150px !important;
 }
 .col-classificacao{
-    width: 120px;
+    min-width: 150px !important;
+    max-width: 150px !important;
 }
 .col-entrevistado{
-    width: 115px;
+    min-width: 150px !important;
+    max-width: 150px !important;
     display: flex;
     justify-content: center;
 }
@@ -1115,116 +1339,263 @@ p.badge{
 
 
 .col-formadora{
-    width: 200px;
+    min-width: 200px !important;
+    max-width: 200px !important;
     white-space: pre-wrap;
 }
 
 .col-parecer{
-    width: 400px;
+    min-width: 400px !important;
+    max-width: 400px !important;
     white-space: pre-wrap;
 }
 .col-curso-extracurriculares{
-    width: 200px;
+    min-width: 200px !important;
+    max-width: 200px !important;
     white-space: pre-wrap;
 }
 .col-apresentacao-pessoal{
-    width: 200px;
+    min-width: 200px !important;
+    max-width: 200px !important;
     white-space: pre-wrap;
 }
 .col-experiencia-profissional{
-    width: 400px;
+    min-width: 400px !important;
+    max-width: 400px !important;
     white-space: pre-wrap;
 }
 
 .col-caracteristicas-positivas{
-    width: 200px;
+    min-width: 200px !important;
+    max-width: 200px !important;
     white-space: pre-wrap;
 }
 .col-habilidades{
-    width: 200px;
+    min-width: 200px !important;
+    max-width: 200px !important;
     white-space: pre-wrap;
 }
 .col-porque-gostaria-jovem-aprendiz{
-    width: 200px;
+    min-width: 200px !important;
+    max-width: 200px !important;
     white-space: pre-wrap;
 }
 .col-demissao{
-    width: 200px;
+    min-width: 200px !important;
+    max-width: 200px !important;
     white-space: pre-wrap;
 }
 .col-pretencoes-candidato{
-    width: 200px;
+    min-width: 200px !important;
+    max-width: 200px !important;
     white-space: pre-wrap;
 }
 .col-objetivo-longo-prazo{
-    width: 200px;
+    min-width: 220px !important;
+    max-width: 220px !important;
     white-space: pre-wrap;
 }
 .col-pontos-melhoria{
-    width: 200px;
+    min-width: 200px !important;
+    max-width: 200px !important;
     white-space: pre-wrap;
 }
 .col-familia{
-    width: 200px;
+    min-width: 200px !important;
+    max-width: 200px !important;
     white-space: pre-wrap;
 }
 .col-disponibilidade-horario{
-    width: 200px;
+    min-width: 200px !important;
+    max-width: 200px !important;
     white-space: pre-wrap;
 }
 .col-fale-um-pouco{
-    width: 200px;
+    min-width: 200px !important;
+    max-width: 200px !important;
     white-space: pre-wrap;
 }
 
 .col-rotina{
-    width: 200px;
+    min-width: 200px !important;
+    max-width: 200px !important;
     white-space: pre-wrap;
 }
 .col-idiomas{
-    width: 200px;
+    min-width: 200px !important;
+    max-width: 200px !important;
     white-space: pre-wrap;
 }
 .col-cras{
-    width: 200px;
+    min-width: 200px !important;
+    max-width: 200px !important;
     white-space: pre-wrap;
 }
 .col-fonte-curriculo{
-    width: 200px;
+    min-width: 200px !important;
+    max-width: 200px !important;
     white-space: pre-wrap;
 }
 .col-sugestao-empresa{
-    width: 200px;
+    min-width: 200px !important;
+    max-width: 200px !important;
     white-space: pre-wrap;
 }
 
 .col-obs-entrevista{
-    width: 400px;
+    min-width: 400px !important;
+    max-width: 400px !important;
     white-space: pre-wrap;
 }
 .col-pontuacao{
-    width: 200px;
+    min-width: 200px !important;
+    max-width: 200px !important;
     white-space: pre-wrap;
 }
 
 .col-status{
-    width: 125px;
+    min-width: 125px !important;
+    max-width: 125px !important;
 }
 
 .col-status i{
     margin-right: 10px;
 }
 
-.col-filhos_sim, .col-genero_outro, .col-tipo_cnh, 
+.col-filhos_sim, .col-genero_outro, 
 .col-pcd, .col-pcd_sim, .col-superior_periodo, .col-cras{
-    width: 200px;
+    min-width: 200px !important;
+    max-width: 200px !important;
     white-space: pre-wrap;
 }
 
 .col-nacionalidade, .col-renda_familiar, .col-obs_rh{
-    width: 150px;
+    min-width: 150px !important;
+    max-width: 150px !important;
     white-space: pre-wrap;
 }
+
+
+
+
+/******** CSS Personalizado **********/
+.sortable {
+    cursor: pointer;
+    position: relative;
+    padding-right: 20px;
+    user-select: none;
+}
+
+.sortable:hover {
+    /* background-color: #f8f9fa; */
+}
+
+.sortable::after {
+    content: "↕";
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.5;
+    font-size: 20px;
+}
+
+.sortable.asc::after {
+    content: "↑";
+    opacity: 1;
+    color: #007bff;
+}
+
+.sortable.desc::after {
+    content: "↓";
+    opacity: 1;
+    color: #007bff;
+}
+
+/* Animação suave para reordenação */
+.lista-curriculos ul {
+    transition: all 0.3s ease;
+}
+
+/* Destaque visual durante ordenação */
+.sorting {
+    opacity: 0.7;
+}
+
+/* Estilos base para demonstração */
+/* .table-container {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow-x: auto;
+} */
+
+.tit-lista {
+    /* background-color: #f8f9fa; */
+    font-weight: bold;
+    /* border-bottom: 2px solid #ddd; */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style: none;
+}
+
+.tit-lista li {
+    padding: 10px 8px;
+    /* border-right: 1px solid #ddd; */
+    flex: 1;
+    min-width: 100px;
+}
+
+.lista-curriculos ul:not(.tit-lista) {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style: none;
+    /* border-bottom: 1px solid #eee; */
+}
+
+.lista-curriculos ul:not(.tit-lista):hover {
+    /* background-color: #f8f9fa; */
+}
+
+.lista-curriculos ul:not(.tit-lista) li {
+    padding: 8px;
+    /* border-right: 1px solid #eee; */
+    flex: 1;
+    min-width: 100px;
+    /* font-size: 12px; */
+}
+
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.bg-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.bg-light {
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+.text-success {
+    color: #28a745;
+}
+
+.text-danger {
+    color: #dc3545;
+}
+
+.fw-bold {
+    font-weight: bold;
+}
+        
 
 </style>
 

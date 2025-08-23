@@ -6,4 +6,6 @@
 
 <!-- Template Javascript -->
 <script src="<?php echo e(asset('js/main.js')); ?>"></script>
+
+
 <?php /**PATH /home/case/Área de trabalho/2025/ldweb/Projeto asppe/painelasppe/resources/views/layouts/partials/scripts.blade.php ENDPATH**/ ?>
