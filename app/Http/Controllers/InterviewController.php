@@ -185,6 +185,17 @@ class InterviewController extends Controller
                 $q->where('cidade', 'like', '%'. $request->cidade . '%');
             });
         }
+
+        // Filtro Telefone Celular
+
+        //dd($request->celular);
+        if ($request->filled('celular') && strlen($request->celular) >= 4) {
+            $ultimosDigitos = substr($request->celular, -4);
+            
+            $query->whereHas('contato', function($q) use ($ultimosDigitos) {
+                $q->where('telefone_celular', 'like', '%' . $ultimosDigitos);
+            });
+        }
         
         // Filtro Filtro data Resumes
 

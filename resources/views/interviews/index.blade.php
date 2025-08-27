@@ -195,6 +195,11 @@
                             <option value="Não" {{ request('cras') == 'Não' ? 'selected' : '' }}> Não</option>                            
                         </select>
                     </div>
+
+                    <div class="col-6 mb-4">
+                        <label for="celular" class="form-label">4 últimos dígitos do Celular</label>
+                        <input type="text" name="celular" id="celular" class="form-control" value="{{ request('celular') }}" placeholder="Ex: 9999">
+                    </div>
                     {{-- <div class="col">
                         <label for="status" class="form-label">Status</label>
                         <select name="status" id="status" class="form-select">
