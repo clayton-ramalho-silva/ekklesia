@@ -194,6 +194,11 @@
                         </select>
                     </div>
 
+                    <div class="col-6 mb-4">
+                        <label for="celular" class="form-label">4 últimos digitos do Celular</label>
+                        <input type="text" name="celular" id="celular" class="form-control" value="<?php echo e(request('celular')); ?>" placeholder="Ex: 9999">
+                    </div>
+
 
                     <div class="col-12 mt-1 d-flex justify-content-between">
                         <button type="submit" class="btn btn-padrao btn-cadastrar">Filtrar</button>                        

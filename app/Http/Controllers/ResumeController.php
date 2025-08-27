@@ -162,6 +162,17 @@ class ResumeController extends Controller
             });
         }
 
+        // Filtro Telefone Celular
+
+        //dd($request->celular);
+        if ($request->filled('celular') && strlen($request->celular) >= 4) {
+            $ultimosDigitos = substr($request->celular, -4);
+            
+            $query->whereHas('contato', function($q) use ($ultimosDigitos) {
+                $q->where('telefone_celular', 'like', '%' . $ultimosDigitos);
+            });
+        }
+
         // Filtro Candidato entrevistado/nao entrevistado/ todos
         // if ($request->has('entrevistado') && $request->entrevistado !== "Todos") {
         //     if ($request->entrevistado == '1') {
