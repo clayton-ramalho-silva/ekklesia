@@ -16,15 +16,17 @@ class PersonalInfoResume extends Model
         'data_nascimento' => 'date'         
     ];
 
-    protected $fillable = [
-        'nome', 'data_nascimento','estado_civil', 
-        'possui_filhos', 'sexo', 'reservista', 
-        'reservista_outro','cnh', 'rg', 'cpf','instagram', 
-        'linkedin', 'tamanho_uniforme','created_at',
-        'foto_candidato', 'foto_candidato_externa',
-        'filhos_sim', 'sexo_outro', 'tipo_cnh', 'pcd', 'pcd_sim',
-        'nacionalidade', 'filhos_qtd'
-    ];
+    // protected $fillable = [
+    //     'nome', 'data_nascimento','estado_civil', 
+    //     'possui_filhos', 'sexo', 'reservista', 
+    //     'reservista_outro','cnh', 'rg', 'cpf','instagram', 
+    //     'linkedin', 'tamanho_uniforme','created_at',
+    //     'foto_candidato', 'foto_candidato_externa',
+    //     'filhos_sim', 'sexo_outro', 'tipo_cnh', 'pcd', 'pcd_sim',
+    //     'nacionalidade', 'filhos_qtd'
+    // ];
+
+    protected $guarded = [];
 
     public function resume()
     {

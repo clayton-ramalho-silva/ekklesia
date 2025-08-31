@@ -11,11 +11,13 @@ class ContactResume extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = [
-        'email', 'telefone_residencial', 'nome_contato','telefone_celular', 
-        'logradouro', 'numero', 'complemento', 
-        'bairro', 'cidade', 'uf', 'cep', 'created_at'
-    ];
+    // protected $fillable = [
+    //     'email', 'telefone_residencial', 'nome_contato','telefone_celular', 
+    //     'logradouro', 'numero', 'complemento', 
+    //     'bairro', 'cidade', 'uf', 'cep', 'created_at'
+    // ];
+
+    protected $guarded = [];
 
     public function resume()
     {

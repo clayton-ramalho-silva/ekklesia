@@ -195,7 +195,7 @@
                     </div>
 
                     <div class="col-6 mb-4">
-                        <label for="celular" class="form-label">4 últimos digitos do Celular</label>
+                        <label for="celular" class="form-label">4 últimos dígitos do Celular</label>
                         <input type="text" name="celular" id="celular" class="form-control" value="<?php echo e(request('celular')); ?>" placeholder="Ex: 9999">
                     </div>
 
