@@ -13,6 +13,7 @@ class ResumeImportController extends Controller
     /** Curriculos com entrevistas. */
     public function importar($filename)
     {        
+        //dd("Importar arquivo: {$filename}");
         $path = "imports/{$filename}";        
         
         if (!Storage::exists($path)) {
@@ -44,7 +45,7 @@ class ResumeImportController extends Controller
             if (!is_array($item)) {
                 $erros[] = [
                     'linha' => $index + 1,                    
-                    'erro' => 'JSON inválido ou linha em branco.'
+                    'erro' => 'JSON inválido ou linha em branco.' . $item['nome_do_candidato_'],
                 ];
                 continue;
             }            
@@ -57,43 +58,73 @@ class ResumeImportController extends Controller
             /************* Tratando dos dados CURRICULO */
 
             // Jovem aprendiz
-            $ja_foi_jovem_aprendiz = $item['j_foi_jovem_aprendiz'];
+            $ja_foi_jovem_aprendiz = trim($item['j_foi_jovem_aprendiz_']);
             $qual_formadora = null;
-            if($ja_foi_jovem_aprendiz === 'Sim, de Outra Qualificadora') {
-                $qual_formadora = $item['se_afirmativo_qual_formadora']; // Pertence a entrevisata
+            if($ja_foi_jovem_aprendiz !== 'NÃO') {
+                $qual_formadora = trim($item['se_afirmativo_qual_formadora']); // Pertence a entrevisata
             }
            
         
             // createad_at
 
-            $data_raw = trim($item['data'] ?? '');
+            // $data_raw = trim($item['carimbo_de_datahora'] ?? '');
+            // $created_at = null;
+
+            // if (!empty($data_raw)) {
+            //     try {
+            //         // Converte de "02/04/25 14:24" → "2025-04-02 14:24:00"
+            //         $created_at = \Carbon\Carbon::createFromFormat('d/m/y H:i', $data_raw)->format('Y-m-d H:i:s');
+            //     } catch (\Exception $e) {
+            //         //$this->warn("Data inválida: '{$data_raw}' - " . $e->getMessage());
+            //     }
+            // }
+
+            $data_raw = trim($item['carimbo_de_datahora'] ?? '');
             $created_at = null;
 
             if (!empty($data_raw)) {
-                try {
-                    // Converte de "02/04/25 14:24" → "2025-04-02 14:24:00"
-                    $created_at = \Carbon\Carbon::createFromFormat('d/m/y H:i', $data_raw)->format('Y-m-d H:i:s');
-                } catch (\Exception $e) {
-                    $this->warn("Data inválida: '{$data_raw}' - " . $e->getMessage());
+                $formatos = [
+                    'n/j/Y G:i:s',    // 6/13/2025 10:17:53
+                    'm/d/Y H:i:s',    // 06/13/2025 10:17:53
+                    'n/j/Y G:i',      // 6/13/2025 10:17
+                    'm/d/Y H:i',      // 06/13/2025 10:17
+                ];
+                
+                foreach ($formatos as $formato) {
+                    try {
+                        $created_at = \Carbon\Carbon::createFromFormat($formato, $data_raw)->format('Y-m-d H:i:s');
+                        break; // Se conseguiu converter, para o loop
+                    } catch (\Exception $e) {
+                        continue; // Tenta o próximo formato
+                    }
                 }
+                
+                if (!$created_at) {
+                    //\Log::warning("Data inválida: '{$data_raw}' - Nenhum formato reconhecido");
+                }
+            }else{
+                $created_at = Carbon::now()->format('Y-m-d H:i:s');
             }
-
            
 
             // "reservista" => "não se aplica"
-            $reservista = $item['tem_reservista______________se_for_do_sexo_feminino_colocar_opo_no'];
+            $reservista = trim($item['reservista']) ?? '';
             if($reservista !== 'Sim') {
                 $reservista = 'Não';
             }
 
             $cpf_formatado = $this->formatarCPF($item['cpf'] ?? '');
-            $rg_formatado = $this->formatarRG($item['r_g'] ?? '');
-            $tel_residencial = $this->formatarTelefone($item['telefone_residencial'] ?? '');
-            $tel_celular = $this->formatarTelefone($item['telefone_celular'] ?? '');
+            //$rg_formatado = $this->formatarRG($item['r_g'] ?? '');
+
+            // Telefones
+            $telefones_info = $this->reorganizarTelefones($item['telefone__'] ?? '');
+            $tel_celular = $this->formatarTelefone($telefones_info['celular_candidato'] ?? '');
+            $tel_residencial = $this->formatarTelefone($telefones_info['numero_recado'] ?? '');
+            $obs_telefone = $telefones_info['obs'] ?? '';
 
                       
 
-            $formacao = $this->organizarEscolaridade(trim($item['escolaridade']), trim($item['se_graduao_qual_curso']));
+            $formacao = $this->organizarEscolaridade(trim($item['_escolaridade_']), trim($item['se_graduao_qual_curso']));
 
             $escolaridade = $formacao['escolaridade'];                     
             $escolaridade_outro = $formacao['escolaridade_outro'];
@@ -102,32 +133,32 @@ class ResumeImportController extends Controller
             
 
             // Data de nascimento segura
-            $data_nascimento_raw = trim($item['data_de_nascimento'] ?? '');
+            $data_nascimento_raw = trim($item['data_nascimento'] ?? '');
             $data_nascimento = null;
 
             if (!empty($data_nascimento_raw)) {
                 try {
                     // Converte "11/10/04" → "2004-10-11"
-                    $data_nascimento = \Carbon\Carbon::createFromFormat('d/m/y', $data_nascimento_raw)->format('Y-m-d');
+                    $data_nascimento = \Carbon\Carbon::createFromFormat('d/m/Y', $data_nascimento_raw)->format('Y-m-d');
                 } catch (\Exception $e) {
-                    $this->warn("Data de nascimento inválida: '{$data_nascimento_raw}' - " . $e->getMessage());
+                    //$this->warn("Data de nascimento inválida: '{$data_nascimento_raw}' - " . $e->getMessage());
                 }
             }
 
 
 
              // convertendo para array vagas_interesse
-            $vagas_interesse = [];
-            if (!empty($item['em_quais_vagas_voc_est_interessado'])) {
-                $vagas_interesse = array_map('trim', explode(',', $item['em_quais_vagas_voc_est_interessado']));
-            }
-            //$vagas_interesse = explode(', ', trim($row['vagas_interesse']));
+            // $vagas_interesse = [];
+            // if (!empty($item['em_quais_vagas_voc_est_interessado'])) {
+            //     $vagas_interesse = array_map('trim', explode(',', $item['em_quais_vagas_voc_est_interessado']));
+            // }
+            // //$vagas_interesse = explode(', ', trim($row['vagas_interesse']));
 
-            $experiencia_profissional= [];
-            // convertendo para array experiencia
-            if (!empty($item['j_possui_alguma_experincia_profissional'])) {
-                $experiencia_profissional = array_map('trim', explode(',', $item['j_possui_alguma_experincia_profissional']));    
-            }
+            // $experiencia_profissional= [];
+            // // convertendo para array experiencia
+            // if (!empty($item['j_possui_alguma_experincia_profissional'])) {
+            //     $experiencia_profissional = array_map('trim', explode(',', $item['j_possui_alguma_experincia_profissional']));    
+            // }
 
 
              $status = trim($item['status']);
@@ -147,125 +178,54 @@ class ResumeImportController extends Controller
                 $cnh = 'Não';
             } 
 
+            // Genero
+            $sexo = trim($item['sexo']);
+            $sexo_outro = null;
+            if($sexo === 'FEMININO'){
+                $sexo = 'Mulher';
+            } else if($sexo === 'MASCULINO') {
+                $sexo = 'Homem';            
+            } else {
+                $sexo = 'Outro';
+                $sexo_outro = $sexo; // Pertence a entrevisata
+            }
+
             //$recruiter_id = intval($item['entrevistador']);
 
 
-            /** Gravando no banco */
-            $resume = Resume::create([
-                'foi_jovem_aprendiz' => $ja_foi_jovem_aprendiz,
-                'status' => $status,
-                'curriculo_externo' => $item['envie_seu_currculo'],            
-                'created_at' => $created_at,
-                'vagas_interesse' => $vagas_interesse ?? null,
-                'experiencia_profissional' => $experiencia_profissional ?? null,                        
-                //'codigo_unico' => $codigo_unico,
-    
-            ]);
-    
-            $resume->informacoesPessoais()->create([
-                'nome' => $item['nome_completo'] ?? 'N/A',
-                'data_nascimento' =>  $data_nascimento,
-                'sexo' => $item['sexo'],
-                //'sexo_outro' =>  $sexo_outo,
-                'rg' => $rg_formatado,
-                'cpf' => $cpf_formatado,
-                'reservista' => $reservista,
-                'foto_candidato_externa' => $item['foto'] ?? '',
-                'created_at' =>$created_at,
-                'estado_civil' => $item['estado_civil'],
-                'possui_filhos' => $item['possui_filhos'],
-                'cnh' => $cnh,
-                //'reservista_outro' => '',
-                //'instagram' => $data['instagram'],
-                //'linkedin' => $data['linkedin'],
-                //'tamanho_uniforme' => trim($row['tamanho_uniforme']) ?? 'N/A',
-    
-            ]);
-    
-            $resume->escolaridade()->create([
-                'informatica' => $item['possui_conhecimento_de_informtica'],
-                'ingles' => $item['possui_conhecimento_de_ingls'],
-                'escolaridade' => $escolaridade, // Fundamental completo, Fundamental cursando, Medio completo, Medio cursando, Tecnico completo, Tecnico cursando, Superior Completo Superior Cursando ou Outro
-                'escolaridade_outro' => $escolaridade_outro,                                                
-                'created_at' => $created_at,
-    
-            ]);
-    
-            $resume->contato()->create([
-                'telefone_residencial' => $tel_residencial, // Telefone de contato
-                //'nome_contato' =>  $nome_contato,
-                'telefone_celular' => $tel_celular,
-                'logradouro' => $item['endereo'],
-                'bairro' => $item['bairro'],
-                'cidade' => $item['cidade'],
-                'created_at' => $created_at,
-                'email' => $item['email'],
-                //'numero' => 'N/A',
-                //'complemento' => null,
-                //'uf' => 'N/A',
-                //'cep' => 'N/A',
-    
-            ]);
-
-            $obs_resume = $item['obs_resume']; 
-
-            if(isset($obs_resume) && $obs_resume != ''){
-                $resume->observacoes()->create([
-                    'observacao' => $obs_resume,
-                    'created_at' => $created_at,
-                ]);
-    
-            }
-
-             /** Tratando e gravando a entrevista */
-
-             // createad_at
-
-            // $data_da_entrevista_raw = trim($item['data_da_entrevista'] ?? '');
-            // $created_at_entrevista = null;
+            // Tratamento do created_at da entrevista
+            //$data_da_entrevista_raw = trim($item['_data_da_entrevista_'] ?? '');
+            //$hora_da_entrevista_raw = trim($item['hora_da_entrevista'] ?? '');
+            //$created_at_entrevista = null;
 
             // if (!empty($data_da_entrevista_raw)) {
             //     try {
-            //         // Converte de "02/04/25 14:24" → "2025-04-02 14:24:00"
-            //         $created_at_entrevista = \Carbon\Carbon::createFromFormat('d/m/y H:i', $data_da_entrevista_raw)->format('Y-m-d H:i:s');
+            //         // Converte a data "24/04/25" para Carbon
+            //         $data_carbon = Carbon::createFromFormat('d/m/y', $data_da_entrevista_raw);
+
+            //         // Trata a hora
+            //         if (is_numeric($hora_da_entrevista_raw)) {
+            //             $hora_formatada = $this->excelFloatToTime((float) $hora_da_entrevista_raw);
+            //         } elseif (preg_match('/^\d{1,2}:\d{2}(:\d{2})?$/', $hora_da_entrevista_raw)) {
+            //             // Já está no formato "HH:mm" ou "HH:mm:ss"
+            //             $hora_formatada = strlen($hora_da_entrevista_raw) === 5
+            //                 ? $hora_da_entrevista_raw . ':00'
+            //                 : $hora_da_entrevista_raw;
+            //         } else {
+            //             // Hora ausente ou inválida
+            //             $hora_formatada = '00:00:00';
+            //         }
+
+            //         // Junta a data e a hora
+            //         $created_at_entrevista = Carbon::createFromFormat('Y-m-d H:i:s', $data_carbon->format('Y-m-d') . ' ' . $hora_formatada);
             //     } catch (\Exception $e) {
-            //         $this->warn("Data inválida: '{$data_da_entrevista_raw}' - " . $e->getMessage());
+            //         //$this->warn("Erro ao processar created_at da entrevista: {$data_da_entrevista_raw} {$hora_da_entrevista_raw} - " . $e->getMessage());
             //     }
             // }
 
-            // Tratamento do created_at da entrevista
-            $data_da_entrevista_raw = trim($item['data_da_entrevista'] ?? '');
-            $hora_da_entrevista_raw = trim($item['hora_da_entrevista'] ?? '');
-            $created_at_entrevista = null;
-
-            if (!empty($data_da_entrevista_raw)) {
-                try {
-                    // Converte a data "24/04/25" para Carbon
-                    $data_carbon = Carbon::createFromFormat('d/m/y', $data_da_entrevista_raw);
-
-                    // Trata a hora
-                    if (is_numeric($hora_da_entrevista_raw)) {
-                        $hora_formatada = $this->excelFloatToTime((float) $hora_da_entrevista_raw);
-                    } elseif (preg_match('/^\d{1,2}:\d{2}(:\d{2})?$/', $hora_da_entrevista_raw)) {
-                        // Já está no formato "HH:mm" ou "HH:mm:ss"
-                        $hora_formatada = strlen($hora_da_entrevista_raw) === 5
-                            ? $hora_da_entrevista_raw . ':00'
-                            : $hora_da_entrevista_raw;
-                    } else {
-                        // Hora ausente ou inválida
-                        $hora_formatada = '00:00:00';
-                    }
-
-                    // Junta a data e a hora
-                    $created_at_entrevista = Carbon::createFromFormat('Y-m-d H:i:s', $data_carbon->format('Y-m-d') . ' ' . $hora_formatada);
-                } catch (\Exception $e) {
-                    $this->warn("Erro ao processar created_at da entrevista: {$data_da_entrevista_raw} {$hora_da_entrevista_raw} - " . $e->getMessage());
-                }
-            }
-
             // Fammila cras
 
-            $tipo_beneficio = $item['sua_famlia__atendida_no_cras'];
+            $tipo_beneficio = $item['sua_famlia__atendida_no_cras'] ?? '';
             if($tipo_beneficio) {
                 $familia_cras = 'Sim';
             } else {
@@ -275,44 +235,223 @@ class ResumeImportController extends Controller
             // observações
 
             $observacao = $item['entrevistas']."\n";
-            $observacao .= $item['observacoes'] ?? 'N/A';
+            $observacao .= $item['observaes'] ?? 'N/A';
 
-            $resume->interview()->create(                
-                [
-                    'saude_candidato' => trim($item['sade']),
-                    'vacina_covid' => trim($item['vacina_covid']),
-                    //'perfil' => trim($row['perfil'])  ?? 'N/A',
-                    'perfil_santa_casa' => $item['santa_casa'],
-                    'classificacao'  => $item['classificao'],
-                    'qual_formadora' => $qual_formadora, 
-                    'parecer_recrutador' => $item['parecer_do_entrevistador'], 
-                    'curso_extracurricular' => $item['curso_extracurricular'], 
-                    'apresentacao_pessoal' => $item['apresentao_pessoal'], 
-                    'experiencia_profissional' => $item['experincia_profissional_tempo_de_empresamotivo_da_sada'], 
-                    'caracteristicas_positivas' => $item['caractersticas_positivas'], 
-                    'habilidades' => $item['habilidades'], 
-                    'porque_ser_jovem_aprendiz' => $item['por_que_gostaria_de_ser_jovem_aprendiz'], 
-                    'qual_motivo_demissao' => $item['por_qual_motivo_voc_pediria_demisso'], 
-                    'pretencao_candidato' => $item['pretenes_do_candidato'], 
-                    'objetivo_longo_prazo' => $item['pretenes_do_candidato'], 
-                    'pontos_melhoria' => $item['pontos_de_melhoria'], 
-                    'familia' => $item['familia'], 
-                    'disponibilidade_horario' => $item['disponibilidade_de_horrio'], 
-                    'sobre_candidato' => $item['fale_um_pouco_mais_sobre_voc'], 
-                    'rotina_candidato' => $item['qual_a_sua_rotina'], 
-                    'familia_cras' => $familia_cras,
-                    'outros_idiomas' => $item['outros_idiomas'], 
-                    'fonte_curriculo' => $item['fonte_de_captao_do_currculo'],
-                    'renda_familiar' => $item['qual_a_renda_familiar_da_sua_casa'],
-                    'tipo_beneficio' => $tipo_beneficio,
-                    //'sugestao_empresa' => $item['santa_casa'], 
-                    'observacoes' => $observacao  ?? 'N/A', 
-                    //'pontuacao' => $item['santa_casa'],                      
-                    'resume_id' => $resume->id,
-                    'recruiter_id' => $item['entrevistador'], // joe doe temp
-                    'created_at' => $created_at_entrevista,
-                ]
-            );
+
+
+            /** Gravando ou Atualizando no banco */
+
+            $resume = Resume::whereHas('informacoesPessoais', function ($query) use ($item){
+                $query->where('nome', trim($item['nome_do_candidato_']));
+            })->first();
+
+            //dd($resume);
+
+            if($resume){
+               
+                //dd($resume->interview);
+                // Resume - Update
+                
+                
+                $resume->update([
+                    'foi_jovem_aprendiz' => $ja_foi_jovem_aprendiz,
+                    'status' => $status,
+                    'curriculo_externo' => $item['anexar_currculo'] ?? '',            
+                    'created_at' => $created_at,
+                    //'vagas_interesse' => $vagas_interesse ?? null,
+                    //'experiencia_profissional' => $experiencia_profissional ?? null,                        
+                    //'codigo_unico' => trim($item['cdigo_nico']) ?? '',        
+                ]);
+
+                $resume->informacoesPessoais()->update([
+                    'nome' => trim($item['nome_do_candidato_']) ?? 'N/A',
+                    'data_nascimento' =>  $data_nascimento,
+                    'sexo' => $sexo,
+                    'sexo_outro' =>  $sexo_outro,
+                    //'rg' => $rg_formatado,
+                    'cpf' => $cpf_formatado,
+                    'reservista' => $reservista,
+                    'foto_candidato_externa' => $item['foto'] ?? '',
+                    'created_at' =>$created_at,
+                    //'estado_civil' => $item['estado_civil'],
+                    //'possui_filhos' => $item['possui_filhos'],
+                    'cnh' => $cnh,
+                    //'reservista_outro' => '',
+                    //'instagram' => $data['instagram'],
+                    //'linkedin' => $data['linkedin'],
+                    //'tamanho_uniforme' => trim($row['tamanho_uniforme']) ?? 'N/A',
+        
+                ]);
+
+                $resume->escolaridade()->update([
+                    'informatica' => $this->organizarCurso($item['informtica_']),
+                    'ingles' => $this->organizarCurso($item['ingls_']),
+                    'escolaridade' => $escolaridade, // Fundamental completo, Fundamental cursando, Medio completo, Medio cursando, Tecnico completo, Tecnico cursando, Superior Completo Superior Cursando ou Outro
+                    'escolaridade_outro' => $escolaridade_outro,                                                
+                    'created_at' => $created_at,
+        
+                ]);
+        
+                $resume->contato()->update([
+                    'telefone_residencial' => $tel_residencial, // Telefone de contato
+                    'nome_contato' =>  $obs_telefone,
+                    'telefone_celular' => $tel_celular,
+                    'logradouro' => trim($item['endereo']) ?? '',
+                    'bairro' => trim($item['bairro']) ?? '',
+                    'cidade' => trim($item['cidade']) ?? '',
+                    'created_at' => $created_at,
+                    //'email' => $item['email'],
+                    //'numero' => 'N/A',
+                    //'complemento' => null,
+                    //'uf' => 'N/A',
+                    //'cep' => 'N/A',
+        
+                ]);
+
+                //Interview - Update
+
+                $resume->interview()->update(                
+                    [
+                        'saude_candidato' => trim($item['sade']),
+                        'vacina_covid' => trim($item['vacina_covid']),
+                        //'perfil' => trim($row['perfil'])  ?? 'N/A',
+                        'perfil_santa_casa' => trim($item['santa_casa']) ?? '',
+                        'classificacao'  => trim($item['classificao__']) ?? '',
+                        'qual_formadora' => $qual_formadora, 
+                        'parecer_recrutador' => trim($item['parecer_do_entrevistador']) ?? '', 
+                        'curso_extracurricular' => trim($item['curso_extracurricular']) ?? '', 
+                        'apresentacao_pessoal' => trim($item['apresentao_pessoal']) ?? '', 
+                        'experiencia_profissional' => trim($item['experincia_profissional_tempo_de_empresamotivo_da_sada']) ?? '', 
+                        'caracteristicas_positivas' => trim($item['caractersticas_positivas']) ?? '', 
+                        'habilidades' => trim($item['habilidades']) ?? '', 
+                        'porque_ser_jovem_aprendiz' => trim($item['por_que_gostaria_de_ser_jovem_aprendiz_']) ?? '', 
+                        'qual_motivo_demissao' => trim($item['por_qual_motivo_voc_pediria_demisso']), 
+                        'pretencao_candidato' => trim($item['pretenes_do_candidato_']) ?? '', 
+                        'objetivo_longo_prazo' => trim($item['pretenes_do_candidato_']) ?? '', 
+                        'pontos_melhoria' => trim($item['pontos_de_melhoria']) ?? '', 
+                        'familia' => trim($item['familia']) ?? '', 
+                        'disponibilidade_horario' => trim($item['disponibilidade_de_horrio']) ?? '', 
+                        'sobre_candidato' => trim($item['fale_um_pouco_mais_sobre_voc']) ?? '', 
+                        'rotina_candidato' => trim($item['qual_a_sua_rotina']) ?? '', 
+                        'familia_cras' => $familia_cras,
+                        'outros_idiomas' => $item['outros_idiomas'] ?? '', 
+                        'fonte_curriculo' => $item['fonte_de_captao_do_currculo__'],
+                        'renda_familiar' => $item['qual_a_renda_familiar_da_sua_casa_'] ?? '',
+                        'tipo_beneficio' => $tipo_beneficio,
+                        'sugestao_empresa' => $item['sugesto__empresas_'] ?? '', 
+                        'observacoes' => $observacao  ?? 'N/A', 
+                        //'pontuacao' => $item['santa_casa'],                      
+                        'resume_id' => $resume->id,
+                        'recruiter_id' => $this->buscarIDRecrutador($item['entrevistador']), 
+                        'created_at' => $created_at,
+                    ]
+                );
+            } else  {
+                //dd($resume);
+
+                // Resume - Create
+                
+                $resume = Resume::create([
+                    'foi_jovem_aprendiz' => $ja_foi_jovem_aprendiz,
+                    'status' => $status,
+                    'curriculo_externo' => $item['anexar_currculo'] ?? '',            
+                    'created_at' => $created_at,
+                    //'vagas_interesse' => $vagas_interesse ?? null,
+                    //'experiencia_profissional' => $experiencia_profissional ?? null,                        
+                    //'cdigo_nico' => trim($item['cdigo_nico']) ?? '',        
+                ]);
+
+                $resume->informacoesPessoais()->create([
+                    'nome' => trim($item['nome_do_candidato_']) ?? 'N/A',
+                    'data_nascimento' =>  $data_nascimento,
+                    'sexo' => $sexo,
+                    'sexo_outro' =>  $sexo_outro,
+                    //'rg' => $rg_formatado,
+                    'cpf' => $cpf_formatado,
+                    'reservista' => $reservista,
+                    'foto_candidato_externa' => $item['foto'] ?? '',
+                    'created_at' =>$created_at,
+                    //'estado_civil' => $item['estado_civil'],
+                    //'possui_filhos' => $item['possui_filhos'],
+                    'cnh' => $cnh,
+                    //'reservista_outro' => '',
+                    //'instagram' => $data['instagram'],
+                    //'linkedin' => $data['linkedin'],
+                    //'tamanho_uniforme' => trim($row['tamanho_uniforme']) ?? 'N/A',
+        
+                ]);
+
+                $resume->escolaridade()->create([
+                    'informatica' => $this->organizarCurso($item['informtica_']),
+                    'ingles' => $this->organizarCurso($item['ingls_']),
+                    'escolaridade' => $escolaridade, // Fundamental completo, Fundamental cursando, Medio completo, Medio cursando, Tecnico completo, Tecnico cursando, Superior Completo Superior Cursando ou Outro
+                    'escolaridade_outro' => $escolaridade_outro,                                                
+                    'created_at' => $created_at,
+        
+                ]);
+        
+                $resume->contato()->create([
+                    'telefone_residencial' => $tel_residencial, // Telefone de contato
+                    'nome_contato' =>  $obs_telefone,
+                    'telefone_celular' => $tel_celular,
+                    'logradouro' => trim($item['endereo']) ?? '',
+                    'bairro' => trim($item['bairro']) ?? '',
+                    'cidade' => trim($item['cidade']) ?? '',
+                    'created_at' => $created_at,
+                    //'email' => $item['email'],
+                    //'numero' => 'N/A',
+                    //'complemento' => null,
+                    //'uf' => 'N/A',
+                    //'cep' => 'N/A',
+        
+                ]);
+
+                //Interview - Create
+
+                $resume->interview()->create(                
+                    [
+                        'saude_candidato' => trim($item['sade']),
+                        'vacina_covid' => trim($item['vacina_covid']),
+                        //'perfil' => trim($row['perfil'])  ?? 'N/A',
+                        'perfil_santa_casa' => trim($item['santa_casa']) ?? '',
+                        'classificacao'  => trim($item['classificao__']) ?? '',
+                        'qual_formadora' => $qual_formadora, 
+                        'parecer_recrutador' => trim($item['parecer_do_entrevistador']) ?? '', 
+                        'curso_extracurricular' => trim($item['curso_extracurricular']) ?? '', 
+                        'apresentacao_pessoal' => trim($item['apresentao_pessoal']) ?? '', 
+                        'experiencia_profissional' => trim($item['experincia_profissional_tempo_de_empresamotivo_da_sada']) ?? '', 
+                        'caracteristicas_positivas' => trim($item['caractersticas_positivas']) ?? '', 
+                        'habilidades' => trim($item['habilidades']) ?? '', 
+                        'porque_ser_jovem_aprendiz' => trim($item['por_que_gostaria_de_ser_jovem_aprendiz_']) ?? '', 
+                        'qual_motivo_demissao' => trim($item['por_qual_motivo_voc_pediria_demisso']), 
+                        'pretencao_candidato' => trim($item['pretenes_do_candidato_']) ?? '', 
+                        'objetivo_longo_prazo' => trim($item['pretenes_do_candidato_']) ?? '', 
+                        'pontos_melhoria' => trim($item['pontos_de_melhoria']) ?? '', 
+                        'familia' => trim($item['familia']) ?? '', 
+                        'disponibilidade_horario' => trim($item['disponibilidade_de_horrio']) ?? '', 
+                        'sobre_candidato' => trim($item['fale_um_pouco_mais_sobre_voc']) ?? '', 
+                        'rotina_candidato' => trim($item['qual_a_sua_rotina']) ?? '', 
+                        'familia_cras' => $familia_cras,
+                        'outros_idiomas' => $item['outros_idiomas'] ?? '', 
+                        'fonte_curriculo' => $item['fonte_de_captao_do_currculo__'],
+                        'renda_familiar' => $item['qual_a_renda_familiar_da_sua_casa_'] ?? '',
+                        'tipo_beneficio' => $tipo_beneficio,
+                        'sugestao_empresa' => $item['sugesto__empresas_'] ?? '', 
+                        'observacoes' => $observacao  ?? 'N/A', 
+                        //'pontuacao' => $item['santa_casa'],                      
+                        'resume_id' => $resume->id,
+                        'recruiter_id' => $this->buscarIDRecrutador($item['entrevistador']), 
+                        'created_at' => $created_at,
+                    ]
+                );
+
+
+
+            }
+
+             
+
+            
 
             $importados++;
         }
@@ -343,36 +482,36 @@ class ResumeImportController extends Controller
         return $limpo;
     }
 
-    // // Organiza os telefones
-    // private function reorganizarTelefones($telefones) {
-    //     // Remove os espaços e normaliza a string
-    //     $telefones = trim(preg_replace('/\s+/', ' ', $telefones));
+    // Organiza os telefones
+    private function reorganizarTelefones($telefones) {
+        // Remove os espaços e normaliza a string
+        $telefones = trim(preg_replace('/\s+/', ' ', $telefones));
 
-    //     // Regex para capturar números de telefone em vários formatos:
-    //     // (XX) XXXX-XXXX, XX XXXX-XXXX, XXXXXXXXXX, (XX) XXXXX-XXXX, etc.
-    //     $phoneRegex = '/(?:\(?\d{2}\)?[\s\-\.]*\d{4,5}[\s\-\.]*\d{4})/';
+        // Regex para capturar números de telefone em vários formatos:
+        // (XX) XXXX-XXXX, XX XXXX-XXXX, XXXXXXXXXX, (XX) XXXXX-XXXX, etc.
+        $phoneRegex = '/(?:\(?\d{2}\)?[\s\-\.]*\d{4,5}[\s\-\.]*\d{4})/';
 
-    //     // Encontra todos os números de telefones
-    //     preg_match_all($phoneRegex, $telefones, $matches);
-    //     $phones = $matches[0];
+        // Encontra todos os números de telefones
+        preg_match_all($phoneRegex, $telefones, $matches);
+        $phones = $matches[0];
 
-    //     // Remove os números de telefone para extrair as observações restantes
-    //     $obs = trim(preg_replace($phoneRegex, '', $telefones));
+        // Remove os números de telefone para extrair as observações restantes
+        $obs = trim(preg_replace($phoneRegex, '', $telefones));
 
-    //     // Limpa a observação (remove caracteres desnecessários no início/fim)
-    //     $obs = preg_replace('/^[\s\/\:\,]+|[\s\/\:\,]+$/', '', $obs);
-    //     $obs = preg_replace('/\s+/', ' ', $obs); // Normaliza espaços
+        // Limpa a observação (remove caracteres desnecessários no início/fim)
+        $obs = preg_replace('/^[\s\/\:\,]+|[\s\/\:\,]+$/', '', $obs);
+        $obs = preg_replace('/\s+/', ' ', $obs); // Normaliza espaços
 
-    //     // Formata os números de telefone
-    //     $celular_candidato = isset($phones[0]) ? $this->formatarTelefone($phones[0]) : '';
-    //     $numero_recado = isset($phones[1]) ? $this->formatarTelefone($phones[1]) : '';
+        // Formata os números de telefone
+        $celular_candidato = isset($phones[0]) ? $this->formatarTelefone($phones[0]) : '';
+        $numero_recado = isset($phones[1]) ? $this->formatarTelefone($phones[1]) : '';
 
-    //     return [
-    //         'celular_candidato' => $celular_candidato,
-    //         'numero_recado' => $numero_recado,
-    //         'obs' => $obs
-    //     ];
-    // }
+        return [
+            'celular_candidato' => $celular_candidato,
+            'numero_recado' => $numero_recado,
+            'obs' => $obs
+        ];
+    }
 
     // private function formatarTelefone($phone) {
     //     // Remove tudo que não for dígito
@@ -485,4 +624,72 @@ class ResumeImportController extends Controller
 
         return sprintf('%02d:%02d:%02d', $horas, $minutos, $segundos);
     }
+
+    private function organizarCurso($curso)
+    {
+        $curso = trim($curso);
+        switch ($curso){
+            case 'BÁSICO':
+                return 'Básico';
+            case 'INTERMEDIÁRIO':
+                return 'Intermediário';
+            case 'AVANÇADO':
+                return 'Avançado';
+            case 'NENHUM':
+                return 'Nenhum';
+            default:
+                return '';
+        }
+    }
+
+    private function buscarIDRecrutador($nome)
+    {
+        $nome = strtoupper(trim($nome));
+        switch ($nome) {
+            case 'caroline':
+                $id = 18;
+                break;
+            case 'marina':
+                $id = 36;
+                break;
+            case 'danielle':
+                $id = 35;
+                break;
+            case 'marcel':
+                $id = 34;
+                break;
+            case 'tânia':
+                $id = 28;
+                break;
+            case 'surya':
+                $id = 27;
+                break;
+            case 'mônica':
+                $id = 24;
+                break;
+            case 'marina':
+                $id = 22;
+                break;
+            case 'hevelyn':
+                $id = 20;
+                break;
+            case 'luciana':
+                $id = 13;
+                break;
+            case 'fernanda':
+                $id = 12;
+                break;
+            case 'nayara':
+                $id = 11;
+                break;
+
+            default:
+                $id = 18; // Recrutador não encontrado
+        }
+
+        return $id;
+    }
+
+   
+
 }

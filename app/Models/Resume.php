@@ -18,13 +18,15 @@ class Resume extends Model
 
     protected $dates = ['data_nascimento'];
 
-    protected $fillable = [
-        'vagas_interesse', 
-        'experiencia_profissional','experiencia_profissional_outro', 
-        'participou_selecao', 'participou_selecao_outro', 'foi_jovem_aprendiz', 
-        'curriculo_doc', 'status','created_at', 'codigo_unico', 'curriculo_externo',
-        'cras', 'fonte', 'autorizacao_uso_dados', 'autorizacao_responsavel_menor'
-    ];
+    // protected $fillable = [
+    //     'vagas_interesse', 
+    //     'experiencia_profissional','experiencia_profissional_outro', 
+    //     'participou_selecao', 'participou_selecao_outro', 'foi_jovem_aprendiz', 
+    //     'curriculo_doc', 'status','created_at', 'codigo_unico', 'curriculo_externo',
+    //     'cras', 'fonte', 'autorizacao_uso_dados', 'autorizacao_responsavel_menor'
+    // ];
+
+    protected $guarded = [];
 
     // Relacionamento muitos para muitos com Job - Vagas que o candidato está associado.
     public function jobs()
