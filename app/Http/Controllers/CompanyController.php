@@ -95,20 +95,20 @@ class CompanyController extends Controller
         $data = $request->validate([
                 'cnpj' => 'required|string|unique:companies,cnpj',
                 'razao_social' => 'required|string|max:255',
-                'nome_fantasia' => 'string|max:255',
-                'cep' => 'string|max:255',
-                'logradouro' => 'string|max:255',
-                'numero' => 'string|max:20',
+                'nome_fantasia' => 'nullable|string|max:255',
+                'cep' => 'nullable|string|max:255',
+                'logradouro' => 'nullable|string|max:255',
+                'numero' => 'nullable|string|max:20',
                 'complenento' => 'nullable|string|max:255',
-                'bairro' => 'string|max:255',
-                'pais' => 'string|max:255',
-                'cidade' => 'string|max:255',
-                'uf' => 'string|max:255',
-                'nome_contato' => 'string|max:255',
+                'bairro' => 'nullable|string|max:255',
+                'pais' => 'nullable|string|max:255',
+                'cidade' => 'nullable|string|max:255',
+                'uf' => 'nullable|string|max:255',
+                'nome_contato' => 'nullable|string|max:255',
                 'email' => 'email',
-                'telefone' => 'string|max:15',
-                'whatsapp' => 'string|max:15',
-                'logotipo' => 'file|mimes:jpg,jpeg,png|max:2048'
+                'telefone' => 'nullable|string|max:15',
+                'whatsapp' => 'nullable|string|max:15',
+                'logotipo' => 'nullable|file|mimes:jpg,jpeg,png|max:2048'
             ]);
 
            // dd($data);
@@ -129,7 +129,7 @@ class CompanyController extends Controller
             'cnpj' => $data['cnpj'],
             'razao_social' => $data['razao_social'],
             'nome_fantasia' => $data['nome_fantasia'],
-            'logotipo' => $data['logotipo']
+            'logotipo' => $data['logotipo'] ?? null
         ]);
 
         $company->contacts()->create([
