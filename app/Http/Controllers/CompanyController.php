@@ -111,7 +111,7 @@ class CompanyController extends Controller
                 'logotipo' => 'nullable|file|mimes:jpg,jpeg,png|max:2048'
             ]);
 
-           // dd($data);
+        //dd($data);
         // Salvando imagem no banco e movendo arquivo para pasta.
         if($request->hasFile('logotipo') && $request->file('logotipo')->isValid()){
             $file = $request->file('logotipo');
