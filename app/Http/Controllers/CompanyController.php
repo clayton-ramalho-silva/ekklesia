@@ -105,13 +105,13 @@ class CompanyController extends Controller
                 'cidade' => 'nullable|string|max:255',
                 'uf' => 'nullable|string|max:255',
                 'nome_contato' => 'nullable|string|max:255',
-                'email' => 'email',
-                'telefone' => 'nullable|string|max:15',
-                'whatsapp' => 'nullable|string|max:15',
+                'email' => 'nullable|email',
+                'telefone' => 'nullable|max:15',
+                'whatsapp' => 'nullable|max:15',
                 'logotipo' => 'nullable|file|mimes:jpg,jpeg,png|max:2048'
             ]);
 
-        //dd($data);
+        dd($data);
         // Salvando imagem no banco e movendo arquivo para pasta.
         if($request->hasFile('logotipo') && $request->file('logotipo')->isValid()){
             $file = $request->file('logotipo');
@@ -170,20 +170,20 @@ class CompanyController extends Controller
         $data = $request->validate([
             'cnpj' => 'required|string|unique:companies,cnpj,'. $company->id,
             'razao_social' => 'required|string|max:255',
-            'nome_fantasia' => 'string|max:255',
-            'cep' => 'string|max:255',
-            'logradouro' => 'string|max:255',
-            'numero' => 'string|max:20',
+            'nome_fantasia' => 'nullable|string|max:255',
+            'cep' => 'nullable|string|max:255',
+            'logradouro' => 'nullable|string|max:255',
+            'numero' => 'nullable|string|max:20',
             'complenento' => 'nullable|string|max:255',
-            'bairro' => 'string|max:255',
-            'pais' => 'string|max:255',
-            'cidade' => 'string|max:255',
-            'uf' => 'string|max:255',
-            'nome_contato' => 'string|max:255',
-            'email' => 'email',
-            'telefone' => 'string|max:15',
-            'whatsapp' => 'string|max:15',
-            'logotipo' => 'file|mimes:jpg,jpeg,png|max:2048'
+            'bairro' => 'nullable|string|max:255',
+            'pais' => 'nullable|string|max:255',
+            'cidade' => 'nullable|string|max:255',
+            'uf' => 'nullable|string|max:255',
+            'nome_contato' => 'nullable|string|max:255',
+            'email' => 'nullable|email',
+            'telefone' => 'nullable|string|max:15',
+            'whatsapp' => 'nullable|string|max:15',
+            'logotipo' => 'nullable|file|mimes:jpg,jpeg,png|max:2048'
         ]);
 
         //dd($data);

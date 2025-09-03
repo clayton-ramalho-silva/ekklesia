@@ -1158,7 +1158,7 @@ $('#fundamental_select_periodo, #fundamental_select_modalidade, #medio_select_pe
 
 
 
-$('#rg').mask('00.000.000-0');
+$('#rg').mask('00.000.000-A');
 $('#cep').mask('00000-000');
 $('#telefone_celular').mask('(00) 00000-0000');
 $('#telefone_residencial').mask(SPMaskBehavior, spOptions);
