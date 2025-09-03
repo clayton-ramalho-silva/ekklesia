@@ -203,6 +203,15 @@
                     
 
                     
+                    <div class="col-6 mb-4">
+                        <div class="form-group">
+                            <label class="form-label">Ordenação:</label>
+                            <select name="ordem" class="form-select select2" onchange="this.form.submit()">
+                                <option value="desc" <?php echo e($ordem == 'desc' ? 'selected' : ''); ?>>Mais Recente</option>
+                                <option value="asc" <?php echo e($ordem == 'asc' ? 'selected' : ''); ?>>Mais Antigo</option>
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="col-12 mt-1 d-flex justify-content-between">
                         <button type="submit" class="btn btn-padrao btn-cadastrar">Filtrar</button>

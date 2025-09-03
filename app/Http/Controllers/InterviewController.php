@@ -246,7 +246,7 @@ class InterviewController extends Controller
         }
         
 
-        $interviews = Interview::all();
+        //$interviews = Interview::all();
 
         // $query->with([
         //     'informacoesPessoais',
@@ -255,11 +255,23 @@ class InterviewController extends Controller
         //     'escolaridade'
         // ]);
 
-        $resumes = $query->paginate(50);
+        //NOVA FUNCIONALIDADE: Filtro de Ordenação
+        $ordem = $request->get('ordem', 'desc'); // Por padrão será 'desc' (mais recente primeiro)
+        
+        // Validar se a ordem é válida
+        if (!in_array($ordem, ['asc', 'desc'])) {
+            $ordem = 'desc';
+        }
+
+        $query->join('interviews', 'resumes.id', '=', 'interviews.resume_id')
+          ->orderBy('interviews.created_at', $ordem)
+          ->select('resumes.*');
+
+        $resumes = $query->paginate(50)->appends($request->all());
         // Implementar paginação
         //$resumes = $query->paginate(50); // Ajustar o numero coforme necessário.
 
-        return view('interviews.index', compact('interviews', 'resumes', 'form_busca'));    
+        return view('interviews.index', compact('resumes', 'form_busca', 'ordem'));    
     }
 
     public function show($id)
