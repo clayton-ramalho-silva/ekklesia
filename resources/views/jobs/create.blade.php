@@ -257,6 +257,7 @@ $("#form-jobs").validate({
     rules:{
         company_id:"required",
         //setor:"required",
+        cbo:"required",
         cargo:"required",
         genero:"required",
         qtd_vagas:"required",

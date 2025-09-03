@@ -23,6 +23,21 @@
                         <label for="nome" class="form-label">Nome do Candidato</label>
                         <input type="text" name="nome" id="nome" class="form-control" value="{{ request('nome') }}" placeholder="Buscar por nome...">                        
                     </div>
+
+                    <div class="col-6 mb-4">
+                        <label for="celular" class="form-label">4 últimos dígitos do Celular</label>
+                        <input type="text" name="celular" id="celular" class="form-control" value="{{ request('celular') }}" placeholder="Ex: 9999">
+                    </div>
+                    <div class="col-6 mb-4">
+                        <div class="form-group">
+                            <label class="form-label">Ordenação:</label>
+                            <select name="ordem" class="form-select select2" onchange="this.form.submit()">
+                                <option value="desc" {{ $ordem == 'desc' ? 'selected' : '' }}>Mais Recente</option>
+                                <option value="asc" {{ $ordem == 'asc' ? 'selected' : '' }}>Mais Antigo</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="col-6">
                         <label for="vagas_interesse" class="form-label">Vagas de Interesse</label>
                         <select name="vagas_interesse[]" id="vagas_interesse" class="form-select" multiple>
@@ -203,10 +218,7 @@
                         </select>
                     </div>
 
-                    <div class="col-6 mb-4">
-                        <label for="celular" class="form-label">4 últimos dígitos do Celular</label>
-                        <input type="text" name="celular" id="celular" class="form-control" value="{{ request('celular') }}" placeholder="Ex: 9999">
-                    </div>
+                    
 
 
                     <div class="col-12 mt-1 d-flex justify-content-between">
@@ -537,6 +549,7 @@ $(document).ready(function(){
     $('.bloco-filtros .select2').select2({
         placeholder: "Selecione",
     });
+    
 
     // Botão limpar - redireciona para URL sem parâmetros
     $('button[name="limpar"]').on('click', function(e){

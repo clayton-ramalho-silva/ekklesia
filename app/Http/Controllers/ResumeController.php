@@ -241,12 +241,24 @@ class ResumeController extends Controller
 
         //dd($query->toRawSql());
 
-        // Implementar paginação
-       $resumes = $query->paginate(50); // Ajustar o numero coforme necessário.    
-          
-        return view('resumes.index', compact('resumes', 'form_busca'));
+        //NOVA FUNCIONALIDADE: Filtro de Ordenação
+        $ordem = $request->get('ordem', 'desc'); // Por padrão será 'desc' (mais recente primeiro)
         
-    }
+        // Validar se a ordem é válida
+        if (!in_array($ordem, ['asc', 'desc'])) {
+            $ordem = 'desc';
+        }
+
+        $query->orderBy('created_at', $ordem);
+
+
+
+            // Implementar paginação
+        $resumes = $query->paginate(50)->appends($request->all()); // Ajustar o numero coforme necessário.    
+            
+            return view('resumes.index', compact('resumes', 'form_busca','ordem'));
+            
+        }
 
     public function show(Resume $resume)
     {

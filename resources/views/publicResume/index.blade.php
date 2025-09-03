@@ -480,7 +480,7 @@
 
                                     <div class="col-4 form-campo">
                                         <div class="mb-2">
-                                            <input type="text" placeholder="Complemento" class="floatlabel form-control" id="complemento" name="complemento" value="{{ old('complemento')}}" required>
+                                            <input type="text" placeholder="Complemento" class="floatlabel form-control" id="complemento" name="complemento" value="{{ old('complemento')}}" >
                                             @error('complemento') <div class="alert alert-danger">{{ $message }}</div> @enderror
                                         </div>
                                     </div>
@@ -1472,7 +1472,7 @@ $("#form-companies-create").validate({
         logradouro:"required",
         numero:"required",
         escolaridade:"required",
-        complemento:"required",
+        //complemento:"required",
         bairro:"required",
         cidade:"required",
         uf:"required",

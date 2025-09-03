@@ -213,6 +213,7 @@ class JobController extends Controller
 
     public function store(Request $request)
     {
+        //dd($request->all());
         $data = $request->validate([
 
             //'setor' =>'required|string|max:255',
@@ -234,6 +235,8 @@ class JobController extends Controller
             'data_entrevista_empresa' => 'nullable|date',
             'company_id' => 'required|exists:companies,id',
         ]);
+
+        //dd($data);
 
         $data['status'] = 'aberta';
         $data['setor'] = '';

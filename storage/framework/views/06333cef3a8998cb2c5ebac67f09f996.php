@@ -615,7 +615,7 @@ unset($__errorArgs, $__bag); ?>
 
                                     <div class="col-4 form-campo">
                                         <div class="mb-2">
-                                            <input type="text" placeholder="Complemento" class="floatlabel form-control" id="complemento" name="complemento" value="<?php echo e(old('complemento')); ?>" required>
+                                            <input type="text" placeholder="Complemento" class="floatlabel form-control" id="complemento" name="complemento" value="<?php echo e(old('complemento')); ?>" >
                                             <?php $__errorArgs = ['complemento'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -1801,7 +1801,7 @@ $("#form-companies-create").validate({
         logradouro:"required",
         numero:"required",
         escolaridade:"required",
-        complemento:"required",
+        //complemento:"required",
         bairro:"required",
         cidade:"required",
         uf:"required",
