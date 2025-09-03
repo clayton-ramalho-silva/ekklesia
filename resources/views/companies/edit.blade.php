@@ -40,66 +40,66 @@
                         <div class="row">
 
                             <div class="col-6 mb-3 form-campo">
-                                <input type="text" class="form-control floatlabel" id="cnpj" name="cnpj" value="{{ $company->cnpj }}" required  placeholder="CNPJ">
+                                <input type="text" class="form-control floatlabel" id="cnpj" name="cnpj" value="{{ old('cnpj', $company->cnpj) }}" required  placeholder="CNPJ">
                                 @error('cnpj') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </div>
 
                             <div class="col-6 mb-3 form-campo">
-                                <input type="text" class="form-control floatlabel" id="razao_social" name="razao_social" value="{{ $company->razao_social }}" required placeholder="Razão Social">
+                                <input type="text" class="form-control floatlabel" id="razao_social" name="razao_social" value="{{ old('razao_social', $company->razao_social) }}" required placeholder="Razão Social">
                                 @error('razao_social') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </div>
 
                             <div class="col-6 mb-3 form-campo">
-                                <input type="text" class="form-control floatlabel" id="nome_fantasia" name="nome_fantasia" value="{{ $company->nome_fantasia }}" placeholder="Nome Fantasia">
+                                <input type="text" class="form-control floatlabel" id="nome_fantasia" name="nome_fantasia" value="{{ old('nome_fantasia', $company->nome_fantasia) }}" placeholder="Nome Fantasia">
                                 @error('nome_fantasia') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </div>
 
                             <div class="col-6 mb-3 form-campo position-relative">
                                 <i class="fas fa-spinner"></i>
-                                <input type="text" class="form-control floatlabel" id="cep" name="cep" value="{{ $company->location->cep }}" placeholder="CEP">
+                                <input type="text" class="form-control floatlabel" id="cep" name="cep" value="{{ old('cep', $company->location->cep) }}" placeholder="CEP">
                                 @error('cep') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </div>
 
                             <div class="col-12 mb-3 form-campo">
-                                <input type="text" class="form-control floatlabel" id="logradouro" name="logradouro" value="{{ $company->location->logradouro }}" placeholder="Endereço">
+                                <input type="text" class="form-control floatlabel" id="logradouro" name="logradouro" value="{{ old('logradouro', $company->location->logradouro) }}" placeholder="Endereço">
                                 @error('logradouro') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </div>
 
                             <div class="col-3 mb-3 form-campo">
-                                <input type="text" class="form-control floatlabel" id="numero" name="numero" value="{{ $company->location->numero }}" placeholder="Número">
+                                <input type="text" class="form-control floatlabel" id="numero" name="numero" value="{{ old('numero', $company->location->numero) }}" placeholder="Número">
                                 @error('numero') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </div>
 
                             <div class="col-3 mb-3 form-campo">
-                                <input type="text" class="form-control floatlabel" id="complenento" name="complenento" value="{{ $company->location->complenento }}" placeholder="Complemento">
+                                <input type="text" class="form-control floatlabel" id="complenento" name="complenento" value="{{ old('complemento', $company->location->complenento) }}" placeholder="Complemento">
                                 @error('complenento') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </div>
 
                             <div class="col-6 mb-3 form-campo">
-                                <input type="text" class="form-control floatlabel" id="bairro" name="bairro" value="{{ $company->location->bairro }}" placeholder="Bairro">
+                                <input type="text" class="form-control floatlabel" id="bairro" name="bairro" value="{{ old('bairro', $company->location->bairro) }}" placeholder="Bairro">
                                 @error('bairro') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </div>
 
                             <div class="col-6 mb-3 form-campo">
-                                <input type="text" class="form-control floatlabel" id="pais" name="pais" value="{{ $company->location->pais }}" placeholder="País">
+                                <input type="text" class="form-control floatlabel" id="pais" name="pais" value="{{ old('pais', $company->location->pais) }}" placeholder="País">
                                 @error('pais') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </div>
 
                             <div class="col-4 mb-3 form-campo">
-                                <input type="text" class="form-control floatlabel" id="cidade" name="cidade" value="{{ $company->location->cidade }}" placeholder="Cidade">
+                                <input type="text" class="form-control floatlabel" id="cidade" name="cidade" value="{{ old('cidade', $company->location->cidade) }}" placeholder="Cidade">
                                 @error('cidade') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </div>
 
                             <div class="mb-3 form-campo col-2">
-                                <div class="floatlabel-wrapper >
+                                 <div class="floatlabel-wrapper ">
                                     <label for="uf" class="label-floatlabel" class="form-label floatlabel-label">UF</label>
-                                    <select name="uf" id="uf" class="form-select active-floatlabel" 
+                                    <select name="uf" id="uf" class="form-select active-floatlabel" >
                                         <option></option>
                                         @php
                                         echo get_estados($company->location->uf);
                                         @endphp
                                     </select>
-                                    @error('genero') <div class="alert alert-danger">{{ $message }}</div> @enderror
+                                    @error('uf') <div class="alert alert-danger">{{ $message }}</div> @enderror
                                 </div>
                             </div>
 
@@ -109,22 +109,22 @@
                             </div> --}}
 
                             <div class="col-6 mb-3 form-campo">
-                                <input type="text" class="form-control floatlabel" id="nome_contato" name="nome_contato" value="{{ $company->contacts->nome_contato }}" placeholder="Nome do contato na empresa">
+                                <input type="text" class="form-control floatlabel" id="nome_contato" name="nome_contato" value="{{ old('nome_contato', $company->contacts->nome_contato) }}" placeholder="Nome do contato na empresa">
                                 @error('nome_contato') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </div>
 
                             <div class="col-6 mb-3 form-campo">
-                                <input type="email" class="form-control floatlabel" id="email" name="email" value="{{ $company->contacts->email }}" placeholder="E-mail">
+                                <input type="email" class="form-control floatlabel" id="email" name="email" value="{{ old('email', $company->contacts->email) }}" placeholder="E-mail">
                                 @error('email') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </div>
 
                             <div class="col-6 mb-3 form-campo">
-                                <input type="tel" class="form-control floatlabel" id="telefone" name="telefone" value="{{ $company->contacts->telefone  }}" placeholder="Telefone">
+                                <input type="tel" class="form-control floatlabel" id="telefone" name="telefone" value="{{ old('telefone', $company->contacts->telefone)  }}" placeholder="Telefone">
                                 @error('telefone') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </div>
 
                             <div class="col-6 mb-3 form-campo">
-                                <input type="tel" class="form-control floatlabel" id="whatsapp" name="whatsapp" value="{{ $company->contacts->whatsapp }}" placeholder="(Whatsapp)">
+                                <input type="tel" class="form-control floatlabel" id="whatsapp" name="whatsapp" value="{{old('whatsapp', $company->contacts->whatsapp )  }}" placeholder="(Whatsapp)">
                                 @error('whatsapp') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </div>
 
