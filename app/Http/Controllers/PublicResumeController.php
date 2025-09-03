@@ -52,8 +52,8 @@ class PublicResumeController extends Controller
             'curriculo_doc' => $data['curriculo_doc'],
             'cras' => $data['cras'] ?? '',
             'fonte' => $data['fonte'] ?? '',
-            'autorizacao_uso_dados' => $data['autorizacao_uso_dados'] ?? '',
-            'autorizacao_responsavel_menor' => $data['autorizacao_responsavel_menor'] ?? '',
+            'autorizacao_uso_dados' => $data['autorizacao_uso_dados'] ?? 1,
+            'autorizacao_responsavel_menor' => $data['autorizacao_responsavel_menor'] ?? 1,
 
         ]);
 
