@@ -1472,6 +1472,7 @@ $("#form-companies-create").validate({
         logradouro:"required",
         numero:"required",
         escolaridade:"required",
+        experiencia_profissional:"required",
         //complemento:"required",
         bairro:"required",
         cidade:"required",
