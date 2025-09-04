@@ -43,8 +43,8 @@ class PublicResumeController extends Controller
         }
 
         $resume = Resume::create([
-            'vagas_interesse' => $data['vagas_interesse'],
-            'experiencia_profissional' => $data['experiencia_profissional'],
+            'vagas_interesse' => $data['vagas_interesse']?? '',
+            'experiencia_profissional' => $data['experiencia_profissional'] ?? '',
             'experiencia_profissional_outro' => $data['experiencia_profissional_outro'] ?? '',
             'participou_selecao' => '', // Cliente pediu para retirar
             'participou_selecao_outro' => '', // Cliente pediu para retirar
@@ -81,7 +81,7 @@ class PublicResumeController extends Controller
         ]);
 
         $resume->escolaridade()->create([
-            'escolaridade' => $data['escolaridade'], // Fundamental completo, Fundamental cursando, Medio completo, Medio cursando, Tecnico completo, Tecnico cursando, Superior Completo Superior Cursando ou Outro
+            'escolaridade' => $data['escolaridade']?? '', // Fundamental completo, Fundamental cursando, Medio completo, Medio cursando, Tecnico completo, Tecnico cursando, Superior Completo Superior Cursando ou Outro
             'escolaridade_outro' => $data['escolaridade_outro'] ?? '', // Qual curso Outro
             'semestre' => $data['semestre'] ?? '', // Modalidade: Presencial, EAD, Hibrido, Outro. Quando cursando qq curso.
             'instituicao' => $data['instituicao'] ?? '', // Quando for Superior Incompleto ou Outro
