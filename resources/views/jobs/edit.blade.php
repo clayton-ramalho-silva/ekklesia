@@ -534,6 +534,15 @@
                             </li>
                             <li class="col2 {{ $isAdmin ? 'col2-admin' : ''}}">
                                 <b>Tipo de Vaga</b>
+
+                                @php
+                                    // Garantir que vagas_interesse é um array
+                                    if (!is_array($resume->vagas_interesse)) {
+                                        $resume->vagas_interesse = json_decode($resume->vagas_interesse, true) ?? [];
+                                    }
+                                @endphp
+
+
                                 @forelse ($resume->vagas_interesse ?? [] as $vaga)
                                     {{ $vaga }}@if(!$loop->last),@endif
                                 @empty
