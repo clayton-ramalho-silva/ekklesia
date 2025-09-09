@@ -440,7 +440,7 @@
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="experiencia_profissional7" value="Garçon/Cumim" name="experiencia_profissional[]" @checked(in_array('Garçon/Cumim)', (array) $resume->experiencia_profissional ?? []))>
                             <label class="form-check-label" for="experiencia_profissional7">
-                                Garçon/Cumim
+                                Garçom/Cumim
                             </label>
                         </div>                  
 
@@ -699,7 +699,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <div class="floatlabel-wrapper">
-                                        <label for="superior_select_periodo" class="label-floatlabel">Qual ao Período?</label>
+                                        <label for="superior_select_periodo" class="label-floatlabel">Qual o Período?</label>
                                         <select name="superior_periodo" id="superior_select_periodo" class="form-select active-floatlabel">
                                             <option></option>
                                             <option value="Manhã" {{ ($resume->escolaridade && $resume->escolaridade->superior_periodo === 'Manhã') ? 'selected' : '' }}>Manhã</option>
@@ -713,7 +713,7 @@
 
                                 <div class="mb-3">
                                     <div class="floatlabel-wrapper">
-                                        <label for="superior_select_modalidade" class="label-floatlabel">Qual ao Período?</label>
+                                        <label for="superior_select_modalidade" class="label-floatlabel">Qual a Modalidade?</label>
                                         <select name="superior_semestre" id="superior_select_modalidade" class="form-select active-floatlabel">
                                             <option></option>
                                             <option value="Presencial" {{ ($resume->escolaridade && $resume->escolaridade->superior_semestre === 'Presencial') ? 'selected' : '' }}>Presencial</option>
@@ -745,7 +745,7 @@
                                 <input type="text" placeholder="Qual Instituição?" class="floatlabel form-control" id="instituicao" name="instituicao" value="{{ $resume->escolaridade->instituicao ?? '' }}">
                                 <div class="mb-3">
                                     <div class="floatlabel-wrapper">
-                                        <label for="outro_select_periodo" class="label-floatlabel">Qual ao Período?</label>
+                                        <label for="outro_select_periodo" class="label-floatlabel">Qual o Período?</label>
                                         <select name="outro_periodo" id="outro_select_periodo" class="form-select active-floatlabel">
                                             <option></option>
                                             <option value="Manhã" {{ ($resume->escolaridade && $resume->escolaridade->outro_periodo === 'Manhã') ? 'selected' : '' }}>Manhã</option>
@@ -759,7 +759,7 @@
 
                                 <div class="mb-3">
                                     <div class="floatlabel-wrapper">
-                                        <label for="outro_select_modalidade" class="label-floatlabel">Qual ao Período?</label>
+                                        <label for="outro_select_modalidade" class="label-floatlabel">Qual a Modalidade?</label>
                                         <select name="semestre" id="outro_select_modalidade" class="form-select active-floatlabel">
                                             <option></option>
                                             <option value="Presencial" {{ ($resume->escolaridade && $resume->escolaridade->semestre === 'Presencial') ? 'selected' : '' }}>Presencial</option>

@@ -717,7 +717,7 @@ unset($__errorArgs, $__bag); ?>
                                         <input class="form-check-input" type="checkbox" id="experiencia_profissional7" value="Garçon/Cumim" name="experiencia_profissional[]" 
                                         <?php if(old('experiencia_profissional') && in_array('Garçon/Cumim', old('experiencia_profissional'))): ?> checked <?php endif; ?>>
                                         <label class="form-check-label" for="experiencia_profissional7">
-                                            Garçon/Cumim
+                                            Garçom/Cumim
                                         </label>
                                     </div>
                                     <div class="form-check">
@@ -1489,7 +1489,7 @@ $('#fundamental_select_periodo, #fundamental_select_modalidade, #medio_select_pe
 
 
 
-$('#rg').mask('00.000.000-0');
+$('#rg').mask('00.000.000-A');
 $('#cep').mask('00000-000');
 $('#telefone_celular').mask('(00) 00000-0000');
 $('#telefone_residencial').mask(SPMaskBehavior, spOptions);
