@@ -42,7 +42,7 @@
                         <label for="vagas_interesse" class="form-label">Vagas de Interesse</label>
                         <select name="vagas_interesse[]" id="vagas_interesse" class="form-select" multiple>
                             @foreach (  
-                                        ['Copa & Cozinha', 'Administrativo', 'Camareiro(a) de Hotel', 
+                                        ['Copa & Cozinha', 'Administrativo', 'Operacional','Administrativo/Operacional', 'Camareiro(a) de Hotel', 
                                         'Recepcionista', 'Atendente de Lojas e Mercados (Comércio & Varejo)',
                                         'Construção e Reparos', 'Conservação e Limpeza'] as $option)
                                 <option value="{{ $option }}" {{ in_array($option, request('vagas_interesse', []))? 'selected' : ''}}>
@@ -56,7 +56,7 @@
                         <label for="experiencia_profissional" class="form-label">Experiência Profissional</label>
                         <select name="experiencia_profissional[]" id="experiencia_profissional" class="form-select" multiple>
                             @foreach (  
-                                        ['Nenhuma por enquanto', 'Copa & Cozinha', 'Administrativo', 'Camareiro(a) de Hotel', 
+                                        ['Nenhuma por enquanto', 'Copa & Cozinha', 'Administrativo', 'Operacional','Administrativo/Operacional','Camareiro(a) de Hotel', 
                                         'Recepcionista', 'Atendente de Lojas e Mercados (Comércio & Varejo)', 'TI (Tecnologia da Informação',
                                         'Construção e Reparos', 'Conservação e Limpeza'] as $option)
                                 <option value="{{ $option }}" {{ in_array($option, request('experiencia_profissional', []))? 'selected' : ''}}>
@@ -312,7 +312,7 @@
                             <svg class="ico-lista" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path fill="none" d="M0 0h24v24H0z"></path><path d="M3 19V5.7a1 1 0 0 1 .658-.94l9.671-3.516a.5.5 0 0 1 .671.47v4.953l6.316 2.105a1 1 0 0 1 .684.949V19h2v2H1v-2h2zm2 0h7V3.855L5 6.401V19zm14 0v-8.558l-5-1.667V19h5z"></path></g></svg>
     
                         </div>
-                        {{$resume->created_at->format('d/m/Y')}}
+                        {{$resume->created_at ? $resume->created_at->format('d/m/Y'): 'N/Infor.'}}
                     </li>
                     <li class="col-nome">
                         <div class="col-info">

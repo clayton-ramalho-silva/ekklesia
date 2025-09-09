@@ -168,14 +168,14 @@ class InterviewController extends Controller
         // Filtro Vagas Interesse
         if ($request->filled('vagas_interesse')) {
             foreach ($request->vagas_interesse as $vaga) {
-                $query->whereJsonContains('vagas_interesse', $vaga);
+                $query->whereJsonContains('resumes.vagas_interesse', $vaga);
             }
         }
 
         // Filtro Experiência Profissional
         if ($request->filled('experiencia_profissional')) {
             foreach ($request->experiencia_profissional as $exp) {
-                $query->whereJsonContains('experiencia_profissional', $exp);
+                $query->whereJsonContains('resumes.experiencia_profissional', $exp);
             }
         }
 

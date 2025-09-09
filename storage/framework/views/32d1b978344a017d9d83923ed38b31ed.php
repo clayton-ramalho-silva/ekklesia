@@ -543,49 +543,49 @@ unset($__errorArgs, $__bag); ?>
                     <div class="mb-3 form-checkbox">
                         <label for="email" class="form-label">Em quais vagas você está interessado?</label>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="vagas_interesse2" value="Administrativo" name="vagas_interesse[]" <?php if(in_array('Administrativo', $resume->vagas_interesse ?? [])): echo 'checked'; endif; ?> >
+                            <input class="form-check-input" type="checkbox" id="vagas_interesse2" value="Administrativo" name="vagas_interesse[]" <?php if(in_array('Administrativo', (array) $resume->vagas_interesse ?? [])): echo 'checked'; endif; ?> >
                             <label class="form-check-label" for="vagas_interesse2">
                                 Administrativo
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="vagas_interesse5" value="Atendente de Lojas e Mercados (Comércio & Varejo)" name="vagas_interesse[]" <?php if(in_array('Atendente de Lojas e Mercados (Comércio & Varejo)', $resume->vagas_interesse ?? [])): echo 'checked'; endif; ?> >
+                            <input class="form-check-input" type="checkbox" id="vagas_interesse5" value="Atendente de Lojas e Mercados (Comércio & Varejo)" name="vagas_interesse[]" <?php if(in_array('Atendente de Lojas e Mercados (Comércio & Varejo)', (array) $resume->vagas_interesse ?? [])): echo 'checked'; endif; ?> >
                             <label class="form-check-label" for="vagas_interesse5">
                                 Atendente de Lojas e Mercados
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="vagas_interesse3" value="Camareiro(a) de Hotel" name="vagas_interesse[]" <?php if(in_array('Camareiro(a) de Hotel', $resume->vagas_interesse ?? [])): echo 'checked'; endif; ?> >
+                            <input class="form-check-input" type="checkbox" id="vagas_interesse3" value="Camareiro(a) de Hotel" name="vagas_interesse[]" <?php if(in_array('Camareiro(a) de Hotel', (array) $resume->vagas_interesse ?? [])): echo 'checked'; endif; ?> >
                             <label class="form-check-label" for="vagas_interesse3">
                                 Camareiro(a)/Mensageiro em Hotéis
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="vagas_interesse7" value="Conservação e Limpeza" name="vagas_interesse[]" <?php if(in_array('Conservação e Limpeza', $resume->vagas_interesse ?? [])): echo 'checked'; endif; ?> >
+                            <input class="form-check-input" type="checkbox" id="vagas_interesse7" value="Conservação e Limpeza" name="vagas_interesse[]" <?php if(in_array('Conservação e Limpeza', (array) $resume->vagas_interesse ?? [])): echo 'checked'; endif; ?> >
                             <label class="form-check-label" for="vagas_interesse7">
                                 Conservação e Limpeza
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="vagas_interesse1" value="Copa & Cozinha" name="vagas_interesse[]" <?php if(in_array('Copa & Cozinha', $resume->vagas_interesse ?? [])): echo 'checked'; endif; ?> >
+                            <input class="form-check-input" type="checkbox" id="vagas_interesse1" value="Copa & Cozinha" name="vagas_interesse[]" <?php if(in_array('Copa & Cozinha', (array) $resume->vagas_interesse ?? [])): echo 'checked'; endif; ?> >
                             <label class="form-check-label" for="vagas_interesse1">
                                 Copa & Cozinha
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="vagas_interesse6" value="Construção e Reparos" name="vagas_interesse[]" <?php if(in_array('Construção e Reparos', $resume->vagas_interesse ?? [])): echo 'checked'; endif; ?> >
+                            <input class="form-check-input" type="checkbox" id="vagas_interesse6" value="Construção e Reparos" name="vagas_interesse[]" <?php if(in_array('Construção e Reparos', (array) $resume->vagas_interesse ?? [])): echo 'checked'; endif; ?> >
                             <label class="form-check-label" for="vagas_interesse6">
                                 Manutenção/Construção e Reparos
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="vagas_interesse4" value="Recepcionista" name="vagas_interesse[]" <?php if(in_array('Recepcionista', $resume->vagas_interesse ?? [])): echo 'checked'; endif; ?> >
+                            <input class="form-check-input" type="checkbox" id="vagas_interesse4" value="Recepcionista" name="vagas_interesse[]" <?php if(in_array('Recepcionista', (array) $resume->vagas_interesse ?? [])): echo 'checked'; endif; ?> >
                             <label class="form-check-label" for="vagas_interesse4">
                                 Recepção
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="vagas_interesse8" value="Garçom/Cumim" name="vagas_interesse[]" <?php if(in_array('Garçom/Cumim', $resume->vagas_interesse ?? [])): echo 'checked'; endif; ?> >
+                            <input class="form-check-input" type="checkbox" id="vagas_interesse8" value="Garçom/Cumim" name="vagas_interesse[]" <?php if(in_array('Garçom/Cumim', (array) $resume->vagas_interesse ?? [])): echo 'checked'; endif; ?> >
                             <label class="form-check-label" for="vagas_interesse4">
                                 Garçom/Cumim
                             </label>
@@ -650,7 +650,7 @@ unset($__errorArgs, $__bag); ?>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="experiencia_profissional7" value="Garçon/Cumim" name="experiencia_profissional[]" <?php if(in_array('Garçon/Cumim)', (array) $resume->experiencia_profissional ?? [])): echo 'checked'; endif; ?>>
                             <label class="form-check-label" for="experiencia_profissional7">
-                                Garçon/Cumim
+                                Garçom/Cumim
                             </label>
                         </div>                  
 
@@ -958,7 +958,7 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
                                 <div class="mb-3">
                                     <div class="floatlabel-wrapper">
-                                        <label for="superior_select_periodo" class="label-floatlabel">Qual ao Período?</label>
+                                        <label for="superior_select_periodo" class="label-floatlabel">Qual o Período?</label>
                                         <select name="superior_periodo" id="superior_select_periodo" class="form-select active-floatlabel">
                                             <option></option>
                                             <option value="Manhã" <?php echo e(($resume->escolaridade && $resume->escolaridade->superior_periodo === 'Manhã') ? 'selected' : ''); ?>>Manhã</option>
@@ -979,7 +979,7 @@ unset($__errorArgs, $__bag); ?>
 
                                 <div class="mb-3">
                                     <div class="floatlabel-wrapper">
-                                        <label for="superior_select_modalidade" class="label-floatlabel">Qual ao Período?</label>
+                                        <label for="superior_select_modalidade" class="label-floatlabel">Qual a Modalidade?</label>
                                         <select name="superior_semestre" id="superior_select_modalidade" class="form-select active-floatlabel">
                                             <option></option>
                                             <option value="Presencial" <?php echo e(($resume->escolaridade && $resume->escolaridade->superior_semestre === 'Presencial') ? 'selected' : ''); ?>>Presencial</option>
@@ -1018,7 +1018,7 @@ unset($__errorArgs, $__bag); ?>
                                 <input type="text" placeholder="Qual Instituição?" class="floatlabel form-control" id="instituicao" name="instituicao" value="<?php echo e($resume->escolaridade->instituicao ?? ''); ?>">
                                 <div class="mb-3">
                                     <div class="floatlabel-wrapper">
-                                        <label for="outro_select_periodo" class="label-floatlabel">Qual ao Período?</label>
+                                        <label for="outro_select_periodo" class="label-floatlabel">Qual o Período?</label>
                                         <select name="outro_periodo" id="outro_select_periodo" class="form-select active-floatlabel">
                                             <option></option>
                                             <option value="Manhã" <?php echo e(($resume->escolaridade && $resume->escolaridade->outro_periodo === 'Manhã') ? 'selected' : ''); ?>>Manhã</option>
@@ -1039,7 +1039,7 @@ unset($__errorArgs, $__bag); ?>
 
                                 <div class="mb-3">
                                     <div class="floatlabel-wrapper">
-                                        <label for="outro_select_modalidade" class="label-floatlabel">Qual ao Período?</label>
+                                        <label for="outro_select_modalidade" class="label-floatlabel">Qual a Modalidade?</label>
                                         <select name="semestre" id="outro_select_modalidade" class="form-select active-floatlabel">
                                             <option></option>
                                             <option value="Presencial" <?php echo e(($resume->escolaridade && $resume->escolaridade->semestre === 'Presencial') ? 'selected' : ''); ?>>Presencial</option>

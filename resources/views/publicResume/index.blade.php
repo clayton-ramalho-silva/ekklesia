@@ -679,7 +679,7 @@
                                                 <input class="form-check-input" type="checkbox" id="experiencia_profissional7" value="Garçon/Cumim" name="experiencia_profissional[]" 
                                                 @if(old('experiencia_profissional') && in_array('Garçon/Cumim', old('experiencia_profissional'))) checked @endif>
                                                 <label class="form-check-label" for="experiencia_profissional7">
-                                                    Garçon/Cumim
+                                                    Garçom/Cumim
                                                 </label>
                                             </div>
                                             <div class="form-check">

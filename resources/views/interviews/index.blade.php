@@ -44,7 +44,7 @@
                         <label for="vagas_interesse" class="form-label">Vagas de Interesse</label>
                         <select name="vagas_interesse[]" id="vagas_interesse" class="form-select" multiple>
                             @foreach (  
-                                        ['Copa & Cozinha', 'Administrativo', 'Camareiro(a) de Hotel', 
+                                        ['Copa & Cozinha', 'Administrativo', 'Operacional','Administrativo/Operacional', 'Camareiro(a) de Hotel', 
                                         'Recepcionista', 'Atendente de Lojas e Mercados (Comércio & Varejo)',
                                         'Construção e Reparos', 'Conservação e Limpeza'] as $option)
                                 <option value="{{ $option }}" {{ in_array($option, request('vagas_interesse', []))? 'selected' : ''}}>
@@ -57,7 +57,7 @@
                         <label for="experiencia_profissional" class="form-label">Experiência Profissional</label>
                         <select name="experiencia_profissional[]" id="experiencia_profissional" class="form-select" multiple>
                             @foreach (  
-                                        ['Nenhuma por enquanto', 'Copa & Cozinha', 'Administrativo', 'Camareiro(a) de Hotel', 
+                                        ['Nenhuma por enquanto', 'Copa & Cozinha', 'Administrativo', 'Operacional','Administrativo/Operacional', 'Camareiro(a) de Hotel', 
                                         'Recepcionista', 'Atendente de Lojas e Mercados (Comércio & Varejo)', 'TI (Tecnologia da Informação',
                                         'Construção e Reparos', 'Conservação e Limpeza'] as $option)
                                 <option value="{{ $option }}" {{ in_array($option, request('experiencia_profissional', []))? 'selected' : ''}}>
