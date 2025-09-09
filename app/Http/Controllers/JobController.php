@@ -280,11 +280,12 @@ class JobController extends Controller
     public function update(Request $request, Job $job)
     {
         //dd($request->all());
-        /** Verifica se o usuario logado é admim ou recrutador associado a vaga */        
-        if(!$job->isEditableBy(Auth::user()) ){
+        /** Verifica se o usuario logado é admim ou recrutador associado a vaga */ 
+        // Solicitado retirada dessa verificação para o admin e recrutador poder editar qualquer vaga    
+        // if(!$job->isEditableBy(Auth::user()) ){
 
-            return redirect()->back()->with('danger', 'Somente o Recrutador associado a vaga ou o Adminstrador podem editar a vaga!');
-        }
+        //     return redirect()->back()->with('danger', 'Somente o Recrutador associado a vaga ou o Adminstrador podem editar a vaga!');
+        // }
 
         $data = $request->validate([
 
@@ -324,12 +325,13 @@ class JobController extends Controller
     public function updateDataEntrevistaEmpresa(Request $request, Job $job)
     {
         
-        /** Verifica se o usuario logado é admim ou recrutador associado a vaga */        
+        /** Verifica se o usuario logado é admim ou recrutador associado a vaga */ 
+        // Solicitado retirada dessa verificação para o admin e recrutador poder editar qualquer vaga         
         
-        if(!$job->isEditableBy(Auth::user()) ){
+        // if(!$job->isEditableBy(Auth::user()) ){
 
-            return redirect()->back()->with('danger', 'Somente o Recrutador associado a vaga ou o Adminstrador podem alterar a data da Entrevista na Empresa!');
-        }
+        //     return redirect()->back()->with('danger', 'Somente o Recrutador associado a vaga ou o Adminstrador podem alterar a data da Entrevista na Empresa!');
+        // }
 
         $data = $request->validate([              
             'data_entrevista_empresa' => 'nullable|date',
@@ -364,9 +366,10 @@ class JobController extends Controller
         $job = Job::findOrFail($jobId);
 
         /** Verifica se o usuario logado é admim ou recrutador associado a vaga */
-        if(!$job->isEditableBy(Auth::user()) ){
-            return redirect()->back()->with('danger', 'Somente o Recrutador associado a vaga ou o Adminstrador podem atualizar o status da vaga!');
-        }
+        // Solicitado retirada dessa verificação para o admin e recrutador poder editar qualquer vaga  
+        // if(!$job->isEditableBy(Auth::user()) ){
+        //     return redirect()->back()->with('danger', 'Somente o Recrutador associado a vaga ou o Adminstrador podem atualizar o status da vaga!');
+        // }
 
 
         $status = $request->input('status');
@@ -404,6 +407,7 @@ class JobController extends Controller
 
 
          /** Verifica se o usuario logado é admim ou recrutador associado a vaga */
+         
         if(!$job->isEditableBy(Auth::user()) ){
 
             return redirect()->back()->with('danger', 'Somente o Adminstrador pode associar um Recrutador a Vaga!');
@@ -444,11 +448,12 @@ class JobController extends Controller
         $job = Job::findOrFail($jobId);
         $now = Carbon::now();
 
-          /** Verifica se o usuario logado é admim ou recrutador associado a vaga */
-        if(!$job->isEditableBy(Auth::user()) ){
+        /** Verifica se o usuario logado é admim ou recrutador associado a vaga */
+        // Solicitado retirada dessa verificação para o admin e recrutador poder editar qualquer vaga  
+        // if(!$job->isEditableBy(Auth::user()) ){
 
-            return redirect()->back()->with('danger', 'Somente o Adminstrador ou Recrutador associado podem iniciar um processo!');
-        }
+        //     return redirect()->back()->with('danger', 'Somente o Adminstrador ou Recrutador associado podem iniciar um processo!');
+        // }
 
         $job->data_inicio_contratacao = $now;
 
@@ -464,10 +469,11 @@ class JobController extends Controller
         $now = Carbon::now();
 
           /** Verifica se o usuario logado é admim ou recrutador associado a vaga */
-        if(!$job->isEditableBy(Auth::user()) ){
+          // Solicitado retirada dessa verificação para o admin e recrutador poder editar qualquer vaga  
+        // if(!$job->isEditableBy(Auth::user()) ){
 
-            return redirect()->back()->with('danger', 'Somente o Adminstrador ou Recrutador associado podem finalizar um processo!');
-        }
+        //     return redirect()->back()->with('danger', 'Somente o Adminstrador ou Recrutador associado podem finalizar um processo!');
+        // }
 
         $job->data_fim_contratacao = $now;
         $job->status = 'fechada';
