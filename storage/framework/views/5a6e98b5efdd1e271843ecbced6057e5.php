@@ -313,6 +313,8 @@ $(document).ready(function() {
     });
 
 });
+
+$('#rg').mask('00.000.000-A');
 </script>
 <?php $__env->stopPush(); ?>
 
