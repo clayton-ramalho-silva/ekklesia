@@ -845,7 +845,7 @@ $('#fundamental_select_periodo, #fundamental_select_modalidade, #medio_select_pe
     placeholder: "Selecione",
 });
 
-$('#rg').mask('00.000.000-0');
+$('#rg').mask('00.000.000-A');
 $('#cpf').mask('000.000.000-00');
 $('#cep').mask('00000-000');
 $('#telefone_celular').mask('(00) 00000-0000');
