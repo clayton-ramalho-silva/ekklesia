@@ -525,14 +525,14 @@
                        
                         @foreach ($job->resumes as $resume)
                         <ul onclick="window.location='{{ route('resumes.edit', $resume) }}'" >
-                            <li class="col1 {{ $isAdmin ? 'col1-admin' : ''}}">
+                            <li class="col1 col1-admin{{-- $isAdmin ? 'col1-admin' : ''--}}">
                                 <b>Nome</b>
                                 <svg class="ico-lista" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path fill="none" d="M0 0h24v24H0z"></path><path d="M3 19V5.7a1 1 0 0 1 .658-.94l9.671-3.516a.5.5 0 0 1 .671.47v4.953l6.316 2.105a1 1 0 0 1 .684.949V19h2v2H1v-2h2zm2 0h7V3.855L5 6.401V19zm14 0v-8.558l-5-1.667V19h5z"></path></g></svg>
                                 <span>
                                     <strong>{{ $resume->informacoesPessoais->nome }}</strong>
                                 </span>
                             </li>
-                            <li class="col2 {{ $isAdmin ? 'col2-admin' : ''}}">
+                            <li class="col2 col2-admin{{-- $isAdmin ? 'col2-admin' : ''--}}">
                                 <b>Tipo de Vaga</b>
 
                                 @php
@@ -549,7 +549,7 @@
                                     Nenhuma vaga especificada
                                 @endforelse
                             </li>                            
-                            <li class="col3 {{ $isAdmin ? 'col3-admin' : ''}}">
+                            <li class="col3 col3-admin{{-- $isAdmin ? 'col3-admin' : ''--}}">
                                 <b>Entrevista</b>
                                 @if ($resume->interview)
                                     <a href="{{ route('interviews.show', $resume->interview->id) }}" class="link-entrevista text-success fw-bold"  data-bs-toggle="tooltip" data-bs-placement="top" title="Ver entrevista">Sim</a>
@@ -557,7 +557,7 @@
                                     <a href="{{ route('interviews.interviewResume', $resume) }}"  class="link-entrevista text-danger fw-bold" data-bs-toggle="tooltip" data-bs-placement="top" title="Entrevistar">Não</a>
                                 @endif
                             </li>
-                            <li class="col4 {{ $isAdmin ? 'col4-admin' : ''}}">
+                            <li class="col4 col4-admin {{-- $isAdmin ? 'col4-admin' : ''--}}">
                                 <b>Status</b>
                                
                                   @switch($resume->status)
@@ -577,8 +577,8 @@
                                 @endswitch                               
                                 
                             </li>
-                            @if ($isAdmin)
-                                <li class="col5 {{ $isAdmin ? 'col5-admin' : ''}}">
+                            {{-- @if ($isAdmin) --}}
+                                <li class="col5 col5-admin {{-- $isAdmin ? 'col5-admin' : ''--}}">
                                     <form action="{{ route('interviews.desassociarVaga') }}" method="POST" style="display:inline;">
                                         @csrf
                                         <input type="hidden" name="job_id" value="{{ $job->id }}">
@@ -587,7 +587,7 @@
                                     </form>
                                 </li>
                                 
-                            @endif
+                            {{-- @endif --}}
                             
 
                         </ul>
