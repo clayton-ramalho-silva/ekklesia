@@ -59,14 +59,20 @@ class ResumeController extends Controller
 
         // Filtro Status
 
-        if ($request->filled('status') && $request->status !== "Todos") {
-            if ($request->status === "ativo" || $request->status === "inativo") {
-                $query->where('status', $request->status);
-            } else {
-                $query->whereHas('selections', function($q) use ($request) {
-                    $q->where('status_selecao', $request->status);
-                });
-            }
+        // if ($request->filled('status') && $request->status !== "Todos") {
+        //     if ($request->status === "ativo" || $request->status === "inativo") {
+        //         $query->where('status', $request->status);
+        //     } else {
+        //         $query->whereHas('selections', function($q) use ($request) {
+        //             $q->where('status_selecao', $request->status);
+        //         });
+        //     }
+        // }
+
+         // Filtro Status
+
+        if ($request->filled('status') && $request->status !== "Todos") {            
+                $query->where('status', $request->status);            
         }
        
 
