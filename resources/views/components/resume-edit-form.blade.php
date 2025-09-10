@@ -334,55 +334,65 @@
                                 
 
                 <h4 class="fw-normal mb-4 mt-4">Mais Informações</h4>   
+
+                @php
+                    $vagasInteresse = [];
+                    if (is_array($resume->vagas_interesse)) {
+                        $vagasInteresse = $resume->vagas_interesse;
+                    } elseif (!empty($resume->vagas_interesse)) {
+                        $decoded = json_decode($resume->vagas_interesse, true);
+                        $vagasInteresse = is_array($decoded) ? $decoded : [];
+                    }
+                @endphp
                 
                  <!-- Vagas Interesse -->
                 <div class="d-flex col-6 form-campo">
                     <div class="mb-3 form-checkbox">
                         <label for="email" class="form-label">Em quais vagas você está interessado?</label>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="vagas_interesse2" value="Administrativo" name="vagas_interesse[]" @checked(in_array('Administrativo', (array) $resume->vagas_interesse ?? [])) >
+                            <input class="form-check-input" type="checkbox" id="vagas_interesse2" value="Administrativo" name="vagas_interesse[]" @checked(in_array('Administrativo', $vagasInteresse)) >
                             <label class="form-check-label" for="vagas_interesse2">
                                 Administrativo
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="vagas_interesse5" value="Atendente de Lojas e Mercados (Comércio & Varejo)" name="vagas_interesse[]" @checked(in_array('Atendente de Lojas e Mercados (Comércio & Varejo)', (array) $resume->vagas_interesse ?? [])) >
+                            <input class="form-check-input" type="checkbox" id="vagas_interesse5" value="Atendente de Lojas e Mercados (Comércio & Varejo)" name="vagas_interesse[]" @checked(in_array('Atendente de Lojas e Mercados (Comércio & Varejo)', $vagasInteresse)) >
                             <label class="form-check-label" for="vagas_interesse5">
                                 Atendente de Lojas e Mercados
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="vagas_interesse3" value="Camareiro(a) de Hotel" name="vagas_interesse[]" @checked(in_array('Camareiro(a) de Hotel', (array) $resume->vagas_interesse ?? [])) >
+                            <input class="form-check-input" type="checkbox" id="vagas_interesse3" value="Camareiro(a) de Hotel" name="vagas_interesse[]" @checked(in_array('Camareiro(a) de Hotel',$vagasInteresse)) >
                             <label class="form-check-label" for="vagas_interesse3">
                                 Camareiro(a)/Mensageiro em Hotéis
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="vagas_interesse7" value="Conservação e Limpeza" name="vagas_interesse[]" @checked(in_array('Conservação e Limpeza', (array) $resume->vagas_interesse ?? [])) >
+                            <input class="form-check-input" type="checkbox" id="vagas_interesse7" value="Conservação e Limpeza" name="vagas_interesse[]" @checked(in_array('Conservação e Limpeza', $vagasInteresse)) >
                             <label class="form-check-label" for="vagas_interesse7">
                                 Conservação e Limpeza
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="vagas_interesse1" value="Copa & Cozinha" name="vagas_interesse[]" @checked(in_array('Copa & Cozinha', (array) $resume->vagas_interesse ?? [])) >
+                            <input class="form-check-input" type="checkbox" id="vagas_interesse1" value="Copa & Cozinha" name="vagas_interesse[]" @checked(in_array('Copa & Cozinha', $vagasInteresse)) >
                             <label class="form-check-label" for="vagas_interesse1">
                                 Copa & Cozinha
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="vagas_interesse6" value="Construção e Reparos" name="vagas_interesse[]" @checked(in_array('Construção e Reparos', (array) $resume->vagas_interesse ?? [])) >
+                            <input class="form-check-input" type="checkbox" id="vagas_interesse6" value="Construção e Reparos" name="vagas_interesse[]" @checked(in_array('Construção e Reparos', $vagasInteresse)) >
                             <label class="form-check-label" for="vagas_interesse6">
                                 Manutenção/Construção e Reparos
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="vagas_interesse4" value="Recepcionista" name="vagas_interesse[]" @checked(in_array('Recepcionista', (array) $resume->vagas_interesse ?? [])) >
+                            <input class="form-check-input" type="checkbox" id="vagas_interesse4" value="Recepcionista" name="vagas_interesse[]" @checked(in_array('Recepcionista',$vagasInteresse)) >
                             <label class="form-check-label" for="vagas_interesse4">
                                 Recepção
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="vagas_interesse8" value="Garçom/Cumim" name="vagas_interesse[]" @checked(in_array('Garçom/Cumim', (array) $resume->vagas_interesse ?? [])) >
+                            <input class="form-check-input" type="checkbox" id="vagas_interesse8" value="Garçom/Cumim" name="vagas_interesse[]" @checked(in_array('Garçom/Cumim',$vagasInteresse)) >
                             <label class="form-check-label" for="vagas_interesse4">
                                 Garçom/Cumim
                             </label>
@@ -395,63 +405,72 @@
                 <div class="d-flex col-6 form-campo">
                     <div class="mb-3 form-checkbox">
                         <label for="telefone_residencial" class="form-label">Já possui alguma experiência profissional?</label>
+                         @php
+                            $experienciaProfissional = [];
+                            if (is_array($resume->experiencia_profissional)) {
+                                $experienciaProfissional = $resume->experiencia_profissional;
+                            } elseif (!empty($resume->experiencia_profissional)) {
+                                $decoded = json_decode($resume->experiencia_profissional, true);
+                                $experienciaProfissional = is_array($decoded) ? $decoded : [];
+                            }
+                        @endphp
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="experiencia_profissional3" value="Administrativo" name="experiencia_profissional[]" @checked(in_array('Administrativo', (array) $resume->experiencia_profissional ?? []))>
+                            <input class="form-check-input" type="checkbox" id="experiencia_profissional3" value="Administrativo" name="experiencia_profissional[]" @checked(in_array('Administrativo', $experienciaProfissional))>
                             <label class="form-check-label" for="experiencia_profissional3">
                                 Administrativo
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="experiencia_profissional6" value="Atendente de Lojas e Mercados (Comércio & Varejo)" name="experiencia_profissional[]" @checked(in_array('Atendente de Lojas e Mercados (Comércio & Varejo)', (array) $resume->experiencia_profissional ?? []))>
+                            <input class="form-check-input" type="checkbox" id="experiencia_profissional6" value="Atendente de Lojas e Mercados (Comércio & Varejo)" name="experiencia_profissional[]" @checked(in_array('Atendente de Lojas e Mercados (Comércio & Varejo)', $experienciaProfissional))>
                             <label class="form-check-label" for="experiencia_profissional6">
                                 Atendente de Lojas e Mercados
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="experiencia_profissional4" value="Camareiro(a) de Hotel" name="experiencia_profissional[]" @checked(in_array('Camareiro(a) de Hotel', (array) $resume->experiencia_profissional ?? []))>
+                            <input class="form-check-input" type="checkbox" id="experiencia_profissional4" value="Camareiro(a) de Hotel" name="experiencia_profissional[]" @checked(in_array('Camareiro(a) de Hotel', $experienciaProfissional))>
                             <label class="form-check-label" for="experiencia_profissional4">
                                 Camareiro(a)/Mensageiro em Hotéis
                             </label>
                         </div>
                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="experiencia_profissional9" value="Conservação e Limpeza" name="experiencia_profissional[]" @checked(in_array('Conservação e Limpeza', (array) $resume->experiencia_profissional ?? []))>
+                            <input class="form-check-input" type="checkbox" id="experiencia_profissional9" value="Conservação e Limpeza" name="experiencia_profissional[]" @checked(in_array('Conservação e Limpeza', $experienciaProfissional))>
                             <label class="form-check-label" for="experiencia_profissional9">
                                 Conservação e Limpeza
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="experiencia_profissional2" value="Copa & Cozinha" name="experiencia_profissional[]" @checked(in_array('Copa & Cozinha', (array)$resume->experiencia_profissional ?? []))>
+                            <input class="form-check-input" type="checkbox" id="experiencia_profissional2" value="Copa & Cozinha" name="experiencia_profissional[]" @checked(in_array('Copa & Cozinha', $experienciaProfissional))>
                             <label class="form-check-label" for="experiencia_profissional2">
                                 Copa & Cozinha
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="experiencia_profissional8" value="Construção e Reparos" name="experiencia_profissional[]" @checked(in_array('Construção e Reparos', (array) $resume->experiencia_profissional ?? []))>
+                            <input class="form-check-input" type="checkbox" id="experiencia_profissional8" value="Construção e Reparos" name="experiencia_profissional[]" @checked(in_array('Construção e Reparos', $experienciaProfissional))>
                             <label class="form-check-label" for="experiencia_profissional8">
                                 Manutenção/Construção e Reparos
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="experiencia_profissional5" value="Recepcionista" name="experiencia_profissional[]" @checked(in_array('Recepcionista', (array) $resume->experiencia_profissional ?? []))>
+                            <input class="form-check-input" type="checkbox" id="experiencia_profissional5" value="Recepcionista" name="experiencia_profissional[]" @checked(in_array('Recepcionista', $experienciaProfissional))>
                             <label class="form-check-label" for="experiencia_profissional5">
                                 Recepção
                             </label>
                         </div>      
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="experiencia_profissional7" value="Garçon/Cumim" name="experiencia_profissional[]" @checked(in_array('Garçon/Cumim)', (array) $resume->experiencia_profissional ?? []))>
+                            <input class="form-check-input" type="checkbox" id="experiencia_profissional7" value="Garçon/Cumim" name="experiencia_profissional[]" @checked(in_array('Garçon/Cumim)', $experienciaProfissional))>
                             <label class="form-check-label" for="experiencia_profissional7">
                                 Garçom/Cumim
                             </label>
                         </div>                  
 
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="experiencia_profissional1" value="Nenhuma por enquanto" name="experiencia_profissional[]" @checked(in_array('Nenhuma por enquanto', (array) $resume->experiencia_profissional ?? []))>
+                            <input class="form-check-input" type="checkbox" id="experiencia_profissional1" value="Nenhuma por enquanto" name="experiencia_profissional[]" @checked(in_array('Nenhuma por enquanto', $experienciaProfissional))>
                             <label class="form-check-label" for="experiencia_profissional1">
                                 Nenhuma Experiencia Profissional
                             </label>
                         </div>                       
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="experiencia_profissional10" value="Outro" name="experiencia_profissional[]" @checked(in_array('Outro', (array) $resume->experiencia_profissional ?? []))>
+                            <input class="form-check-input" type="checkbox" id="experiencia_profissional10" value="Outro" name="experiencia_profissional[]" @checked(in_array('Outro', $experienciaProfissional))>
                             <label class="form-check-label" for="experiencia_profissional10">
                                 Outro
                             </label>
