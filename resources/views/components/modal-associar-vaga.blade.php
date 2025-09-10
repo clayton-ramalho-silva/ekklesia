@@ -115,7 +115,12 @@
 @push('css-custom')
     <style>
         .modal-associar-vaga.show{
-            z-index: 999999;
+            z-index: 9999999;
+        }
+
+        .lista-associar-vaga {
+            max-height: 500px;
+            overflow-y: scroll;
         }
     </style>
 @endpush

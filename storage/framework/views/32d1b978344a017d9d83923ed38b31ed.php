@@ -539,9 +539,13 @@ unset($__errorArgs, $__bag); ?>
                 <h4 class="fw-normal mb-4 mt-4">Mais Informações</h4>   
 
                 <?php
-                    $vagasInteresse = is_array($resume->vagas_interesse) 
-                        ? $resume->vagas_interesse 
-                        : json_decode($resume->vagas_interesse ?? '[]', true);
+                    $vagasInteresse = [];
+                    if (is_array($resume->vagas_interesse)) {
+                        $vagasInteresse = $resume->vagas_interesse;
+                    } elseif (!empty($resume->vagas_interesse)) {
+                        $decoded = json_decode($resume->vagas_interesse, true);
+                        $vagasInteresse = is_array($decoded) ? $decoded : [];
+                    }
                 ?>
                 
                  <!-- Vagas Interesse -->

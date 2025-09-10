@@ -453,15 +453,16 @@ class ResumeController extends Controller
 
         //dd($jobAprovado);
         // Obtém vagas com empresas associadas conforme o usuário e status 'aberta'
-        $jobsQuery = Job::where('status', 'aberta');
+        //$jobsQuery = Job::where('status', 'aberta');
 
-        if ($user->role !== 'admin') {
-            $jobsQuery->whereHas('recruiters', function ($query) use ($user) {
-                $query->where('recruiter_id', $user->id);
-            });
-        }
+        // if ($user->role !== 'admin') {
+        //     $jobsQuery->whereHas('recruiters', function ($query) use ($user) {
+        //         $query->where('recruiter_id', $user->id);
+        //     });
+        // }
 
-        $jobs = $jobsQuery->get();        
+        // $jobs = $jobsQuery->get();   
+        $jobs = Job::where('status', 'aberta')->get();
 
         $jobsAssociados = $resume->jobs;
 
