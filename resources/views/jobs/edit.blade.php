@@ -639,9 +639,22 @@
                             </li>
                             <li class="col2">
                                 <b>Tipo de Vaga</b>
-                                @foreach ($selecao->resume->vagas_interesse ?? [] as $vaga)
+                                {{-- @foreach ($selecao->resume->vagas_interesse ?? [] as $vaga)
                                     {{$vaga}},
-                                @endforeach
+                                @endforeach --}}
+                                 @php
+                                    // Garantir que vagas_interesse é um array
+                                    if (!is_array($selecao->resume->vagas_interesse)) {
+                                        $selecao->resume->vagas_interesse = json_decode($selecao->resume->vagas_interesse, true) ?? [];
+                                    }
+                                @endphp
+
+
+                                @forelse ($resume->vagas_interesse ?? [] as $vaga)
+                                    {{ $vaga }}@if(!$loop->last),@endif
+                                @empty
+                                    Nenhuma vaga especificada
+                                @endforelse
                             </li>
                             <li class="col3">
                                 <b>Status da Seleção</b>
