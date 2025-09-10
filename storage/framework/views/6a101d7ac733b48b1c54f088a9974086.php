@@ -118,7 +118,12 @@
 <?php $__env->startPush('css-custom'); ?>
     <style>
         .modal-associar-vaga.show{
-            z-index: 999999;
+            z-index: 9999999;
+        }
+
+        .lista-associar-vaga {
+            max-height: 500px;
+            overflow-y: scroll;
         }
     </style>
 <?php $__env->stopPush(); ?><?php /**PATH /home/case/Área de trabalho/2025/ldweb/Projeto asppe/painelasppe/resources/views/components/modal-associar-vaga.blade.php ENDPATH**/ ?>
