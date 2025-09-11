@@ -522,8 +522,22 @@
                     </ul>
 
                     @if ($job->resumes()->count() > 0)
+                        @php
+                            // Garantir que resumes é uma coleção
+                            $resumes = is_string($job->resumes) ? collect() : $job->resumes;
+                        @endphp
+                        {{-- @php
+                            dd([
+                                'type' => gettype($job->resumes),
+                                'value' => $job->resumes,
+                                'count' => $job->resumes()->count()
+                            ]);
+                        @endphp --}}
                        
-                        @foreach ($job->resumes as $resume)
+                        @foreach ($resumes as $resume)
+                        
+
+
                         <ul onclick="window.location='{{ route('resumes.edit', $resume) }}'" >
                             <li class="col1 col1-admin{{-- $isAdmin ? 'col1-admin' : ''--}}">
                                 <b>Nome</b>
