@@ -266,7 +266,7 @@
 
                                     <div class="col-6 form-campo">
                                         <div class="mb-3">
-                                            <input type="text" placeholder="RG" class="floatlabel form-control" id="rg" name="rg" required placeholder="RG" value="{{ old('rg')}}" >
+                                            <input type="text" placeholder="RG" class="floatlabel form-control" id="rg" name="rg" required value="{{ old('rg')}}" >
                                             @error('rg') <div class="alert alert-danger">{{ $message }}</div> @enderror
                                         </div>
                                     </div>   
@@ -1485,8 +1485,8 @@ $("#form-companies-create").validate({
         informatica:"required",
         ingles:"required",
         cras:"required",
-        fonte:"required"        
-        //rg:"required",
+        fonte:"required",        
+        rg:"required",
         //tamanho_uniforme:"required",
     }
 });
