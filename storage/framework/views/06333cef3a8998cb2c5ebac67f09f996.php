@@ -282,7 +282,7 @@ unset($__errorArgs, $__bag); ?>
 
                                     <div class="col-6 form-campo">
                                         <div class="mb-3">
-                                            <input type="text" placeholder="RG" class="floatlabel form-control" id="rg" name="rg" required placeholder="RG" value="<?php echo e(old('rg')); ?>" >
+                                            <input type="text" placeholder="RG" class="floatlabel form-control" id="rg" name="rg" required value="<?php echo e(old('rg')); ?>" >
                                             <?php $__errorArgs = ['rg'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -891,7 +891,7 @@ unset($__errorArgs, $__bag); ?>
                                                 <input class="form-check-input" type="checkbox" id="experiencia_profissional7" value="Garçon/Cumim" name="experiencia_profissional[]" 
                                                 <?php if(old('experiencia_profissional') && in_array('Garçon/Cumim', old('experiencia_profissional'))): ?> checked <?php endif; ?>>
                                                 <label class="form-check-label" for="experiencia_profissional7">
-                                                    Garçon/Cumim
+                                                    Garçom/Cumim
                                                 </label>
                                             </div>
                                             <div class="form-check">
