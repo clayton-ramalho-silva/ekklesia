@@ -1814,8 +1814,8 @@ $("#form-companies-create").validate({
         informatica:"required",
         ingles:"required",
         cras:"required",
-        fonte:"required"        
-        //rg:"required",
+        fonte:"required",        
+        rg:"required",
         //tamanho_uniforme:"required",
     }
 });
