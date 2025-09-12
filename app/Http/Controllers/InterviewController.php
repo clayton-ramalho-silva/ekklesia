@@ -13,11 +13,19 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use App\Traits\LogsActivity;
 use App\Services\ResumeService;
+use App\Services\CidadeService;
 
 
 class InterviewController extends Controller
 {
     use LogsActivity;
+
+    protected $cidadeService;
+
+    public function __construct(CidadeService $cidadeService)
+    {
+        $this->cidadeService = $cidadeService;
+    }
 
     public function index(Request $request)
     {
@@ -275,7 +283,11 @@ class InterviewController extends Controller
         // Implementar paginação
         //$resumes = $query->paginate(50); // Ajustar o numero coforme necessário.
 
-        return view('interviews.index', compact('resumes', 'form_busca', 'ordem'));    
+
+        $cidades = $this->cidadeService->getCidades();
+        
+
+        return view('interviews.index', compact('resumes', 'form_busca', 'ordem', 'cidades'));    
     }
 
     public function show($id)
