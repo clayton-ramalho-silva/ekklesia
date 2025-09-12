@@ -165,8 +165,13 @@
                         <label for="cidade" class="form-label">Cidade:</label>
                         <select id="cidade" name="cidade" class="form-select select2">
                             <option>Todas</option>
+                            @foreach($cidades as $cidade)
+                                <option value="{{ $cidade }}" {{ request('cidade') == $cidade ? 'selected' : '' }}>
+                                    {{ $cidade }}
+                                </option>
+                            @endforeach
                             @php
-                            echo get_cidades($resumes, 3);
+                            //echo get_cidades($resumes, 3);
                             @endphp
                         </select>
                     </div>

@@ -157,13 +157,20 @@
                             <option value="Nenhum" <?php echo e(request('ingles') == 'Nenhum' ? 'selected' : ''); ?>> Nenhum</option>
                         </select>
                     </div>
-
+                    
                     <div class="col-6">
                         <label for="cidade" class="form-label">Cidade:</label>
                         <select id="cidade" name="cidade" class="form-select select2">
                             <option>Todas</option>
-                            <?php
-                            echo get_cidades($resumes, 3);
+                            <?php $__currentLoopData = $cidades; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cidade): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($cidade); ?>" <?php echo e(request('cidade') == $cidade ? 'selected' : ''); ?>>
+                                    <?php echo e($cidade); ?>
+
+                                </option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php                            
+                            //echo get_cidades($resumes, 3);
+                            //echo get_cidades_debug($resumes,3);
                             ?>
                         </select>
                     </div>

@@ -42,6 +42,8 @@ if (! function_exists('get_estados')) {
 if (! function_exists('get_cidades')) {
 
     function get_cidades($lista, $tipo = 1) {
+        var_dump($lista);
+        
         $opcoes = '';
         $cidades = array();
         
@@ -81,6 +83,7 @@ if (! function_exists('get_cidades')) {
         
         return $opcoes;
     }
+
     // function get_cidades($lista, $tipo=1){
 
     //     $opcoes  = '';
@@ -127,6 +130,8 @@ if (! function_exists('get_cidades')) {
     // }
 
 }
+
+
 
 if (! function_exists('limite')) {
 

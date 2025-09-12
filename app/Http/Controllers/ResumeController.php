@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Resume\StoreResumeRequest;
 use App\Http\Requests\Resume\UpdateResumeRequest;
+use App\Models\ContactResume;
 use App\Models\Interview;
 use App\Models\Job;
 use App\Models\Resume;
@@ -13,10 +14,18 @@ use App\Traits\LogsActivity;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Services\ResumeService;
+use App\Services\CidadeService;
 
 class ResumeController extends Controller
 {
     use LogsActivity;
+
+    protected $cidadeService;
+
+    public function __construct(CidadeService $cidadeService)
+    {
+        $this->cidadeService = $cidadeService;
+    }
 
     public function index(Request $request)
     {
@@ -257,12 +266,21 @@ class ResumeController extends Controller
 
         $query->orderBy('created_at', $ordem);
 
+        
+         
+
+        
+
 
 
             // Implementar paginação
-        $resumes = $query->paginate(50)->appends($request->all()); // Ajustar o numero coforme necessário.    
+        $resumes = $query->paginate(50)->appends($request->all()); // Ajustar o numero coforme necessário.  
+        
+        $cidades = $this->cidadeService->getCidades();
+        //$cidades = $this->getCidadesFromContact();
+        //dd($cidades);
             
-            return view('resumes.index', compact('resumes', 'form_busca','ordem'));
+            return view('resumes.index', compact('resumes', 'form_busca','ordem', 'cidades'));
             
         }
 
@@ -638,6 +656,51 @@ class ResumeController extends Controller
         }
 
         return redirect()->back()->with('success', 'Status alterado com sucesso para ' . ucfirst($newStatus) . '.');
+    }
+
+
+     /**
+     * Opção 3: Direto da tabela ContactResume (mais simples ainda)
+     */
+    public function getCidadesFromContact()
+    {        
+        $cidades = ContactResume::whereNotNull('cidade')
+            ->where('cidade', '!=', '')
+            ->distinct()
+            ->pluck('cidade')
+            ->map(function($cidade) {
+                return $this->normalizarCidade($cidade);
+            })
+            ->unique()
+            ->sort()
+            ->values();
+
+        return $cidades;
+    }
+    /*
+     * Método auxiliar para normalizar nomes das cidades
+     */
+    private function normalizarCidade($cidade)
+    {
+        if (!$cidade) return null;
+        
+        // Remove espaços extras e quebras de linha
+        $cidade = trim($cidade);
+        
+        if (empty($cidade)) return null;
+        
+        // Separa por espaços
+        $parts = explode(' ', $cidade);
+        $normalized = [];
+        
+        foreach ($parts as $part) {
+            $part = trim($part);
+            if (!empty($part)) {
+                $normalized[] = ucfirst(strtolower($part));
+            }
+        }
+        
+        return implode(' ', $normalized);
     }
 
 
