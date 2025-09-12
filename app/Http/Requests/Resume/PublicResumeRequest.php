@@ -23,7 +23,12 @@ class PublicResumeRequest extends FormRequest
     {
         return [
             'nome' => 'required|string|max:255',
-            'cpf' => 'required|string|max:255|unique:personal_info_resumes,cpf',
+            'cpf' => [
+                'required',
+                'string',
+                'max:255',
+                new \App\Rules\UniqueCpf('personal_info_resumes'),
+                ],
             'cnh' => 'required|string|max:255',
             'rg' => 'required|string|max:255',
             'data_nascimento' => 'required|date',
