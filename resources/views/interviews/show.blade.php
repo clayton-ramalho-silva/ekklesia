@@ -83,7 +83,7 @@
                         <div class="col-6">
                             <div class="col-12 bloco-ativo d-flex mb-3">
 
-                                <p class="fw-bold">Currículo Cadastrado em: {{$resume->created_at->format('d/m/Y') }}</p>
+                                <p class="fw-bold">Currículo Cadastrado em: {{$resume->created_at ? $resume->created_at->format('d/m/Y') : now()->format('d/m/Y') }}</p>
                             </div>
 
                         </div>

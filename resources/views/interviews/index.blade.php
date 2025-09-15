@@ -548,6 +548,7 @@
                     </li>
                      --}}
                     
+                    
                     {{-- Campos Entrevista --}}
                     <li class="col-idiomas">{{ $resume->interview->outros_idiomas }}</li>
                     <li class="col-apresentacao-pessoal">{{ $resume->interview->apresentacao_pessoal }}</li>

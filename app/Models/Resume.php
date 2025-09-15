@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Illuminate\Support\Facades\DB;
 
 class Resume extends Model
 {
@@ -50,9 +50,9 @@ class Resume extends Model
         return $this->hasOne(ContactResume::class);
     }
 
-    public function interview()
+   public function interview()
     {
-        return $this->hasOne(Interview::class);
+        return $this->hasOne(Interview::class)->latestOfMany();
     }
 
     public function selections()
