@@ -516,6 +516,7 @@
                     
                     
                     
+                    
                     <li class="col-idiomas"><?php echo e($resume->interview->outros_idiomas); ?></li>
                     <li class="col-apresentacao-pessoal"><?php echo e($resume->interview->apresentacao_pessoal); ?></li>
                     <li class="col-saude"><?php echo e($resume->interview->saude_candidato); ?></li>

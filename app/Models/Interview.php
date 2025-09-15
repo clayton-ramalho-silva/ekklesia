@@ -49,6 +49,10 @@ class Interview extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'deleted_at' => 'datetime',
+    ];
+
     public function resume()
     {
         return $this->belongsTo(Resume::class);            
@@ -63,4 +67,6 @@ class Interview extends Model
     {
         return $this->belongsTo(User::class, 'recruiter_id');
     }
+
+    
 }
