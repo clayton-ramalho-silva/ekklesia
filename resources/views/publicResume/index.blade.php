@@ -167,6 +167,14 @@
         font-size: 13px;
         letter-spacing: 1px;
     }
+    .mensagem-arquivo{
+        font-size: 12px;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+
+
     @media(max-width: 480px){
         .form-padrao .form-l{
             order: 1;
@@ -1221,6 +1229,7 @@ Estou ciente de que essa autorização não se estende a divulgação pública e
         
                                 <div class="mb-3 d-flex flex-column align-items-center">
                                     <p class="fw-bold text-center">Faça Upload do Currículo</p>
+                                    
         
                                     {{-- Aceita apenas pdf --}}
                                     <input type="file" id="file-upload" class="file-input"
@@ -1237,6 +1246,7 @@ Estou ciente de que essa autorização não se estende a divulgação pública e
                                     <label for="file-upload" class="btn-select-file btn-padrao">Selecionar</label>                                    
         
                                     @error('curriculo_doc') <div class="alert alert-danger">{{ $message }}</div> @enderror
+                                    <span class="mensagem-arquivo">O arquvio dever ser no formato PDF e ter o tamanho máximo de 2MB.</span>
                                 </div>                                
                             </div>
 

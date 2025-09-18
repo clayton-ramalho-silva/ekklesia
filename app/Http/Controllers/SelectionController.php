@@ -18,6 +18,7 @@ class SelectionController extends Controller
     // Primeira interação no processo seletivo
     public function storeSelection(Request $request )
     {       
+        
         $data = $request->validate([
             'job_id' => 'required|exists:jobs,id',
             'resume_id' => 'required|exists:resumes,id',
@@ -25,6 +26,7 @@ class SelectionController extends Controller
             'avaliacao' => 'nullable|boolean',
             'observacao' => 'nullable|string',            
         ]);
+        //dd($data);
 
         $resume = Resume::findOrFail($data['resume_id']);
         // Verifica se o resume está com status 'contratado'
@@ -149,7 +151,7 @@ class SelectionController extends Controller
     // Atualizar Processo seletivo
     public function updateSelection(Request $request,  $selectionId)
     {
-        //dd('aqui');
+       
         $data = $request->validate([
             'job_id' => 'required|exists:jobs,id',
             'resume_id' => 'required|exists:resumes,id',
@@ -159,8 +161,7 @@ class SelectionController extends Controller
             
            
         ]);
-
-        //dd($data);
+        
 
         $selection = Selection::findOrFail($selectionId);
 

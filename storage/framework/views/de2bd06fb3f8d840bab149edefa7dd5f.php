@@ -163,7 +163,7 @@
                                                                 <label for="status_selecao" class="label-floatlabel" class="form-label floatlabel-label">Status da Seleção</label>
                                                                 <select name="status_selecao" id="status_selecao" class="form-select active-floatlabel" required>
                                                                     <option value="aguardando" selected> Aguardando</option>
-                                                                    <option value="aprovado" > Contrado</option>
+                                                                    <option value="aprovado" > Contratado</option>
                                                                     <option value="reprovado" > Reprovado</option>
                                                                     
                                                                 </select>
