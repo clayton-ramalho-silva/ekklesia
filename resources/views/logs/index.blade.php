@@ -132,6 +132,11 @@
             @endif
 
         </div>
+         <!-- No final da página, após a tabela ou lista de currículos -->
+        <div class="pagination-wrapper">
+            {{ $logs->appends(request()->query())->links('vendor.pagination.custom') }}
+            <p class="pagination-info">Mostrando {{ $logs->firstItem() }} a {{ $logs->lastItem() }} de {{ $logs->total() }} currículos</p>
+        </div>
 
         <table class="table" style="display: none">
             <thead>
@@ -159,6 +164,7 @@
                 @endforeach
             </tbody>
         </table>
+        
     </article>
 
     <article class="f4 bts-interna">
@@ -175,6 +181,20 @@
     td,tr{
         font-size: 12px;
     }
+
+    .table-container.lista-logs{
+        width: 100%;
+        overflow: auto;
+        height: 450px;
+    }
+    .table-container.lista-logs .tit-lista{
+    width: fit-content;
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 4;
+    min-width: 100%;
+}
 </style>
 
 @endpush

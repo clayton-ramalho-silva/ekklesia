@@ -23,7 +23,9 @@ class LogController extends Controller
 
             $form_busca = $request->form_busca;
         }
-        $logs = $query->latest()->paginate(20);
+        //$logs = $query->latest()->paginate(20);
+            // Implementar paginação
+        $logs = $query->latest()->paginate(50)->appends($request->all()); // Ajustar o numero coforme necessário.  
 
         return view('logs.index', compact('logs','form_busca'));
     }
