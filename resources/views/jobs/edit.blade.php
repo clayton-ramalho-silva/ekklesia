@@ -530,11 +530,15 @@
                                               
                         @foreach ($resumesSemSelecao as $resume)
                         
+                        
                         @php
-                            if($resume->interview()->exists()){
-                                $rota = route('interviews.interviewResume', $resume->id);
+                            if($resume->interview){
+                                //$rota = route('interviews.interviewResume', $resume->id);
+                                $rota = route('interviews.show', $resume->interview->id);
                             }else{
-                                $rota = route('resumes.edit', $resume);
+                                //dd('aqui nao');
+                                //$rota = route('resumes.edit', $resume);
+                                $rota = route('interviews.interviewResume', $resume);
                             }
                         @endphp
 

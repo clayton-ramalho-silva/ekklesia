@@ -325,6 +325,11 @@
             @endif
 
         </div>
+        <!-- No final da página, após a tabela ou lista de currículos -->
+        <div class="pagination-wrapper mt-3">
+            {{ $jobs->appends(request()->query())->links('vendor.pagination.custom') }}
+            <p class="pagination-info">Mostrando {{ $jobs->firstItem() }} a {{ $jobs->lastItem() }} de {{ $jobs->total() }} currículos</p>
+        </div>
 
     </article>
 
@@ -511,8 +516,19 @@ width: 25% !important;
    background-color: #fff;
 }
 
+.table-container.lista-vagas{
+    height: 450px;
+    overflow: auto;
+}
 
-
+.table-container.lista-vagas .tit-lista{
+    width: fit-content;
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 4;
+    min-width: 100%;
+}
 
 </style>
 @endpush

@@ -186,7 +186,8 @@ class JobController extends Controller
 
 
         
-        $jobs = $query->orderBy('created_at', 'desc')->get();
+        $query->orderBy('created_at', 'desc');
+        $jobs = $query->paginate(25)->appends($request->all()); // Ajustar o numero coforme necessário.  
 
         $companies = Company::all();
         $recruiters = User::where('role', 'recruiter')->get();

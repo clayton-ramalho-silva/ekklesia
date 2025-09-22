@@ -1351,7 +1351,7 @@ $message = $__bag->first($__errorArgs[0]); ?> <div class="alert alert-danger"><?
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                <span class="mensagem-arquivo">O arquvio dever ter o tamanho máximo de 2MB.</span>
+                <span class="mensagem-arquivo">O arquivo deve ter o tamanho máximo de 2MB.</span>
             </div>                                
             
 
@@ -1399,7 +1399,7 @@ $message = $__bag->first($__errorArgs[0]); ?> <div class="alert alert-danger"><?
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                <span class="mensagem-arquivo">O arquvio dever ser no formato PDF e ter o tamanho máximo de 2MB.</span>
+                <span class="mensagem-arquivo">O arquivo deve ser no formato PDF e ter o tamanho máximo de 2MB.</span>
             </div>
 
         

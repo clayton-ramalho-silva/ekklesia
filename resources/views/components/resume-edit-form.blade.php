@@ -1048,7 +1048,7 @@
                 --}}
 
                 @error('foto_candidato') <div class="alert alert-danger">{{ $message }}</div> @enderror
-                <span class="mensagem-arquivo">O arquvio dever ter o tamanho máximo de 2MB.</span>
+                <span class="mensagem-arquivo">O arquivo deve ter o tamanho máximo de 2MB.</span>
             </div>                                
             {{-- @endif --}}
 
@@ -1092,7 +1092,7 @@
                 <label for="file-upload" class="btn-select-file btn-padrao">Selecionar</label>
 
                 @error('curriculo_doc') <div class="alert alert-danger">{{ $message }}</div> @enderror
-                <span class="mensagem-arquivo">O arquvio dever ser no formato PDF e ter o tamanho máximo de 2MB.</span>
+                <span class="mensagem-arquivo">O arquivo deve ser no formato PDF e ter o tamanho máximo de 2MB.</span>
             </div>
 
         
