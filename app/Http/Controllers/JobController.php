@@ -408,10 +408,10 @@ class JobController extends Controller
 
          /** Verifica se o usuario logado é admim ou recrutador associado a vaga */
          
-        if(!$job->isEditableBy(Auth::user()) ){
+        // if(!$job->isEditableBy(Auth::user()) ){
 
-            return redirect()->back()->with('danger', 'Somente o Adminstrador pode associar um Recrutador a Vaga!');
-        }
+        //     return redirect()->back()->with('danger', 'Somente o Adminstrador pode associar um Recrutador a Vaga!');
+        // }
 
 
 

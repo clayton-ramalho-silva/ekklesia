@@ -311,7 +311,7 @@
                         </form>
 
 
-                        @if (Auth::user()->role == 'admin')
+                        {{-- @if (Auth::user()->role == 'admin') --}}
                             <form class="form-padrao" action="{{ route('jobs.associateRecruiter', $job->id) }}" method="POST">
 
                                 @csrf
@@ -330,7 +330,7 @@
 
                             </form>
 
-                        @endif
+                        {{-- @endif --}}
 
                     </div>
 
@@ -521,24 +521,25 @@
                         @endif
                     </ul>
 
-                    @if ($job->resumes()->count() > 0)
-                        @php
-                            // Garantir que resumes é uma coleção
-                            $resumes = is_string($job->resumes) ? collect() : $job->resumes;
-                        @endphp
-                        {{-- @php
-                            dd([
-                                'type' => gettype($job->resumes),
-                                'value' => $job->resumes,
-                                'count' => $job->resumes()->count()
-                            ]);
-                        @endphp --}}
-                       
-                        @foreach ($resumes as $resume)
+                    @php
+                        // Traz os currículos que não tem seleção com a vaga.
+                        $resumesSemSelecao = $job->resumesWithoutSelection()->get();
+                    @endphp
+
+                    @if ($resumesSemSelecao->count() > 0)
+                                              
+                        @foreach ($resumesSemSelecao as $resume)
                         
+                        @php
+                            if($resume->interview()->exists()){
+                                $rota = route('interviews.interviewResume', $resume->id);
+                            }else{
+                                $rota = route('resumes.edit', $resume);
+                            }
+                        @endphp
 
-
-                        <ul onclick="window.location='{{ route('resumes.edit', $resume) }}'" >
+                        {{-- <ul onclick="window.location='{{ route('resumes.edit', $resume) }}'" > --}}
+                        <ul onclick="window.location='{{ $rota }}'" >
                             <li class="col1 col1-admin{{-- $isAdmin ? 'col1-admin' : ''--}}">
                                 <b>Nome</b>
                                 <svg class="ico-lista" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path fill="none" d="M0 0h24v24H0z"></path><path d="M3 19V5.7a1 1 0 0 1 .658-.94l9.671-3.516a.5.5 0 0 1 .671.47v4.953l6.316 2.105a1 1 0 0 1 .684.949V19h2v2H1v-2h2zm2 0h7V3.855L5 6.401V19zm14 0v-8.558l-5-1.667V19h5z"></path></g></svg>

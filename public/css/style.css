@@ -148,3 +148,29 @@ font-size:11px;
         text-align: center;
         margin-top: 10px;
     }
+
+
+/* Badge de status abaixo dos nomes nas tabelas de curriculos e entrevistas.*/    
+ .badge-status{
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    color: white;
+    width: fit-content;
+    font-weight: 600;            
+}
+.badge-ativo{
+    background-color: #6c757d;
+}
+.badge-inativo{
+    background-color: #dc3545;
+}
+.badge-processo{
+    background-color: yellow;
+    color: #333333;
+}
+
+.badge-contratado{
+    background-color: #28a745;
+}
+

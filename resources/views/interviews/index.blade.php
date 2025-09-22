@@ -215,6 +215,30 @@
                             <option value="Não" {{ request('cras') == 'Não' ? 'selected' : '' }}> Não</option>                            
                         </select>
                     </div>
+                    <hr>
+                    {{-- Parecer entrevistador --}}
+                    <div class="col-12 mb-3">
+                        <label for="parecer_recrutador" class="form-label" style="font-weight: 700; color:#333; padding-bottom: 7px;">Parecer do entrevistador</label>
+                        <input type="text" name="parecer_recrutador" id="parecer_recrutador" class="form-control" value="{{ request('parecer_recrutador') }}" placeholder="Palavras chaves..">
+                    </div>
+
+                    {{-- Habilidades --}}
+                    <div class="col-12 mb-3">
+                        <label for="habilidades" class="form-label" style="font-weight: 700; color:#333; padding-bottom: 7px;">Habilidades</label>
+                        <input type="text" name="habilidades" id="habilidades" class="form-control" value="{{ request('habilidades') }}" placeholder="Palavras chaves..">
+                    </div>
+
+                    {{-- Apresentação Pessoal --}}
+                    <div class="col-12 mb-3">
+                        <label for="apresentacao_pessoal" class="form-label" style="font-weight: 700; color:#333; padding-bottom: 7px;">Apresentação Pessoal</label>
+                        <input type="text" name="apresentacao_pessoal" id="apresentacao_pessoal" class="form-control" value="{{ request('apresentacao_pessoal') }}" placeholder="Palavras chaves..">
+                    </div>
+
+                    {{-- Caracteristicas positivas --}}
+                    <div class="col-12 mb-3">
+                        <label for="caracteristicas_positivas" class="form-label" style="font-weight: 700; color:#333; padding-bottom: 7px;">Características Positivas</label>
+                        <input type="text" name="caracteristicas_positivas" id="caracteristicas_positivas" class="form-control" value="{{ request('caracteristicas_positivas') }}" placeholder="Palavras chaves..">
+                    </div>
 
                     
                     {{-- <div class="col">
@@ -392,6 +416,22 @@
                             @else
                                 <p class="badge bg-light text-dark">{{ $idadeFormatada }}</p>
                             @endif
+
+                            @switch($resume->status)
+                                @case('ativo')
+                                    <p class="badge-status badge-ativo">Disponível</p>
+                                    @break
+                                @case('inativo')
+                                    <p class="badge-status badge-inativo" >Inativo</p>
+                                    @break
+                                @case('processo')
+                                    <p class="badge-status badge-processo" >Em processo</p>
+                                    @break
+                                @case('contratado')
+                                    <p class="badge-status badge-contratado">Contratado</p>
+                                    @break                           
+                                    
+                            @endswitch 
 
                         </div>
 

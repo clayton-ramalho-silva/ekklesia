@@ -52,7 +52,7 @@ class InterviewController extends Controller
         // $query = Resume::with(['informacoesPessoais', 'contato', 'escolaridade'])->whereHas('interview');
 
         // Abaixo de 23 anos.
-        $query = Resume::with(['informacoesPessoais', 'contato', 'escolaridade'])
+        $query = Resume::with(['informacoesPessoais', 'contato', 'escolaridade', 'interview'])
             ->whereHas('interview')
             ->whereHas('informacoesPessoais', function ($q) {
                 $q->whereNotNull('data_nascimento')
@@ -80,6 +80,42 @@ class InterviewController extends Controller
          if($request->filled('nome')) {
             $query->whereHas('informacoesPessoais', function($q) use ($request) {
                 $q->where('nome', 'like', '%' . $request->nome . '%');
+            });
+
+            //dd($request->nome);
+        }
+
+        // Filtro palavra-chave Parecer do Entrevistador
+         if($request->filled('parecer_recrutador')) {
+            $query->whereHas('interview', function($q) use ($request) {
+                $q->where('parecer_recrutador', 'like', '%' . $request->parecer_recrutador . '%');
+            });
+
+            //dd($request->nome);
+        }
+
+        // Filtro palavra-chave Parecer do Entrevistador
+         if($request->filled('habilidades')) {
+            $query->whereHas('interview', function($q) use ($request) {
+                $q->where('habilidades', 'like', '%' . $request->habilidades . '%');
+            });
+
+            //dd($request->nome);
+        }
+
+        // Filtro palavra-chave Parecer do Entrevistador
+         if($request->filled('apresentacao_pessoal')) {
+            $query->whereHas('interview', function($q) use ($request) {
+                $q->where('apresentacao_pessoal', 'like', '%' . $request->apresentacao_pessoal . '%');
+            });
+
+            //dd($request->nome);
+        }
+
+        // Filtro palavra-chave Parecer do Entrevistador
+         if($request->filled('caracteristicas_positivas')) {
+            $query->whereHas('interview', function($q) use ($request) {
+                $q->where('caracteristicas_positivas', 'like', '%' . $request->caracteristicas_positivas . '%');
             });
 
             //dd($request->nome);
@@ -268,16 +304,19 @@ class InterviewController extends Controller
         // ]);
 
         //NOVA FUNCIONALIDADE: Filtro de Ordenação
-        $ordem = $request->get('ordem', 'desc'); // Por padrão será 'desc' (mais recente primeiro)
-        
-        // Validar se a ordem é válida
-        if (!in_array($ordem, ['asc', 'desc'])) {
-            $ordem = 'desc';
-        }
+         $ordem = $request->get('ordem', 'desc');
+            if(!in_array($ordem, ['asc', 'desc'])){
+                $ordem = 'desc';
+            }
 
-        $query->join('interviews', 'resumes.id', '=', 'interviews.resume_id')
-          ->orderBy('interviews.created_at', $ordem)
-          ->select('resumes.*');
+            $query->orderBy(
+                Interview::select('created_at')
+                    ->whereColumn('interviews.resume_id', 'resumes.id')
+                    ->latest()
+                    ->limit(1),
+                $ordem
+            );
+
 
         $resumes = $query->paginate(50)->appends($request->all());
         // Implementar paginação

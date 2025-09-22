@@ -331,6 +331,22 @@
                                 <p class="badge bg-light text-dark">{{ $idadeFormatada }}</p>
                             @endif
 
+                             @switch($resume->status)
+                                    @case('ativo')
+                                        <p class="badge-status badge-ativo">Disponível</p>
+                                        @break
+                                    @case('inativo')
+                                        <p class="badge-status badge-inativo" >Inativo</p>
+                                        @break
+                                    @case('processo')
+                                        <p class="badge-status badge-processo" >Em processo</p>
+                                        @break
+                                    @case('contratado')
+                                        <p class="badge-status badge-contratado">Contratado</p>
+                                        @break                           
+                                        
+                                @endswitch 
+
                         </div>
 
                     </li>
@@ -1329,12 +1345,39 @@ p.badge{
         .fw-bold {
             font-weight: bold;
         }
-        
+
+        /* .badge-status{
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            color: white;
+            width: fit-content;
+            font-weight: 600;            
+        }
+        .badge-ativo{
+            background-color: #6c757d;
+        }
+        .badge-inativo{
+            background-color: #dc3545;
+        }
+        .badge-processo{
+            background-color: yellow;
+            color: #333333;
+        }
+
+        .badge-contratado{
+            background-color: #28a745;
+        } */
+
+
+
         /* Indicadores de status */
         /* .status-ativo::before { content: "●"; color: #28a745; margin-right: 5px; }
         .status-inativo::before { content: "●"; color: #6c757d; margin-right: 5px; }
         .status-em-processo::before { content: "●"; color: #ffc107; margin-right: 5px; }
         .status-contratado::before { content: "●"; color: #007bff; margin-right: 5px; } */
+
+
 
 </style>
 @endpush
