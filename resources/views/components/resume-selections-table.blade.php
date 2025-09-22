@@ -8,7 +8,7 @@
                 <li class="col1">Empresa</li>
                 <li class="col2">Título</li>
                 <li class="col3">Vagas</li>
-                <li class="col4">Status da Seleção</li>
+                <li class="col4">Seleção</li>
                 <li class="col5">Recrutador</li>
                 <li class="col6">Status</li>
             </ul>
@@ -258,37 +258,27 @@
                                 @endforeach
                                 @endif
                             </li>
-                            <li class="col6">
-                                @php
-                                $temSelecaoAprovada = $resume->selections->contains('status_selecao', 'aprovado');
-                                if($resume->status === 'inativo'){
+                            <li class="col6">                            
 
-                                    $classe = 'status-inativo'; // Colocar cor vermelha
-                                    $status = 'Inativo';
+                                <b>Status</b>
+                               
+                                  @switch($resume->status)
+                                    @case('ativo')
+                                        <i class="status-ativo" title="Disponível"></i>Disponível
+                                        @break
+                                    @case('inativo')
+                                        <i class="status-inativo" title="Inativo"></i>Inativo
+                                        @break
+                                    @case('processo')
+                                        <i class="status-em-processo" title="Em processo"></i>Em processo
+                                        @break
+                                    @case('contratado')
+                                        <i class="status-contratado" title="Contratado"></i>Contratado
+                                        @break                           
+                                        
+                                @endswitch 
 
-                                } else {
 
-                                    if(($resume->interview)){
-
-                                        if($resume->selections->contains('status_selecao', 'aprovado')){
-                                            $classe = 'status-contratado'; // Colocar cor Verde
-                                            $status = 'Contratado';
-                                        } else {
-                                            $classe = 'status-em-processo'; // Colocar cor Amarela
-                                            $status = 'Em processo';
-                                        }
-
-                                    } else {
-
-                                        $classe = 'status-ativo'; // Colocar cor Cinza
-                                        $status = 'Disponível';
-
-                                    }
-
-                                }
-                                @endphp
-
-                                <i class="{{ $classe }}" title="{{ $status }}"></i>
                             </li>
 
                         </ul>
@@ -440,3 +430,35 @@
         </div>
 
     </article>
+
+
+@push('css-custom')
+    
+<style>
+
+.lista-processos-seletivos ul .col1{
+width: 40% !important;
+}
+
+.lista-processos-seletivos ul .col2{
+width: 20% !important;
+}
+.lista-processos-seletivos ul .col3{
+width: 5% !important;
+}
+.lista-processos-seletivos ul .col4{
+width: 10% !important;
+}
+.lista-processos-seletivos ul .col5{
+width: 10% !important;
+}
+.lista-processos-seletivos ul .col6{
+width: 10% !important;
+}
+
+
+
+
+
+</style>
+@endpush

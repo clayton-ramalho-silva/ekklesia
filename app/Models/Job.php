@@ -101,5 +101,11 @@ class Job extends Model
         });
     }
 
+    public function resumesWithoutSelection()
+    {
+        return $this->resumes()->whereDoesntHave('selections', function($query){
+            $query->where('job_id', $this->id);
+        });
+    }
 
 }

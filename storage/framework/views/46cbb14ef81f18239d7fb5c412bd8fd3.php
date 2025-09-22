@@ -214,6 +214,30 @@
                             <option value="Não" <?php echo e(request('cras') == 'Não' ? 'selected' : ''); ?>> Não</option>                            
                         </select>
                     </div>
+                    <hr>
+                    
+                    <div class="col-12 mb-3">
+                        <label for="parecer_recrutador" class="form-label" style="font-weight: 700; color:#333; padding-bottom: 7px;">Parecer do entrevistador</label>
+                        <input type="text" name="parecer_recrutador" id="parecer_recrutador" class="form-control" value="<?php echo e(request('parecer_recrutador')); ?>" placeholder="Palavras chaves..">
+                    </div>
+
+                    
+                    <div class="col-12 mb-3">
+                        <label for="habilidades" class="form-label" style="font-weight: 700; color:#333; padding-bottom: 7px;">Habilidades</label>
+                        <input type="text" name="habilidades" id="habilidades" class="form-control" value="<?php echo e(request('habilidades')); ?>" placeholder="Palavras chaves..">
+                    </div>
+
+                    
+                    <div class="col-12 mb-3">
+                        <label for="apresentacao_pessoal" class="form-label" style="font-weight: 700; color:#333; padding-bottom: 7px;">Apresentação Pessoal</label>
+                        <input type="text" name="apresentacao_pessoal" id="apresentacao_pessoal" class="form-control" value="<?php echo e(request('apresentacao_pessoal')); ?>" placeholder="Palavras chaves..">
+                    </div>
+
+                    
+                    <div class="col-12 mb-3">
+                        <label for="caracteristicas_positivas" class="form-label" style="font-weight: 700; color:#333; padding-bottom: 7px;">Características Positivas</label>
+                        <input type="text" name="caracteristicas_positivas" id="caracteristicas_positivas" class="form-control" value="<?php echo e(request('caracteristicas_positivas')); ?>" placeholder="Palavras chaves..">
+                    </div>
 
                     
                     
@@ -361,6 +385,22 @@
                             <?php else: ?>
                                 <p class="badge bg-light text-dark"><?php echo e($idadeFormatada); ?></p>
                             <?php endif; ?>
+
+                            <?php switch($resume->status):
+                                case ('ativo'): ?>
+                                    <p class="badge-status badge-ativo">Disponível</p>
+                                    <?php break; ?>
+                                <?php case ('inativo'): ?>
+                                    <p class="badge-status badge-inativo" >Inativo</p>
+                                    <?php break; ?>
+                                <?php case ('processo'): ?>
+                                    <p class="badge-status badge-processo" >Em processo</p>
+                                    <?php break; ?>
+                                <?php case ('contratado'): ?>
+                                    <p class="badge-status badge-contratado">Contratado</p>
+                                    <?php break; ?>                           
+                                    
+                            <?php endswitch; ?> 
 
                         </div>
 

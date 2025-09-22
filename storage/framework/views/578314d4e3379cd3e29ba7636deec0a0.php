@@ -8,7 +8,7 @@
                 <li class="col1">Empresa</li>
                 <li class="col2">Título</li>
                 <li class="col3">Vagas</li>
-                <li class="col4">Status da Seleção</li>
+                <li class="col4">Seleção</li>
                 <li class="col5">Recrutador</li>
                 <li class="col6">Status</li>
             </ul>
@@ -290,37 +290,27 @@ unset($__errorArgs, $__bag); ?>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 <?php endif; ?>
                             </li>
-                            <li class="col6">
-                                <?php
-                                $temSelecaoAprovada = $resume->selections->contains('status_selecao', 'aprovado');
-                                if($resume->status === 'inativo'){
+                            <li class="col6">                            
 
-                                    $classe = 'status-inativo'; // Colocar cor vermelha
-                                    $status = 'Inativo';
+                                <b>Status</b>
+                               
+                                  <?php switch($resume->status):
+                                    case ('ativo'): ?>
+                                        <i class="status-ativo" title="Disponível"></i>Disponível
+                                        <?php break; ?>
+                                    <?php case ('inativo'): ?>
+                                        <i class="status-inativo" title="Inativo"></i>Inativo
+                                        <?php break; ?>
+                                    <?php case ('processo'): ?>
+                                        <i class="status-em-processo" title="Em processo"></i>Em processo
+                                        <?php break; ?>
+                                    <?php case ('contratado'): ?>
+                                        <i class="status-contratado" title="Contratado"></i>Contratado
+                                        <?php break; ?>                           
+                                        
+                                <?php endswitch; ?> 
 
-                                } else {
 
-                                    if(($resume->interview)){
-
-                                        if($resume->selections->contains('status_selecao', 'aprovado')){
-                                            $classe = 'status-contratado'; // Colocar cor Verde
-                                            $status = 'Contratado';
-                                        } else {
-                                            $classe = 'status-em-processo'; // Colocar cor Amarela
-                                            $status = 'Em processo';
-                                        }
-
-                                    } else {
-
-                                        $classe = 'status-ativo'; // Colocar cor Cinza
-                                        $status = 'Disponível';
-
-                                    }
-
-                                }
-                                ?>
-
-                                <i class="<?php echo e($classe); ?>" title="<?php echo e($status); ?>"></i>
                             </li>
 
                         </ul>
@@ -495,4 +485,36 @@ unset($__errorArgs, $__bag); ?>
 
         </div>
 
-    </article><?php /**PATH /home/case/Área de trabalho/2025/ldweb/Projeto asppe/painelasppe/resources/views/components/resume-selections-table.blade.php ENDPATH**/ ?>
+    </article>
+
+
+<?php $__env->startPush('css-custom'); ?>
+    
+<style>
+
+.lista-processos-seletivos ul .col1{
+width: 40% !important;
+}
+
+.lista-processos-seletivos ul .col2{
+width: 20% !important;
+}
+.lista-processos-seletivos ul .col3{
+width: 5% !important;
+}
+.lista-processos-seletivos ul .col4{
+width: 10% !important;
+}
+.lista-processos-seletivos ul .col5{
+width: 10% !important;
+}
+.lista-processos-seletivos ul .col6{
+width: 10% !important;
+}
+
+
+
+
+
+</style>
+<?php $__env->stopPush(); ?><?php /**PATH /home/case/Área de trabalho/2025/ldweb/Projeto asppe/painelasppe/resources/views/components/resume-selections-table.blade.php ENDPATH**/ ?>
