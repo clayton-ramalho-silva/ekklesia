@@ -534,16 +534,16 @@
                         @php
                             if($resume->interview){
                                 //$rota = route('interviews.interviewResume', $resume->id);
-                                $rota = route('interviews.show', $resume->interview->id);
+                                $rotaResume = route('interviews.show', $resume->interview->id);
                             }else{
                                 //dd('aqui nao');
                                 //$rota = route('resumes.edit', $resume);
-                                $rota = route('interviews.interviewResume', $resume);
+                                $rotaResume = route('resumes.edit', $resume);
                             }
                         @endphp
 
                         {{-- <ul onclick="window.location='{{ route('resumes.edit', $resume) }}'" > --}}
-                        <ul onclick="window.location='{{ $rota }}'" >
+                        <ul onclick="window.location='{{ $rotaResume }}'" >
                             <li class="col1 col1-admin{{-- $isAdmin ? 'col1-admin' : ''--}}">
                                 <b>Nome</b>
                                 <svg class="ico-lista" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path fill="none" d="M0 0h24v24H0z"></path><path d="M3 19V5.7a1 1 0 0 1 .658-.94l9.671-3.516a.5.5 0 0 1 .671.47v4.953l6.316 2.105a1 1 0 0 1 .684.949V19h2v2H1v-2h2zm2 0h7V3.855L5 6.401V19zm14 0v-8.558l-5-1.667V19h5z"></path></g></svg>
@@ -573,7 +573,7 @@
                                 @if ($resume->interview)
                                     <a href="{{ route('interviews.show', $resume->interview->id) }}" class="link-entrevista text-success fw-bold"  data-bs-toggle="tooltip" data-bs-placement="top" title="Ver entrevista">Sim</a>
                                 @else
-                                    <a href="{{ route('interviews.interviewResume', $resume) }}"  class="link-entrevista text-danger fw-bold" data-bs-toggle="tooltip" data-bs-placement="top" title="Entrevistar">Não</a>
+                                    <a href="{{ route('resumes.edit', $resume) }}"  class="link-entrevista text-danger fw-bold" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver currículo">Não</a>
                                 @endif
                             </li>
                             <li class="col4 col4-admin {{-- $isAdmin ? 'col4-admin' : ''--}}">
