@@ -1108,7 +1108,10 @@ p.badge{
     width: 160px;
 }
 .col-linkedin{
-    width: 190px;
+    width: 200px;
+    min-width: 150px !important;
+    white-space: pre-wrap;
+    overflow: hidden;
 }
 .col-telefone_celular{
     min-width: 200px !important;

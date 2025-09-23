@@ -602,6 +602,16 @@ class InterviewController extends Controller
         $data = $request->validated();     
           //dd($request->all());
         $resume = Resume::find($request->resume_id);
+
+         if (!$resume) {
+            return redirect()->back()->with('error', 'Currículo não encontrado.');
+        }
+        
+        // Verificação se já existe entrevista
+        if ($resume->interview()->exists()) {
+            return redirect()->back()->with('error', 'Este currículo já possui uma entrevista cadastrada.');
+        }
+        
         $resume = $service->updateResume($requestResume->validated(), $resume);
 
         //dd($resume->informacoesPessoais);

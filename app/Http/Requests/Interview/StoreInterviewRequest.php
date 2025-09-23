@@ -45,14 +45,31 @@ class StoreInterviewRequest extends FormRequest
             'parecer_recrutador' => 'nullable|string', // Parecer RH
             'observacoes' => 'nullable|string', // Entrevistas
             'obs_rh' => 'nullable|string', // Observações RH
-            'resume_id' => 'nullable|exists:resumes,id',
             'tipo_beneficio' => 'nullable|string|max:255',
+            'resume_id' => [
+                'required',
+                'exists:resumes,id',
+                function ($attribute, $value, $fail) {
+                    if (\App\Models\Interview::where('resume_id', $value)->exists()) {
+                        $fail('Já existe uma entrevista cadastrada para este currículo.');
+                    }
+                },
+            ],
             //'perfil' => 'nullable|string|max:255',
             //'curso_extracurricular' => 'nullable|string',
             //'pretencao_candidato' => 'nullable|string',
             //'sobre_candidato' => 'nullable|string',
             //'sugestao_empresa' => 'nullable|string',
             //'pontuacao' => 'nullable|string|max:255', 
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'resume_id.required' => 'O currículo é obrigatório.',
+            'resume_id.exists' => 'Currículo não encontrado.',
+            // outras mensagens...
         ];
     }
 }
