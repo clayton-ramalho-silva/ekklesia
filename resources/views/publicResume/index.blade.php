@@ -173,6 +173,9 @@
         margin-top: 10px;
     }
 
+    /* Estilos para dispositivos móveis */
+    
+
 
 
     @media(max-width: 480px){
@@ -184,13 +187,25 @@
         }
 
        #bloco-submit-desktop{
-            display: none;
+            display: none !important;
         }
 
         #bloco-submit-mobile{
         display: flex;
         order: 3;
-    }
+        }
+
+        #data_nascimento{
+            width: 100%;
+            background-color: transparent;
+            border-top: 1px solid #ced4da;
+        }
+        .form-campo{
+            padding-right: 0 !important;
+            padding-left: 0 !important;
+        }
+
+       
     }
 </style>
 
@@ -318,12 +333,12 @@
                                     <div class="col-6 form-campo">
                                         <div class="mb-3">
                                             <div class="floatlabel-wrapper required">
-                                                <label for="date" class="label-floatlabel" class="form-label floatlabel-label">Data de Nascimento</label>
+                                                <label for="data_nascimento" class="label-floatlabel" class="form-label floatlabel-label">Data de Nascimento</label>
                                                 <input type="date" class="form-control active-floatlabel" id="data_nascimento" name="data_nascimento" value="{{ old('data_nascimento')}}" required>
                                                 @error('data_nascimento') <div class="alert alert-danger">{{ $message }}</div> @enderror
                                             </div>
                                         </div>
-                                    </div>                            
+                                    </div>                                             
 
                                     <!-- Nacionalidade teste -->
                                     @php
@@ -1218,7 +1233,7 @@ Estou ciente de que essa autorização não se estende a divulgação pública e
                                     </div>
                                 </div>
 
-                                <div class="col-9 bloco-submit d-flex mt-3">
+                                <div id="bloco-submit-desktop" class="col-9 bloco-submit d-flex mt-3">
                                     <button type="submit" class="btn-padrao btn-cadastrar">Cadastrar</button>
                                     <a href="{{ route('resumes.index')}}" class="btn-padrao btn-cancelar ms-3">Cancelar</a>
                                 </div>
@@ -1626,6 +1641,27 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Verificar quando a data é alterada
     dataNascimento.addEventListener('change', verificarMenorIdade);
+
+
+
+    // Remover a clase form-control do campo data de nascimento quando em mobile
+    function ajustarDataNascimento() {
+        const larguraTela = window.innerWidth;
+        const campoData = document.getElementById('data_nascimento');       
+
+        if (larguraTela <= 560) { // Largura típica para mobile
+            if (campoData) {
+                campoData.classList.remove('form-control');
+            }            
+        } else {
+            if (campoData) {
+                campoData.classList.add('form-control');
+            }          
+        }
+    }
+    // Ajustar ao carregar a página
+    ajustarDataNascimento();
+
 });
 
 </script>

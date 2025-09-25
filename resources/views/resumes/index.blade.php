@@ -595,7 +595,8 @@ function updateActiveFilters(){
         if( key !== 'page' && value && value !== 'Todos' && value !== 'Todas'){
             // Para arrays (selects múltiplos)
             if (key.endsWith('[]')){
-                activeFilters.push(createFilterBadge(key.replace('[]', ''), value));
+                //activeFilters.push(createFilterBadge(key.replace('[]', ''), value));
+                activeFilters.push(createFilterBadge(key, value));
             } else {
                 activeFilters.push(createFilterBadge(key, value));
             }
