@@ -157,23 +157,23 @@
                             <option value="Nenhum" <?php echo e(request('ingles') == 'Nenhum' ? 'selected' : ''); ?>> Nenhum</option>
                         </select>
                     </div>
+
+                                  
                     
-                    <div class="col-6">
+                    <div class="col-12">
                         <label for="cidade" class="form-label">Cidade:</label>
-                        <select id="cidade" name="cidade" class="form-select select2">
-                            <option>Todas</option>
+                        <select id="cidade" name="cidade[]" class="" multiple="multiple">
+                            
                             <?php $__currentLoopData = $cidades; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cidade): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($cidade); ?>" <?php echo e(request('cidade') == $cidade ? 'selected' : ''); ?>>
+                                <option value="<?php echo e($cidade); ?>" 
+                                    <?php echo e(is_array(request('cidade')) && in_array($cidade, request('cidade')) ? 'selected' : ''); ?>>
                                     <?php echo e($cidade); ?>
 
                                 </option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            <?php                            
-                            //echo get_cidades($resumes, 3);
-                            //echo get_cidades_debug($resumes,3);
-                            ?>
                         </select>
                     </div>
+                
 
                     
                     <div class="col-6 mb-4">
@@ -532,7 +532,7 @@
         <div class="pagination-wrapper">
             <?php echo e($resumes->appends(request()->query())->links('vendor.pagination.custom')); ?>
 
-            <p class="pagination-info">Mostrando <?php echo e($resumes->firstItem()); ?> a <?php echo e($resumes->lastItem()); ?> de <?php echo e($resumes->total()); ?> currículos</p>
+            <p class="pagination-info mt-3">Mostrando <?php echo e($resumes->firstItem()); ?> a <?php echo e($resumes->lastItem()); ?> de <?php echo e($resumes->total()); ?> currículos</p>
         </div>
 
     </article>
@@ -559,7 +559,19 @@ $(document).ready(function(){
     $('.bloco-filtros .select2').select2({
         placeholder: "Selecione",
     });
-    
+
+    $('#cidade').select2({
+        //placeholder: 'Todas as cidades (selecione para filtrar)',        
+        width: '100%',
+        closeOnSelect: true,
+        allowClear: true
+    });
+    // $('cidade').select2();
+
+    // $('cidade').on('select2:opening select2:closing', function( event ) {
+    //     var $searchfield = $(this).parent().find('.select2-search__field');
+    //     $searchfield.prop('disabled', true);
+    // });
 
     // Botão limpar - redireciona para URL sem parâmetros
     $('button[name="limpar"]').on('click', function(e){
@@ -1369,7 +1381,49 @@ p.badge{
         .status-em-processo::before { content: "●"; color: #ffc107; margin-right: 5px; }
         .status-contratado::before { content: "●"; color: #007bff; margin-right: 5px; } */
 
+/* Css do multiple select */
 
+.select2-container--default .select2-selection--multiple .select2-selection__choice{
+    display: flex;
+    width: fit-content;
+    height: 30px;
+    align-items: center;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple{
+    border: solid #cacaca 1px;
+    
+}
+.select2-container--default .select2-selection--multiple{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    border: solid #cacaca 1px;
+}
+
+.select2-container .select2-selection--multiple .select2-selection__rendered{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    width: fit-content
+}
+
+.select2-container--default .select2-search--inline .select2-search__field{
+    height: 30px;
+    display: flex;
+    box-shadow: none !important;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__clear{
+    display: none;
+}
 
 </style>
 <?php $__env->stopPush(); ?>

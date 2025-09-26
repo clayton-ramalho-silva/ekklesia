@@ -51,13 +51,15 @@ class InterviewController extends Controller
         //$query = Resume::with(['informacoesPessoais', 'contato', 'interview', 'escolaridade']);
         // $query = Resume::with(['informacoesPessoais', 'contato', 'escolaridade'])->whereHas('interview');
 
-        // Abaixo de 23 anos.
+        //Abaixo de 23 anos.
         $query = Resume::with(['informacoesPessoais', 'contato', 'escolaridade', 'interview'])
             ->whereHas('interview')
             ->whereHas('informacoesPessoais', function ($q) {
                 $q->whereNotNull('data_nascimento')
                 ->whereRaw('TIMESTAMPDIFF(YEAR, data_nascimento, CURDATE()) < 23');
-            });
+            });      
+
+
 
         //$query = Resume::query();
 
@@ -228,11 +230,28 @@ class InterviewController extends Controller
         }
 
         // Filtro Cidade
-        if ($request->filled('cidade') && $request->cidade !== "Todas") {
-            $query->whereHas('contato', function($q) use ($request) {
-                $q->where('cidade', 'like', '%'. $request->cidade . '%');
-            });
+        // if ($request->filled('cidade') && $request->cidade !== "Todas") {
+        //     $query->whereHas('contato', function($q) use ($request) {
+        //         $q->where('cidade', 'like', '%'. $request->cidade . '%');
+        //     });
+        // }
+
+        // Filtro Cidade - múltiplas seleções
+        if ($request->filled('cidade') && is_array($request->cidade)) {
+            $cidades = array_filter($request->cidade); // Remove valores vazios
+            
+            if (!empty($cidades)) {
+                $query->whereHas('contato', function($q) use ($cidades) {
+                    $q->where(function($subQuery) use ($cidades) {
+                        foreach ($cidades as $cidade) {
+                            $subQuery->orWhere('cidade', 'like', '%' . $cidade . '%');
+                        }
+                    });
+                });
+            }
         }
+
+
 
         // Filtro Telefone Celular
 
