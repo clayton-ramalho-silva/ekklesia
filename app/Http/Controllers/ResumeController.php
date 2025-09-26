@@ -149,6 +149,43 @@ class ResumeController extends Controller
             });
         }
 
+        // Filtro Informatica - múltiplas seleções
+        // if ($request->filled('ingles') && is_array($request->ingles)) {
+        //     $opcoesIngles = array_filter($request->ingles); // Remove valores vazios
+            
+        //     if (!empty($opcoesIngles)) {
+        //         $query->whereHas('escolaridade', function($q) use ($opcoesIngles) {
+        //             $q->where(function($subQuery) use ($opcoesIngles) {
+        //                 foreach ($opcoesIngles as $ingles) {
+        //                     $subQuery->orWhere('ingles', 'like', '%' . $ingles . '%');
+        //                 }
+        //             });
+        //         });
+        //     }
+        // }
+
+
+        // No controller, ANTES de processar os filtros
+        // $opcoesIngles = ['Básico', 'Intermediário', 'Avançado', 'Nenhum'];
+
+        // if ($request->filled('ingles') && is_array($request->ingles)) {
+        //     $opcoesIngles = array_filter($request->ingles); // Remove valores vazios
+            
+        //     if (!empty($opcoesIngles)) {
+        //         $query->whereHas('escolaridade', function($q) use ($opcoesIngles) {
+        //             $q->where(function($subQuery) use ($opcoesIngles) {
+        //                 foreach ($opcoesIngles as $opcao) {
+        //                     $subQuery->orWhere('ingles', $opcao );
+        //                 }
+        //             });
+        //         });
+        //     }
+        // }
+
+
+
+
+
          // Filtro Formação/Escolaridade
          if ($request->filled('escolaridade') && $request->escolaridade !== "Todos") {
             $query->whereHas('escolaridade', function($q) use ($request) {
@@ -170,11 +207,20 @@ class ResumeController extends Controller
             }
         }
 
-        // Filtro Cidade
-        if ($request->filled('cidade') && $request->cidade !== "Todas") {
-            $query->whereHas('contato', function($q) use ($request) {
-                $q->where('cidade', 'like', '%'. $request->cidade . '%');
-            });
+      
+        // Filtro Cidade - múltiplas seleções
+        if ($request->filled('cidade') && is_array($request->cidade)) {
+            $cidades = array_filter($request->cidade); // Remove valores vazios
+            
+            if (!empty($cidades)) {
+                $query->whereHas('contato', function($q) use ($cidades) {
+                    $q->where(function($subQuery) use ($cidades) {
+                        foreach ($cidades as $cidade) {
+                            $subQuery->orWhere('cidade', 'like', '%' . $cidade . '%');
+                        }
+                    });
+                });
+            }
         }
 
         // Filtro Telefone Celular
@@ -280,9 +326,9 @@ class ResumeController extends Controller
         //$cidades = $this->getCidadesFromContact();
         //dd($cidades);
             
-            return view('resumes.index', compact('resumes', 'form_busca','ordem', 'cidades'));
+        return view('resumes.index', compact('resumes', 'form_busca','ordem', 'cidades'));
             
-        }
+    }
 
     public function show(Resume $resume)
     {
