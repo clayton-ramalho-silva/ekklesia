@@ -544,7 +544,7 @@
         <!-- No final da página, após a tabela ou lista de currículos -->
         <div class="pagination-wrapper">
             {{ $resumes->appends(request()->query())->links('vendor.pagination.custom') }}
-            <p class="pagination-info">Mostrando {{ $resumes->firstItem() }} a {{ $resumes->lastItem() }} de {{ $resumes->total() }} currículos</p>
+            <p class="pagination-info mt-3">Mostrando {{ $resumes->firstItem() }} a {{ $resumes->lastItem() }} de {{ $resumes->total() }} currículos</p>
         </div>
 
     </article>

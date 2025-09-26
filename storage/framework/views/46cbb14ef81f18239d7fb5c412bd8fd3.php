@@ -646,7 +646,7 @@
         <div class="pagination-wrapper">
             <?php echo e($resumes->appends(request()->query())->links('vendor.pagination.custom')); ?>
 
-            <p class="pagination-info">Mostrando <?php echo e($resumes->firstItem()); ?> a <?php echo e($resumes->lastItem()); ?> de <?php echo e($resumes->total()); ?> currículos</p>
+            <p class="pagination-info mt-3">Mostrando <?php echo e($resumes->firstItem()); ?> a <?php echo e($resumes->lastItem()); ?> de <?php echo e($resumes->total()); ?> currículos</p>
         </div>
 
     </article>
