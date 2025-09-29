@@ -124,9 +124,16 @@
 
                     <div class="col-6">
                         <label for="escolaridade" class="form-label">Formação/Escolaridade</label>
-                        <select name="escolaridade" id="escolaridade" class="form-select select2">
+                        <select name="escolaridade[]" id="escolaridade" class="form-select" multiple>
                             <option value="">Todos</option>
-                            <option value="Ensino Fundamental Completo" {{ request('escolaridade') == 'Ensino Fundamental Completo' ? 'selected' : '' }}> Ensino Fundamental Completo</option>
+                            @foreach ( ['Ensino Fundamental Completo', 'Ensino Fundamental Cursando', 'Ensino Médio Completo', 
+                                        'Ensino Médio Incompleto','Ensino Técnico Completo','Ensino Técnico Cursando', 
+                                        'Superior Completo', 'Superior Cursando', 'Outro'] as $option)
+                                <option value="{{ $option }}" {{ in_array($option, (array) request('escolaridade', []))? 'selected' : ''}}>
+                                    {{ $option }}
+                                </option>
+                            @endforeach  
+                            {{-- <option value="Ensino Fundamental Completo" {{ request('escolaridade') == 'Ensino Fundamental Completo' ? 'selected' : '' }}> Ensino Fundamental Completo</option>
                             <option value="Ensino Fundamental Cursando" {{ request('escolaridade') == 'Ensino Fundamental Cursando' ? 'selected' : '' }}> Ensino Fundamental Cursando</option>
                             <option value="Ensino Médio Completo" {{ request('escolaridade') == 'Ensino Médio Completo' ? 'selected' : '' }}> Ensino Médio Completo</option>
                             <option value="Ensino Médio Incompleto" {{ request('escolaridade') == 'Ensino Médio Incompleto' ? 'selected' : '' }}>  Ensino Médio Cursando</option>
@@ -134,29 +141,42 @@
                             <option value="Ensino Técnico Cursando" {{ request('escolaridade') == 'Ensino Técnico Cursando' ? 'selected' : '' }}> Ensino Técnico Cursando</option>
                             <option value="Superior Completo" {{ request('escolaridade') == 'Superior Completo' ? 'selected' : '' }}> Superior Completo</option>
                             <option value="Superior Cursando" {{ request('escolaridade') == 'Superior Cursando' ? 'selected' : '' }}> Superior Cursando</option>
-                            <option value="Outro" {{ request('escolaridade') == 'Outro' ? 'selected' : '' }}> Outro</option>
+                            <option value="Outro" {{ request('escolaridade') == 'Outro' ? 'selected' : '' }}> Outro</option> --}}
                         </select>
                     </div>
 
                     <div class="col-6">
                         <label for="informatica" class="form-label">Possui conhecimento no pacote Office (Excel/Word)?</label>
-                        <select name="informatica" id="informatica" class="form-select select2">
+                        <select name="informatica[]" id="informatica" class="form-select" multiple>
                             <option value="">Todos</option>
-                            <option value="Básico" {{ request('informatica') == 'Básico' ? 'selected' : '' }}> Básico</option>
+                            @foreach (  
+                                        ['Básico', 'Intermediário', 'Avançado', 'Nenhum'] as $option)
+                                <option value="{{ $option }}" {{ in_array($option, request('informatica', []))? 'selected' : ''}}>
+                                    {{ $option }}
+                                </option>
+                            @endforeach 
+                            {{-- <option value="Básico" {{ request('informatica') == 'Básico' ? 'selected' : '' }}> Básico</option>
                             <option value="Intermediário" {{ request('informatica') == 'Intermediário' ? 'selected' : '' }}> Intermediário</option>
                             <option value="Avançado" {{ request('informatica') == 'Avançado' ? 'selected' : '' }}> Avançado</option>
-                            <option value="Nenhum" {{ request('informatica') == 'Nenhum' ? 'selected' : '' }}> Nenhum</option>
+                            <option value="Nenhum" {{ request('informatica') == 'Nenhum' ? 'selected' : '' }}> Nenhum</option> --}}
                         </select>
                     </div>
 
                     <div class="col-6">
                         <label for="ingles" class="form-label">Inglês</label>
-                        <select name="ingles" id="ingles" class="form-select select2">
+                        <select name="ingles[]" id="ingles" class="form-select" multiple>
                             <option value="">Todos</option>
+                            @foreach (  
+                                        ['Básico', 'Intermediário', 'Avançado', 'Nenhum'] as $option)
+                                <option value="{{ $option }}" {{ in_array($option, request('ingles', []))? 'selected' : ''}}>
+                                    {{ $option }}
+                                </option>
+                            @endforeach 
+                            {{-- <option value="">Todos</option>
                             <option value="Básico" {{ request('ingles') == 'Básico' ? 'selected' : '' }}> Básico</option>
                             <option value="Intermediário" {{ request('ingles') == 'Intermediário' ? 'selected' : '' }}> Intermediário</option>
                             <option value="Avançado" {{ request('ingles') == 'Avançado' ? 'selected' : '' }}> Avançado</option>
-                            <option value="Nenhum" {{ request('ingles') == 'Nenhum' ? 'selected' : '' }}> Nenhum</option>
+                            <option value="Nenhum" {{ request('ingles') == 'Nenhum' ? 'selected' : '' }}> Nenhum</option> --}}
                         </select>
                     </div>
 

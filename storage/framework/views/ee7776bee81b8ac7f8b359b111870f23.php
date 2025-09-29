@@ -122,39 +122,45 @@
 
                     <div class="col-6">
                         <label for="escolaridade" class="form-label">Formação/Escolaridade</label>
-                        <select name="escolaridade" id="escolaridade" class="form-select select2">
+                        <select name="escolaridade[]" id="escolaridade" class="form-select" multiple>
                             <option value="">Todos</option>
-                            <option value="Ensino Fundamental Completo" <?php echo e(request('escolaridade') == 'Ensino Fundamental Completo' ? 'selected' : ''); ?>> Ensino Fundamental Completo</option>
-                            <option value="Ensino Fundamental Cursando" <?php echo e(request('escolaridade') == 'Ensino Fundamental Cursando' ? 'selected' : ''); ?>> Ensino Fundamental Cursando</option>
-                            <option value="Ensino Médio Completo" <?php echo e(request('escolaridade') == 'Ensino Médio Completo' ? 'selected' : ''); ?>> Ensino Médio Completo</option>
-                            <option value="Ensino Médio Incompleto" <?php echo e(request('escolaridade') == 'Ensino Médio Incompleto' ? 'selected' : ''); ?>>  Ensino Médio Cursando</option>
-                            <option value="Ensino Técnico Completo" <?php echo e(request('escolaridade') == 'Ensino Técnico Completo' ? 'selected' : ''); ?>> Ensino Técnico Completo</option>
-                            <option value="Ensino Técnico Cursando" <?php echo e(request('escolaridade') == 'Ensino Técnico Cursando' ? 'selected' : ''); ?>> Ensino Técnico Cursando</option>
-                            <option value="Superior Completo" <?php echo e(request('escolaridade') == 'Superior Completo' ? 'selected' : ''); ?>> Superior Completo</option>
-                            <option value="Superior Cursando" <?php echo e(request('escolaridade') == 'Superior Cursando' ? 'selected' : ''); ?>> Superior Cursando</option>
-                            <option value="Outro" <?php echo e(request('escolaridade') == 'Outro' ? 'selected' : ''); ?>> Outro</option>
+                            <?php $__currentLoopData = ['Ensino Fundamental Completo', 'Ensino Fundamental Cursando', 'Ensino Médio Completo', 
+                                        'Ensino Médio Incompleto','Ensino Técnico Completo','Ensino Técnico Cursando', 
+                                        'Superior Completo', 'Superior Cursando', 'Outro']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($option); ?>" <?php echo e(in_array($option, (array) request('escolaridade', []))? 'selected' : ''); ?>>
+                                    <?php echo e($option); ?>
+
+                                </option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
+                            
                         </select>
                     </div>
 
                     <div class="col-6">
                         <label for="informatica" class="form-label">Possui conhecimento no pacote Office (Excel/Word)?</label>
-                        <select name="informatica" id="informatica" class="form-select select2">
+                        <select name="informatica[]" id="informatica" class="form-select" multiple>
                             <option value="">Todos</option>
-                            <option value="Básico" <?php echo e(request('informatica') == 'Básico' ? 'selected' : ''); ?>> Básico</option>
-                            <option value="Intermediário" <?php echo e(request('informatica') == 'Intermediário' ? 'selected' : ''); ?>> Intermediário</option>
-                            <option value="Avançado" <?php echo e(request('informatica') == 'Avançado' ? 'selected' : ''); ?>> Avançado</option>
-                            <option value="Nenhum" <?php echo e(request('informatica') == 'Nenhum' ? 'selected' : ''); ?>> Nenhum</option>
+                            <?php $__currentLoopData = ['Básico', 'Intermediário', 'Avançado', 'Nenhum']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($option); ?>" <?php echo e(in_array($option, request('informatica', []))? 'selected' : ''); ?>>
+                                    <?php echo e($option); ?>
+
+                                </option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+                            
                         </select>
                     </div>
 
                     <div class="col-6">
                         <label for="ingles" class="form-label">Inglês</label>
-                        <select name="ingles" id="ingles" class="form-select select2">
+                        <select name="ingles[]" id="ingles" class="form-select" multiple>
                             <option value="">Todos</option>
-                            <option value="Básico" <?php echo e(request('ingles') == 'Básico' ? 'selected' : ''); ?>> Básico</option>
-                            <option value="Intermediário" <?php echo e(request('ingles') == 'Intermediário' ? 'selected' : ''); ?>> Intermediário</option>
-                            <option value="Avançado" <?php echo e(request('ingles') == 'Avançado' ? 'selected' : ''); ?>> Avançado</option>
-                            <option value="Nenhum" <?php echo e(request('ingles') == 'Nenhum' ? 'selected' : ''); ?>> Nenhum</option>
+                            <?php $__currentLoopData = ['Básico', 'Intermediário', 'Avançado', 'Nenhum']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($option); ?>" <?php echo e(in_array($option, request('ingles', []))? 'selected' : ''); ?>>
+                                    <?php echo e($option); ?>
+
+                                </option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+                            
                         </select>
                     </div>
 

@@ -135,34 +135,35 @@ class ResumeController extends Controller
             $query->where('foi_jovem_aprendiz', $request->foi_jovem_aprendiz);
         }
 
-        // Filtro Informatica
-        if ($request->filled('informatica') && $request->informatica !== "Todos") {
-            $query->whereHas('escolaridade', function($q) use ($request) {
-                $q->where('informatica', $request->informatica);
-            });
-        }
-
-        // Filtro Informatica
-        if ($request->filled('ingles') && $request->ingles !== "Todos") {
-            $query->whereHas('escolaridade', function($q) use ($request) {
-                $q->where('ingles', $request->ingles);
-            });
+        // Filtro Informatica - múltiplas seleções
+        if ($request->filled('informatica') && is_array($request->informatica)) {
+            $opcoesInformatica = array_filter($request->informatica); // Remove valores vazios
+            
+            if (!empty($opcoesInformatica)) {
+                $query->whereHas('escolaridade', function($q) use ($opcoesInformatica) {
+                    $q->where(function($subQuery) use ($opcoesInformatica) {
+                        foreach ($opcoesInformatica as $informatica) {
+                            $subQuery->orWhere('informatica', 'like', '%' . $informatica . '%');
+                        }
+                    });
+                });
+            }
         }
 
         // Filtro Informatica - múltiplas seleções
-        // if ($request->filled('ingles') && is_array($request->ingles)) {
-        //     $opcoesIngles = array_filter($request->ingles); // Remove valores vazios
+        if ($request->filled('ingles') && is_array($request->ingles)) {
+            $opcoesIngles = array_filter($request->ingles); // Remove valores vazios
             
-        //     if (!empty($opcoesIngles)) {
-        //         $query->whereHas('escolaridade', function($q) use ($opcoesIngles) {
-        //             $q->where(function($subQuery) use ($opcoesIngles) {
-        //                 foreach ($opcoesIngles as $ingles) {
-        //                     $subQuery->orWhere('ingles', 'like', '%' . $ingles . '%');
-        //                 }
-        //             });
-        //         });
-        //     }
-        // }
+            if (!empty($opcoesIngles)) {
+                $query->whereHas('escolaridade', function($q) use ($opcoesIngles) {
+                    $q->where(function($subQuery) use ($opcoesIngles) {
+                        foreach ($opcoesIngles as $ingles) {
+                            $subQuery->orWhere('ingles', 'like', '%' . $ingles . '%');
+                        }
+                    });
+                });
+            }
+        }
 
 
         // No controller, ANTES de processar os filtros
