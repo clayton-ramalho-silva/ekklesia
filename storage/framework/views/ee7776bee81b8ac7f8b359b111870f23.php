@@ -66,32 +66,76 @@
 
                     <div class="col-6">
                         <label for="status" class="form-label">Status</label>
-                        <select name="status" id="status" class="form-select select2">
-                            <option value="">Todos</option>
-                            <option value="ativo" <?php echo e(request('status') == 'ativo' ? 'selected' : ''); ?> > Disponível</option>
-                            <option value="processo" <?php echo e(request('status') == 'processo' ? 'selected' : ''); ?>> Em processo</option>
-                            <option value="contratado" <?php echo e(request('status') == 'contratado' ? 'selected' : ''); ?> > Contratado</option>
-                            <option value="inativo" <?php echo e(request('status') == 'inativo' ? 'selected' : ''); ?>> Inativo</option>
+                        <select name="status[]" id="status" class="form-select" multiple>
+                            <?php $__currentLoopData = ['ativo', 'processo', 'contratado', 'inativo']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($option); ?>" <?php echo e(in_array($option, request('status', []))? 'selected' : ''); ?>>
+                                <?php switch($option):
+                                    case ('ativo'): ?>
+                                        Disponivel
+                                        <?php break; ?>
+                                    <?php case ('processo'): ?>
+                                        Em processo
+                                        <?php break; ?>
+                                    <?php case ('contratado'): ?>
+                                        Contratado
+                                        <?php break; ?>
+                                    <?php case ('inativo'): ?>
+                                        Inativo                                        
+                                        <?php break; ?>
+                                    <?php default: ?>
+                                        <?php echo e($option); ?>
+
+                                    
+                                        
+                                <?php endswitch; ?>
+                               
+                            </option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+                            
                         </select>
                     </div>
 
                     <div class="col-6">
                         <label for="sexo" class="form-label">Gênero</label>
-                        <select name="sexo" id="sexo" class="form-select select2">
-                            <option value="">Todos</option>
-                            <option value="Homem" <?php echo e(request('sexo') == 'Homem' ? 'selected' : ''); ?>> Homem</option>
-                            <option value="Mulher" <?php echo e(request('sexo') == 'Mulher' ? 'selected' : ''); ?>> Mulher</option>
-                            <option value="Prefiro não dizer" <?php echo e(request('sexo') == 'Prefiro não dizer' ? 'selected' : ''); ?>> Prefiro não dizer</option>
+                        <select name="sexo[]" id="sexo" class="form-select" multiple>
+                            
+                            <?php $__currentLoopData = ['Homem', 'Mulher', 'Prefiro não dizer']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($option); ?>" <?php echo e(in_array($option, request('sexo', []))? 'selected' : ''); ?>>
+                                    <?php echo e($option); ?>
+
+                                </option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+                            
                         </select>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label">Gênero</label>
+                        <div class="form-check">
+                            <?php $__currentLoopData = ['Homem', 'Mulher', 'Prefiro não dizer']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="sexo[]" 
+                                        id="sexo_<?php echo e($loop->index); ?>" value="<?php echo e($option); ?>"
+                                        <?php echo e(in_array($option, request('sexo', [])) ? 'checked' : ''); ?>>
+                                    <label class="form-check-label" for="sexo_<?php echo e($loop->index); ?>">
+                                        <?php echo e($option); ?>
+
+                                    </label>
+                                </div>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </div>
                     </div>
 
                     <div class="col-6">
                         <label for="cnh" class="form-label">Possui CNH?</label>
-                        <select name="cnh" id="cnh" class="form-select select2">
-                            <option value="">Todos</option>
-                            <option value="Sim"  <?php echo e(request('cnh') == 'Sim' ? 'selected' : ''); ?>> Sim</option>
-                            <option value="Não"  <?php echo e(request('cnh') == 'Não' ? 'selected' : ''); ?>> Não</option>
-                            <option value="Em andamento"  <?php echo e(request('cnh') == 'Em andamento' ? 'selected' : ''); ?>> Em andamento</option>
+                        <select name="cnh[]" id="cnh" class="form-select" multiple>
+                            
+                            <?php $__currentLoopData = ['Sim', 'Não', 'Em andamento']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($option); ?>" <?php echo e(in_array($option, request('reservista', []))? 'selected' : ''); ?>>
+                                    <?php echo e($option); ?>
+
+                                </option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+                            
                         </select>
                     </div>
 
@@ -102,28 +146,36 @@
 
                     <div class="col-6">
                         <label for="reservista" class="form-label">Possui Reservista?</label>
-                        <select name="reservista" id="reservista" class="form-select select2">
-                            <option value="">Todos</option>
-                            <option value="Sim" <?php echo e(request('reservista') == 'Sim' ? 'selected' : ''); ?>> Sim</option>
-                            <option value="Não" <?php echo e(request('reservista') == 'Não' ? 'selected' : ''); ?>> Não</option>
-                            <option value="Em andamento" <?php echo e(request('reservista') == 'Em andamento' ? 'selected' : ''); ?>> Em andamento</option>
+                        <select name="reservista[]" id="reservista" class="form-select" multiple>
+                            
+                            <?php $__currentLoopData = ['Sim', 'Não', 'Em andamento']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($option); ?>" <?php echo e(in_array($option, request('reservista', []))? 'selected' : ''); ?>>
+                                    <?php echo e($option); ?>
+
+                                </option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+                            
                         </select>
                     </div>
 
                     <div class="col-6">
                         <label for="foi_jovem_aprendiz" class="form-label">Já foi Jovem Aprendiz?</label>
-                        <select name="foi_jovem_aprendiz" id="foi_jovem_aprendiz" class="form-select select2">
-                            <option value="">Todos</option>
-                            <option value="Sim, da ASPPE"  <?php echo e(request('foi_jovem_aprendiz') == 'Sim, da ASPPE' ? 'selected' : ''); ?>> Sim, da ASPPE</option>
-                            <option value="Sim, de Outra Qualificadora"  <?php echo e(request('foi_jovem_aprendiz') == 'Sim, de Outra Qualificadora' ? 'selected' : ''); ?>> Sim, de Outra Qualificadora</option>
-                            <option value="Não"  <?php echo e(request('foi_jovem_aprendiz') == 'Não' ? 'selected' : ''); ?>> Não</option>
+                        <select name="foi_jovem_aprendiz[]" id="foi_jovem_aprendiz" class="form-select" multiple>
+                            
+                             <?php $__currentLoopData = ['Sim, da ASPPE', 'Sim, de Outra Qualificadora', 'Não']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($option); ?>" <?php echo e(in_array($option, request('foi_jovem_aprendiz', []))? 'selected' : ''); ?>>
+                                    <?php echo e($option); ?>
+
+                                </option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+                            
                         </select>
                     </div>
 
                     <div class="col-6">
                         <label for="escolaridade" class="form-label">Formação/Escolaridade</label>
                         <select name="escolaridade[]" id="escolaridade" class="form-select" multiple>
-                            <option value="">Todos</option>
+                            
                             <?php $__currentLoopData = ['Ensino Fundamental Completo', 'Ensino Fundamental Cursando', 'Ensino Médio Completo', 
                                         'Ensino Médio Incompleto','Ensino Técnico Completo','Ensino Técnico Cursando', 
                                         'Superior Completo', 'Superior Cursando', 'Outro']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -131,8 +183,7 @@
                                     <?php echo e($option); ?>
 
                                 </option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
-                            
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>                             
                         </select>
                     </div>
 
@@ -145,8 +196,7 @@
                                     <?php echo e($option); ?>
 
                                 </option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
-                            
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>                             
                         </select>
                     </div>
 
@@ -204,12 +254,16 @@
                     </div>
 
                      <div class="col-6 mb-4">
-                        <label for="ingles" class="form-label">PCD</label>
-                        <select name="pcd" id="pcd" class="form-select select2">
-                            <option value="">Todos</option>
-                            <option value="Sim, com laudo." <?php echo e(request('pcd') == 'Sim, com laudo.' ? 'selected' : ''); ?>> Sim, com laudo.</option>
-                            <option value="Sim, sem laudo." <?php echo e(request('pcd') == 'Sim, sem laudo.' ? 'selected' : ''); ?>> Sim, sem laudo.</option>
-                            <option value="Não" <?php echo e(request('pcd') == 'Não' ? 'selected' : ''); ?>> Não</option>                            
+                        <label for="pcd" class="form-label">PCD</label>
+                        <select name="pcd[]" id="pcd" class="form-select" multiple>
+                            
+                            <?php $__currentLoopData = ['Sim, com laudo.', 'Sim, sem laudo.', 'Não']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($option); ?>" <?php echo e(in_array($option, request('pcd', []))? 'selected' : ''); ?>>
+                                <?php echo e($option); ?>
+
+                            </option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+                            
                         </select>
                     </div>
 
@@ -461,8 +515,7 @@
                     <li class="col-formacao">
                         <?php if(isset($resume->escolaridade->escolaridade) && is_array($resume->escolaridade->escolaridade)): ?>
                             <?php $__currentLoopData = $resume->escolaridade->escolaridade; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $formacao): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <?php echo e($formacao); ?>
-
+                                <p><?php echo e($formacao); ?></p>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>                            
                         <?php else: ?>
                             Nenhuma formação informada.

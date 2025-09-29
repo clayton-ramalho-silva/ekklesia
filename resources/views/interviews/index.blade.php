@@ -562,7 +562,7 @@
                     <li class="col-formacao">
                         @if ($resume->escolaridade->escolaridade && is_array($resume->escolaridade->escolaridade))
                             @foreach ($resume->escolaridade->escolaridade as $formacao)
-                                {{$formacao}}
+                                <p>{{$formacao}}</p>
                             @endforeach                            
                         @else
                             Nenhuma formação informada.

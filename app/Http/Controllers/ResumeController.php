@@ -80,23 +80,64 @@ class ResumeController extends Controller
 
          // Filtro Status
 
-        if ($request->filled('status') && $request->status !== "Todos") {            
-                $query->where('status', $request->status);            
+        // if ($request->filled('status') && $request->status !== "Todos") {            
+        //         $query->where('status', $request->status);            
+        // }
+       
+        // Filtro Status - múltiplas seleções
+        if ($request->filled('status') && is_array($request->status)) {
+            $statusSelecionados = array_filter($request->status, function($item) {
+                return $item !== '' && $item !== 'Todos';
+            });
+            
+            if (!empty($statusSelecionados)) {
+                $query->whereIn('status', $statusSelecionados);
+            }
         }
        
 
         // Filtro gênero
-        if ($request->filled('sexo') && $request->sexo !== "Todos"){
-            $query->whereHas('informacoesPessoais', function($q) use ($request) {
-                $q->where('sexo', $request->sexo);
-            });
-        }        
+        // if ($request->filled('sexo') && $request->sexo !== "Todos"){
+        //     $query->whereHas('informacoesPessoais', function($q) use ($request) {
+        //         $q->where('sexo', $request->sexo);
+        //     });
+        // }        
+
+         // Filtro gênero- múltiplas seleções
+        if ($request->filled('sexo') && is_array($request->sexo)) {
+            $opcoes = array_filter($request->sexo); // Remove valores vazios
+            
+            if (!empty($opcoes)) {
+                $query->whereHas('informacoesPessoais', function($q) use ($opcoes) {
+                    $q->where(function($subQuery) use ($opcoes) {
+                        foreach ($opcoes as $opcao) {
+                            $subQuery->orWhere('sexo', 'like', '%' . $opcao . '%');
+                        }
+                    });
+                });
+            }
+        }
 
         // Filtro CNH
-        if ($request->filled('cnh') && $request->cnh !== "Todos") {
-            $query->whereHas('informacoesPessoais', function($q) use ($request) {
-                $q->where('cnh', $request->cnh);
-            });
+        // if ($request->filled('cnh') && $request->cnh !== "Todos") {
+        //     $query->whereHas('informacoesPessoais', function($q) use ($request) {
+        //         $q->where('cnh', $request->cnh);
+        //     });
+        // }
+
+         // Filtro CNH- múltiplas seleções
+        if ($request->filled('cnh') && is_array($request->cnh)) {
+            $opcoes = array_filter($request->cnh); // Remove valores vazios
+            
+            if (!empty($opcoes)) {
+                $query->whereHas('informacoesPessoais', function($q) use ($opcoes) {
+                    $q->where(function($subQuery) use ($opcoes) {
+                        foreach ($opcoes as $opcao) {
+                            $subQuery->orWhere('cnh', 'like', '%' . $opcao . '%');
+                        }
+                    });
+                });
+            }
         }
 
         // Filtro Idade
@@ -123,16 +164,37 @@ class ResumeController extends Controller
         // }
 
 
-        // Filtro Reservista
-        if ($request->filled('reservista') && $request->reservista !== "Todos") {
-            $query->whereHas('informacoesPessoais', function($q) use ($request) {
-                $q->where('reservista', $request->reservista);
-            });
-        }
+        
 
-        //Filtro Já foi jovem aprendiz
-        if ($request->filled('foi_jovem_aprendiz') && $request->foi_jovem_aprendiz !== "Todos") {
-            $query->where('foi_jovem_aprendiz', $request->foi_jovem_aprendiz);
+         // Filtro Reservista- múltiplas seleções
+        if ($request->filled('reservista') && is_array($request->reservista)) {
+            $opcoes = array_filter($request->reservista); // Remove valores vazios
+            
+            if (!empty($opcoes)) {
+                $query->whereHas('informacoesPessoais', function($q) use ($opcoes) {
+                    $q->where(function($subQuery) use ($opcoes) {
+                        foreach ($opcoes as $opcao) {
+                            $subQuery->orWhere('reservista', 'like', '%' . $opcao . '%');
+                        }
+                    });
+                });
+            }
+        }
+        
+
+         // Filtro Já foi jovem aprendiz - múltiplas seleções
+        if ($request->filled('foi_jovem_aprendiz') && is_array($request->foi_jovem_aprendiz)) {
+            $opcoesJovemAprendiz = array_filter($request->foi_jovem_aprendiz); // Remove valores vazios
+            
+            if (!empty($opcoesJovemAprendiz)) {
+                $query->whereHas('informacoesPessoais', function($q) use ($opcoesJovemAprendiz) {
+                    $q->where(function($subQuery) use ($opcoesJovemAprendiz) {
+                        foreach ($opcoesJovemAprendiz as $jovem_aprendiz) {
+                            $subQuery->orWhere('foi_jovem_aprendiz', 'like', '%' . $jovem_aprendiz . '%');
+                        }
+                    });
+                });
+            }
         }
 
         // Filtro Informatica - múltiplas seleções
@@ -187,12 +249,29 @@ class ResumeController extends Controller
 
 
 
-         // Filtro Formação/Escolaridade
-         if ($request->filled('escolaridade') && $request->escolaridade !== "Todos") {
-            $query->whereHas('escolaridade', function($q) use ($request) {
-                $q->whereJsonContains('escolaridade', $request->escolaridade);
+        //  // Filtro Formação/Escolaridade
+        //  if ($request->filled('escolaridade') && $request->escolaridade !== "Todos") {
+        //     $query->whereHas('escolaridade', function($q) use ($request) {
+        //         $q->whereJsonContains('escolaridade', $request->escolaridade);
+        //     });
+        // } 
+        
+        // Filtro Formação/Escolaridade - múltiplas seleções
+        if ($request->filled('escolaridade') && is_array($request->escolaridade)) {
+            $escolaridades = array_filter($request->escolaridade, function($item) {
+                return $item !== '' && $item !== 'Todos';
             });
-        }    
+            
+            if (!empty($escolaridades)) {
+                $query->whereHas('escolaridade', function($q) use ($escolaridades) {
+                    $q->where(function($subQuery) use ($escolaridades) {
+                        foreach ($escolaridades as $escolaridade) {
+                            $subQuery->orWhereJsonContains('escolaridade', $escolaridade);
+                        }
+                    });
+                });
+            }
+        }
 
         // Filtro Vagas Interesse
         if ($request->filled('vagas_interesse')) {
