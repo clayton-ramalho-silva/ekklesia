@@ -65,6 +65,12 @@ class ResumeController extends Controller
             });
         }
 
+        // Filtro por cpf - Busca pelo nome do candidato
+        if($request->filled('cpf')) {
+            $query->whereHas('informacoesPessoais', function($q) use ($request) {
+                $q->where('cpf', 'like', '%' . $request->cpf . '%');
+            });
+        }
 
         // Filtro Status
 
@@ -212,7 +218,7 @@ class ResumeController extends Controller
             }
         }
 
-        // Filtro Informatica - múltiplas seleções
+        // Filtro Ingles - múltiplas seleções
         if ($request->filled('ingles') && is_array($request->ingles)) {
             $opcoesIngles = array_filter($request->ingles); // Remove valores vazios
             
@@ -314,6 +320,17 @@ class ResumeController extends Controller
             });
         }
 
+        // Filtro Telefone Contato
+
+        if ($request->filled('telefone_contato') && strlen($request->telefone_contato) >= 4) {
+            $ultimosDigitos = substr($request->telefone_contato, -4);
+            
+            $query->whereHas('contato', function($q) use ($ultimosDigitos) {
+                $q->where('telefone_residencial', 'like', '%' . $ultimosDigitos);
+            });
+        }
+
+        
         // Filtro Candidato entrevistado/nao entrevistado/ todos
         // if ($request->has('entrevistado') && $request->entrevistado !== "Todos") {
         //     if ($request->entrevistado == '1') {
@@ -351,22 +368,61 @@ class ResumeController extends Controller
 
        
         //Controller - Filtro PCD
-        if ($request->filled('pcd') && $request->pcd !== "Todos") {
-            $query->whereHas('informacoesPessoais', function($q) use ($request) {
-                if ($request->pcd === 'Não') {
-                    // Se escolheu "Não", excluir os que têm "Sim, com laudo." e "Sim, sem laudo."
-                    // Inclui registros com "Não", null, vazio ou outros valores
-                    $q->where(function($subQuery) {
-                        $subQuery->whereNotIn('pcd', ['Sim, com laudo.', 'Sim, sem laudo.'])
-                                ->orWhereNull('pcd')
-                                ->orWhere('pcd', '');
+        // if ($request->filled('pcd') && $request->pcd !== "Todos") {
+        //     $query->whereHas('informacoesPessoais', function($q) use ($request) {
+        //         if ($request->pcd === 'Não') {
+        //             // Se escolheu "Não", excluir os que têm "Sim, com laudo." e "Sim, sem laudo."
+        //             // Inclui registros com "Não", null, vazio ou outros valores
+        //             $q->where(function($subQuery) {
+        //                 $subQuery->whereNotIn('pcd', ['Sim, com laudo.', 'Sim, sem laudo.'])
+        //                         ->orWhereNull('pcd')
+        //                         ->orWhere('pcd', '');
+        //             });
+        //         } else {
+        //             // Para outras opções, mantém o comportamento original
+        //             $q->where('pcd', $request->pcd);
+        //         }
+        //     });
+        // }
+
+        // Filtro PCD - múltiplas seleções
+        if ($request->filled('pcd') && is_array($request->pcd)) {
+            $pcdSelecionados = array_filter($request->pcd);
+            
+            if (!empty($pcdSelecionados)) {
+                $query->whereHas('informacoesPessoais', function($q) use ($pcdSelecionados) {
+                    $q->where(function($subQuery) use ($pcdSelecionados) {
+                        
+                        // Verifica se "Não" foi selecionado
+                        if (in_array('Não', $pcdSelecionados)) {
+                            $subQuery->where(function($naoQuery) {
+                                $naoQuery->whereNotIn('pcd', ['Sim, com laudo.', 'Sim, sem laudo.'])
+                                        ->orWhereNull('pcd')
+                                        ->orWhere('pcd', '');
+                            });
+                        }
+                        
+                        // Adiciona as outras opções selecionadas (Sim, com laudo. / Sim, sem laudo.)
+                        $outrasOpcoes = array_diff($pcdSelecionados, ['Não']);
+                        if (!empty($outrasOpcoes)) {
+                            if (in_array('Não', $pcdSelecionados)) {
+                                // Se "Não" também foi selecionado, usa OR
+                                $subQuery->orWhereIn('pcd', $outrasOpcoes);
+                            } else {
+                                // Se só tem "Sim" opções
+                                $subQuery->whereIn('pcd', $outrasOpcoes);
+                            }
+                        }
                     });
-                } else {
-                    // Para outras opções, mantém o comportamento original
-                    $q->where('pcd', $request->pcd);
-                }
-            });
+                });
+            }
         }
+
+
+
+
+
+
 
         //Filtro Já foi jovem aprendiz
         if ($request->filled('cras') && $request->cras !== "cras") {
