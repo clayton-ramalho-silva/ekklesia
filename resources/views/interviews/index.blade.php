@@ -19,7 +19,7 @@
 
             <form id="filter-form-interviews" method="GET" action="{{route('interviews.index')}}" class="dropdown-menu bloco-filtros" aria-labelledby="dropdownFiltroInterview">
 
-                <div class="row d-flex">
+                <div class="row d-flex container-filtros">
 
                     <div class="col-12 mb-3">
                         <label for="nome" class="form-label" style="font-weight: 700; color:#333; padding-bottom: 7px;">Nome do Candidato</label>
@@ -32,6 +32,18 @@
                     </div>
 
                     <div class="col-6 mb-4">
+                        <label for="telefone_contato" class="form-label">4 últimos dígitos do Tel. Contato</label>
+                        <input type="text" name="telefone_contato" id="telefone_contato" class="form-control" value="{{ request('celular') }}" placeholder="Ex: 9999">
+                    </div>
+                     <div class="col col-5 mb-4">
+                        <div class="mb-3">
+                            <label for="cpf" class="form-label">CPF:</label>
+                            <input type="text" class="form-control" id="cpf" name="cpf"  value="{{ request('cpf') }}" placeholder="000.000.000-00" maxlength="14">
+                            @error('cpf') <div class="alert alert-danger">{{ $message }}</div> @enderror
+                        </div>
+                    </div>
+
+                    <div class="col col-4 mb-4">
                         <div class="form-group">
                             <label class="form-label">Ordenação:</label>
                             <select name="ordem" class="form-select select2" onchange="this.form.submit()">
@@ -40,6 +52,11 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col col-3 mb-4">
+                        <label for="min_age" class="form-label">Idade mínima:</label>
+                        <input type="number" name="min_age" id="min_age" class="form-control" value="{{ request('min_age')}}" >
+                    </div>
+
                     <div class="col-6">
                         <label for="vagas_interesse" class="form-label">Vagas de Interesse</label>
                         <select name="vagas_interesse[]" id="vagas_interesse" class="form-select" multiple>
@@ -67,7 +84,7 @@
                         </select>
                     </div>
 
-                    <div class="col-6">
+                    {{-- <div class="col-6">
                         <label for="status" class="form-label">Status</label>
                         <select name="status" id="status" class="form-select select2">
                             <option value="">Todos</option>
@@ -76,9 +93,35 @@
                             <option value="contratado" {{ request('status') == 'contratado' ? 'selected' : '' }} > Contratado</option>
                             <option value="inativo" {{ request('status') == 'inativo' ? 'selected' : '' }}> Inativo</option>
                         </select>
-                    </div>
+                    </div> --}}
+
 
                     <div class="col-6">
+                        <label class="form-label">Status</label>
+                        <div class="form-check">
+                            @foreach (['ativo', 'processo', 'contratado', 'inativo'] as $option)
+                                @php
+                                    $label = match($option) {
+                                        'ativo' => 'Disponivel',
+                                        'processo' => 'Em processo',
+                                        'contratado' => 'Contratado',
+                                        'inativo' => 'Inativo',
+                                        default => $option
+                                    };
+                                @endphp
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="status[]" 
+                                        id="status_{{ $loop->index }}" value="{{ $option }}"
+                                        {{ in_array($option, request('status', [])) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="status_{{ $loop->index }}">
+                                        {{ $label }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    {{-- <div class="col-6">
                         <label for="sexo" class="form-label">Gênero</label>
                         <select name="sexo" id="sexo" class="form-select select2">
                             <option value="">Todos</option>
@@ -86,9 +129,32 @@
                             <option value="Mulher" {{ request('sexo') == 'Mulher' ? 'selected' : '' }}> Mulher</option>
                             <option value="Prefiro não dizer" {{ request('sexo') == 'Prefiro não dizer' ? 'selected' : '' }}> Prefiro não dizer</option>
                         </select>
+                    </div> --}}
+
+                     <div class="col-6">
+                        <label class="form-label">Gênero</label>
+                        <div class="form-check">
+                            @foreach (['Homem', 'Mulher', 'Prefiro não dizer', 'Outro'] as $option)
+                                @php
+                                    $label = match($option) {
+                                        'Homem' => 'Masculino',
+                                        'Mulher' => 'Feminino',                                        
+                                        default => $option
+                                    };
+                                @endphp
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="sexo[]" 
+                                        id="sexo_{{ $loop->index }}" value="{{ $option }}"
+                                        {{ in_array($option, request('sexo', [])) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="sexo_{{ $loop->index }}">
+                                        {{ $option }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
 
-                    <div class="col-6">
+                    {{-- <div class="col-6">
                         <label for="cnh" class="form-label">Possui CNH?</label>
                         <select name="cnh" id="cnh" class="form-select select2">
                             <option value="">Todos</option>
@@ -96,14 +162,38 @@
                             <option value="Não"  {{ request('cnh') == 'Não' ? 'selected' : '' }}> Não</option>
                             <option value="Em andamento"  {{ request('cnh') == 'Em andamento' ? 'selected' : '' }}> Em andamento</option>
                         </select>
-                    </div>
+                    </div> --}}
 
                     <div class="col-6">
-                        <label for="min_age" class="form-label">Idade mínima:</label>
-                        <input type="number" name="min_age" id="min_age" class="form-control" value="{{ request('min_age')}}" >
+                        <label for="cnh" class="form-label">Possui CNH?</label>
+                        <div class="form-check">
+                            @foreach (['Sim', 'Não', 'Em andamento'] as $option)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="cnh[]" 
+                                        id="cnh{{ $loop->index }}" value="{{ $option }}"
+                                        {{ in_array($option, request('cnh', [])) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="cnh{{ $loop->index }}">
+                                        {{ $option }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                        <!--<select name="cnh[]" id="cnh" class="form-select" multiple>
+                            {{-- <option value="">Todos</option> --}}
+                            {{-- @foreach (  
+                                        ['Sim', 'Não', 'Em andamento'] as $option)
+                                <option value="{{ $option }}" {{ in_array($option, request('reservista', []))? 'selected' : ''}}>
+                                    {{ $option }}
+                                </option>
+                            @endforeach  --}}
+                            {{-- <option value="Sim"  {{ request('cnh') == 'Sim' ? 'selected' : '' }}> Sim</option>
+                            <option value="Não"  {{ request('cnh') == 'Não' ? 'selected' : '' }}> Não</option>
+                            <option value="Em andamento"  {{ request('cnh') == 'Em andamento' ? 'selected' : '' }}> Em andamento</option> --}}
+                        </select>-->
                     </div>
 
-                    <div class="col-6">
+                    
+                    {{-- <div class="col-6">
                         <label for="reservista" class="form-label">Possui Reservista?</label>
                         <select name="reservista" id="reservista" class="form-select select2">
                             <option value="">Todos</option>
@@ -111,9 +201,35 @@
                             <option value="Não" {{ request('reservista') == 'Não' ? 'selected' : '' }}> Não</option>
                             <option value="Em andamento" {{ request('reservista') == 'Em andamento' ? 'selected' : '' }}> Em andamento</option>
                         </select>
-                    </div>
+                    </div> --}}
 
                     <div class="col-6">
+                        <label for="reservista" class="form-label">Possui Reservista?</label>
+                        <div class="form-check">
+                            @foreach (['Sim', 'Não', 'Em andamento'] as $option)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="reservista[]" 
+                                        id="reservista{{ $loop->index }}" value="{{ $option }}"
+                                        {{ in_array($option, request('reservista', [])) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="reservista{{ $loop->index }}">
+                                        {{ $option }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                        {{-- <select name="reservista[]" id="reservista" class="form-select" multiple>
+                          
+                            @foreach (  
+                                        ['Sim', 'Não', 'Em andamento'] as $option)
+                                <option value="{{ $option }}" {{ in_array($option, request('reservista', []))? 'selected' : ''}}>
+                                    {{ $option }}
+                                </option>
+                            @endforeach 
+                          
+                        </select> --}}
+                    </div>
+
+                    {{-- <div class="col-6">
                         <label for="foi_jovem_aprendiz" class="form-label">Já foi Jovem Aprendiz?</label>
                         <select name="foi_jovem_aprendiz" id="foi_jovem_aprendiz" class="form-select select2">
                             <option value="">Todos</option>
@@ -121,9 +237,33 @@
                             <option value="Sim, de Outra Qualificadora"  {{ request('foi_jovem_aprendiz') == 'Sim, de Outra Qualificadora' ? 'selected' : '' }}> Sim, de Outra Qualificadora</option>
                             <option value="Não"  {{ request('foi_jovem_aprendiz') == 'Não' ? 'selected' : '' }}> Não</option>
                         </select>
-                    </div>
+                    </div> --}}
 
                     <div class="col-6">
+                        <label for="foi_jovem_aprendiz" class="form-label">Já foi Jovem Aprendiz?</label>
+                        <div class="form-check">
+                            @foreach (['Sim, da ASPPE', 'Sim, de Outra Qualificadora', 'Não'] as $option)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="foi_jovem_aprendiz[]" 
+                                        id="foi_jovem_aprendiz{{ $loop->index }}" value="{{ $option }}"
+                                        {{ in_array($option, request('foi_jovem_aprendiz', [])) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="foi_jovem_aprendiz{{ $loop->index }}">
+                                        {{ $option }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                        {{-- <select name="foi_jovem_aprendiz[]" id="foi_jovem_aprendiz" class="form-select" multiple>                            
+                             @foreach (  
+                                        ['Sim, da ASPPE', 'Sim, de Outra Qualificadora', 'Não'] as $option)
+                                <option value="{{ $option }}" {{ in_array($option, request('foi_jovem_aprendiz', []))? 'selected' : ''}}>
+                                    {{ $option }}
+                                </option>
+                            @endforeach                             
+                        </select> --}}
+                    </div>
+
+                    {{-- <div class="col-6">
                         <label for="escolaridade" class="form-label">Formação/Escolaridade</label>
                         <select name="escolaridade" id="escolaridade" class="form-select select2">
                             <option value="">Todos</option>
@@ -137,9 +277,27 @@
                             <option value="Superior Cursando" {{ request('escolaridade') == 'Superior Cursando' ? 'selected' : '' }}> Superior Cursando</option>
                             <option value="Outro" {{ request('escolaridade') == 'Outro' ? 'selected' : '' }}> Outro</option>
                         </select>
+                    </div> --}}
+
+                     <div class="col-12">
+                        <label class="form-label">Formação/Escolaridade</label>
+                        <div class="form-check d-flex flex-wrap">
+                            @foreach ( ['Ensino Fundamental Completo', 'Ensino Fundamental Cursando', 'Ensino Médio Completo', 
+                                        'Ensino Médio Incompleto','Ensino Técnico Completo','Ensino Técnico Cursando', 
+                                        'Superior Completo', 'Superior Cursando', 'Outro'] as $option)
+                                <div class="form-check w-50">
+                                    <input class="form-check-input" type="checkbox" name="escolaridade[]" 
+                                        id="escolaridade_{{ $loop->index }}" value="{{ $option }}"
+                                        {{ in_array($option, (array) request('escolaridade', [])) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="escolaridade_{{ $loop->index }}">
+                                        {{ $option }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
 
-                    <div class="col-6">
+                    {{-- <div class="col-6">
                         <label for="informatica" class="form-label">Possui conhecimento no pacote Office (Excel/Word)?</label>
                         <select name="informatica" id="informatica" class="form-select select2">
                             <option value="">Todos</option>
@@ -148,9 +306,34 @@
                             <option value="Avançado" {{ request('informatica') == 'Avançado' ? 'selected' : '' }}> Avançado</option>
                             <option value="Nenhum" {{ request('informatica') == 'Nenhum' ? 'selected' : '' }}> Nenhum</option>
                         </select>
-                    </div>
+                    </div> --}}
 
                     <div class="col-6">
+                        <label for="informatica" class="form-label">Possui conhecimento no pacote Office (Excel/Word)?</label>
+                        <div class="form-check">
+                            @foreach (['Básico', 'Intermediário', 'Avançado','Nenhum'] as $option)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="informatica[]" 
+                                        id="informatica{{ $loop->index }}" value="{{ $option }}"
+                                        {{ in_array($option, request('informatica', [])) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="informatica{{ $loop->index }}">
+                                        {{ $option }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                        {{-- <select name="informatica[]" id="informatica" class="form-select" multiple>
+                            <option value="">Todos</option>
+                            @foreach (  
+                                        ['Básico', 'Intermediário', 'Avançado', 'Nenhum'] as $option)
+                                <option value="{{ $option }}" {{ in_array($option, request('informatica', []))? 'selected' : ''}}>
+                                    {{ $option }}
+                                </option>
+                            @endforeach                             
+                        </select> --}}
+                    </div>
+
+                    {{-- <div class="col-6">
                         <label for="ingles" class="form-label">Inglês</label>
                         <select name="ingles" id="ingles" class="form-select select2">
                             <option value="">Todos</option>
@@ -159,6 +342,31 @@
                             <option value="Avançado" {{ request('ingles') == 'Avançado' ? 'selected' : '' }}> Avançado</option>
                             <option value="Nenhum" {{ request('ingles') == 'Nenhum' ? 'selected' : '' }}> Nenhum</option>
                         </select>
+                    </div> --}}
+
+                    <div class="col-6">
+                        <label for="ingles" class="form-label">Inglês</label>
+                        <div class="form-check">
+                            @foreach (['Básico', 'Intermediário', 'Avançado','Nenhum'] as $option)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="ingles[]" 
+                                        id="ingles{{ $loop->index }}" value="{{ $option }}"
+                                        {{ in_array($option, request('ingles', [])) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="ingles{{ $loop->index }}">
+                                        {{ $option }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                        {{-- <select name="ingles[]" id="ingles" class="form-select" multiple>
+                            <option value="">Todos</option>
+                            @foreach (  
+                                        ['Básico', 'Intermediário', 'Avançado', 'Nenhum'] as $option)
+                                <option value="{{ $option }}" {{ in_array($option, request('ingles', []))? 'selected' : ''}}>
+                                    {{ $option }}
+                                </option>
+                            @endforeach                            
+                        </select> --}}
                     </div>
 
                                   
@@ -213,7 +421,7 @@
                         </select>
                     </div>
 
-                    <div class="col-6 mb-4">
+                    {{-- <div class="col-6 mb-4">
                         <label for="ingles" class="form-label">PCD</label>
                         <select name="pcd" id="pcd" class="form-select select2">
                             <option value="">Todos</option>
@@ -221,7 +429,7 @@
                             <option value="Sim, sem laudo." {{ request('pcd') == 'Sim, sem laudo.' ? 'selected' : '' }}> Sim, sem laudo.</option>
                             <option value="Não" {{ request('pcd') == 'Não' ? 'selected' : '' }}> Não</option>                            
                         </select>
-                    </div>
+                    </div> --}}
 
                     <div class="col-6 mb-4">
                         <label for="ingles" class="form-label">Sua família é atendida por algum equipamento do governo?</label>
@@ -230,6 +438,22 @@
                             <option value="Sim" {{ request('cras') == 'Sim' ? 'selected' : '' }}> Sim</option>                            
                             <option value="Não" {{ request('cras') == 'Não' ? 'selected' : '' }}> Não</option>                            
                         </select>
+                    </div>
+
+                    <div class="col-6 mb-4">
+                        <label for="pcd" class="form-label">PCD</label>
+                        <div>
+                            @foreach (['Sim, com laudo.', 'Sim, sem laudo.', 'Não'] as $option)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="pcd[]" 
+                                        id="pcd_{{ $loop->index }}" value="{{ $option }}"
+                                        {{ in_array($option, (array) request('pcd', [])) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="pcd_{{ $loop->index }}">
+                                        {{ $option }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                     <hr>
                     {{-- Parecer entrevistador --}}
@@ -562,7 +786,7 @@
                     <li class="col-formacao">
                         @if ($resume->escolaridade->escolaridade && is_array($resume->escolaridade->escolaridade))
                             @foreach ($resume->escolaridade->escolaridade as $formacao)
-                                {{$formacao}}
+                                <p>{{$formacao}}</p>
                             @endforeach                            
                         @else
                             Nenhuma formação informada.
@@ -712,6 +936,7 @@
 @endsection
 
 @push('scripts-custom')
+<script src="{{ asset('js/jquery.mask.js') }}"></script>
 <script>
 
 $(document).ready(function(){
@@ -719,6 +944,7 @@ $(document).ready(function(){
     $('.bloco-filtros .select2').select2({
         placeholder: "Selecione",
     });
+    
 
     //  $('#cidade').select2({
     //     placeholder: 'Selecione as cidades',
@@ -732,6 +958,8 @@ $(document).ready(function(){
         closeOnSelect: true,
         allowClear: true
     });
+
+    $('#cpf').mask('000.000.000-00');
     
 
     // Botão limpar - redireciona para URL sem parâmetros
@@ -1802,8 +2030,11 @@ p.badge{
     font-size: 13px;
     color: #333333;
 }   
-
-
+/*filtro*/
+.container-filtros{
+    height: 500px;
+    overflow-y: auto
+}
 </style>
 
 @endpush

@@ -896,5 +896,9 @@ function updateStatus(newStatus) {
     width: 74%;
 }
 
+.modal{
+    z-index: 9999999 !important;
+}
+
 </style>
 @endpush

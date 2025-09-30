@@ -1114,6 +1114,10 @@ function updateStatus(newStatus) {
     width: 74%;
 }
 
+.modal{
+    z-index: 9999999 !important;
+}
+
 </style>
 <?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/case/Área de trabalho/2025/ldweb/Projeto asppe/painelasppe/resources/views/interviews/show.blade.php ENDPATH**/ ?>
