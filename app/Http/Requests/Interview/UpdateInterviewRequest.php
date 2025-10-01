@@ -41,13 +41,13 @@ class UpdateInterviewRequest extends FormRequest
             'porque_ser_jovem_aprendiz' => 'nullable|string',
             'fonte_curriculo' => 'nullable|string|max:255',
             'perfil_santa_casa' => 'nullable|string|max:255',
-            'classificacao' => 'nullable|string|max:255',
+            //'classificacao' => 'nullable|string|max:255', - pediram para trocar pelo campo 'perfil'
             'parecer_recrutador' => 'nullable|string', // Parecer RH
             'observacoes' => 'nullable|string', // Entrevistas
             'obs_rh' => 'nullable|string', // Observações RH
             'resume_id' => 'nullable|exists:resumes,id',
-            'tipo_beneficio' => 'nullable|string|max:255'
-            //'perfil' => 'required|string|max:255',
+            'tipo_beneficio' => 'nullable|string|max:255',
+            'perfil' => 'nullable|string|max:255',
             //'curso_extracurricular' => 'required|string',
             //'pretencao_candidato' => 'required|string',
             //'sobre_candidato' => 'required|string',

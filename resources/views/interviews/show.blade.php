@@ -415,15 +415,14 @@
                     <div class="col-3 form-campo">
                         <div class="mb-3">
                             <div class="floatlabel-wrapper ">
-                                <label for="classificacao" class="label-floatlabel" class="form-label floatlabel-label">Classificação?</label>
-                                <select name="classificacao" id="classificacao" class="form-select active-floatlabel" >
+                                <label for="perfil" class="label-floatlabel" class="form-label floatlabel-label">Perfil?</label>
+                                <select name="perfil" id="perfil" class="form-select active-floatlabel" >
                                     <option></option>
-                                    <option value="A" {{ $interview->classificacao === 'A' ? 'selected' : ''}}> A</option>
-                                    <option value="B" {{ $interview->classificacao === 'B' ? 'selected' : ''}}> B</option>
-                                    <option value="C" {{ $interview->classificacao === 'C' ? 'selected' : ''}}> C</option>
-                                    <option value="D" {{ $interview->classificacao === 'D' ? 'selected' : ''}}> D</option>
+                                    <option value="ADMINISTRATIVO" {{ $interview->perfil === 'ADMINISTRATIVO' ? 'selected' : ''}}> ADMINISTRATIVO</option>
+                                    <option value="OPERACIONAL" {{ $interview->perfil === 'OPERACIONAL' ? 'selected' : ''}}> OPERACIONAL</option>
+                                    <option value="ADM / OPERACIONAL" {{ $interview->perfil === 'ADM / OPERACIONAL' ? 'selected' : ''}}> ADM / OPERACIONAL</option>                                    
                                 </select>
-                                @error('classificacao') <div class="alert alert-danger">{{ $message }}</div> @enderror
+                                @error('perfil') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </div>
                         </div>
                     </div>

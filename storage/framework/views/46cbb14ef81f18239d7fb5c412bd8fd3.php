@@ -208,6 +208,23 @@ unset($__errorArgs, $__bag); ?>
                         </div>
                         
                     </div>
+                     <div class="col-6">
+                        <label for="perfil" class="form-label">Perfil?</label>
+                        <div class="form-check">
+                            <?php $__currentLoopData = ['ADMINISTRATIVO', 'OPERACIONAL','ADM / OPERACIONAL']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="perfil[]" 
+                                        id="perfil<?php echo e($loop->index); ?>" value="<?php echo e($option); ?>"
+                                        <?php echo e(in_array($option, request('perfil', [])) ? 'checked' : ''); ?>>
+                                    <label class="form-check-label" for="perfil<?php echo e($loop->index); ?>">
+                                        <?php echo e($option); ?>
+
+                                    </label>
+                                </div>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </div>
+                        
+                    </div>
 
                     
 
@@ -472,7 +489,7 @@ unset($__errorArgs, $__bag); ?>
                 <li class="col-porque-gostaria-jovem-aprendiz sortable" data-column="porque-gostaria-jovem-aprendiz" data-type="text">Por que ser Jovem Aprendiz?</li>
                 <li class="col-fonte-curriculo sortable" data-column="fonte-curriculo" data-type="text">Fonte Captação Currículo</li>
                 <li class="col-perfil-stacasa sortable" data-column="perfil-stacasa" data-type="text">Perfil Sta. Casa</li>
-                <li class="col-classificacao sortable" data-column="classificacao" data-type="text">Classificação</li>
+                <li class="col-classificacao sortable" data-column="classificacao" data-type="text">Perfil</li>
                 <li class="col-status sortable" data-column="status" data-type="text">Status</li>
                 <li class="col-entrevistado sortable" data-column="entrevistado" data-type="text">Entrevistado?</li>                
                 <li class="col-parecer sortable" data-column="parecer" data-type="text">Parecer do RH</li>
@@ -713,7 +730,7 @@ unset($__errorArgs, $__bag); ?>
                     <li class="col-porque-gostaria-jovem-aprendiz"><?php echo e($resume->interview->porque_ser_jovem_aprendiz); ?></li>
                     <li class="col-fonte-curriculo"><?php echo e($resume->interview->fonte_curriculo); ?></li>
                     <li class="col-perfil-stacasa"><?php echo e($resume->interview->perfil_santa_casa); ?></li>
-                     <li class="col-classificacao"><?php echo e($resume->interview->classificacao); ?></li>
+                     <li class="col-classificacao"><?php echo e($resume->interview->perfil); ?></li>
                      <li class="col-status">
                         <b>Status</b>
                         <?php switch($resume->status):

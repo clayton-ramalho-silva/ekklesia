@@ -184,6 +184,21 @@ class InterviewController extends Controller
             }
         }
 
+         // Filtro Perfil- múltiplas seleções
+        if ($request->filled('perfil') && is_array($request->perfil)) {
+            $opcoes = array_filter($request->perfil); // Remove valores vazios
+            
+            if (!empty($opcoes)) {
+                $query->whereHas('interview', function($q) use ($opcoes) {
+                    $q->where(function($subQuery) use ($opcoes) {
+                        foreach ($opcoes as $opcao) {
+                            $subQuery->orWhere('perfil', $opcao );
+                        }
+                    });
+                });
+            }
+        }
+
         // Filtro CNH
         // if ($request->filled('cnh') && $request->cnh !== "Todos") {
         //     $query->whereHas('informacoesPessoais', function($q) use ($request) {
@@ -599,10 +614,17 @@ class InterviewController extends Controller
         //$resumes = Resume::whereDoesntHave('interview')->get();
 
         // Busca todas as entrevistas
-        $query = Resume::with(['informacoesPessoais', 'contato', 'escolaridade'])
-            ->whereDoesntHave('interview');
+        // $query = Resume::with(['informacoesPessoais', 'contato', 'escolaridade'])
+        //     ->whereDoesntHave('interview');
 
         //$query = Resume::query();
+        //Abaixo de 23 anos.
+        $query = Resume::with(['informacoesPessoais', 'contato', 'escolaridade', 'interview'])
+            ->whereHas('interview')
+            ->whereHas('informacoesPessoais', function ($q) {
+                $q->whereNotNull('data_nascimento')
+                ->whereRaw('TIMESTAMPDIFF(YEAR, data_nascimento, CURDATE()) < 23');
+            });  
 
         
 
@@ -816,13 +838,13 @@ class InterviewController extends Controller
             'porque_ser_jovem_aprendiz' => $data['porque_ser_jovem_aprendiz'], 
             'fonte_curriculo' => $data['fonte_curriculo'],
             'perfil_santa_casa' => $data['perfil_santa_casa'],
-            'classificacao' => $data['classificacao'],
+            //'classificacao' => $data['classificacao'],  substituido por perfil
             'parecer_recrutador' => $data['parecer_recrutador'], 
             'observacoes' => $data['observacoes'], 
             'obs_rh' => $data['obs_rh'],
             'resume_id' => $data['resume_id'],
             'recruiter_id' => Auth::id(),            
-            //'perfil' => $data['perfil'],
+            'perfil' => $data['perfil'],
             //'curso_extracurricular' => $data['curso_extracurricular'], 
             //'pretencao_candidato' => $data['pretencao_candidato'], 
             //'sugestao_empresa' => $data['sugestao_empresa'], 
@@ -853,7 +875,7 @@ class InterviewController extends Controller
         $interview->update($data);
 
         // Salvando Log de criação
-        $this->logAction('create', 'interviews', $interview->id, 'Entrevista cadastrado com sucesso.');
+        $this->logAction('update', 'interviews', $interview->id, 'Entrevista atualizada com sucesso.');
 
         //return redirect()->route('interviews.index')->with('success', 'Entrevista cadastrada com sucesso!');
         return redirect()->back()->with('success', 'Entrevista atualizada com sucesso!');
