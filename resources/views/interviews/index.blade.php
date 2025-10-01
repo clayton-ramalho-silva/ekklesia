@@ -262,6 +262,29 @@
                             @endforeach                             
                         </select> --}}
                     </div>
+                     <div class="col-6">
+                        <label for="perfil" class="form-label">Perfil?</label>
+                        <div class="form-check">
+                            @foreach (['ADMINISTRATIVO', 'OPERACIONAL','ADM / OPERACIONAL'] as $option)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="perfil[]" 
+                                        id="perfil{{ $loop->index }}" value="{{ $option }}"
+                                        {{ in_array($option, request('perfil', [])) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="perfil{{ $loop->index }}">
+                                        {{ $option }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                        {{-- <select name="foi_jovem_aprendiz[]" id="foi_jovem_aprendiz" class="form-select" multiple>                            
+                             @foreach (  
+                                        ['Sim, da ASPPE', 'Sim, de Outra Qualificadora', 'Não'] as $option)
+                                <option value="{{ $option }}" {{ in_array($option, request('foi_jovem_aprendiz', []))? 'selected' : ''}}>
+                                    {{ $option }}
+                                </option>
+                            @endforeach                             
+                        </select> --}}
+                    </div>
 
                     {{-- <div class="col-6">
                         <label for="escolaridade" class="form-label">Formação/Escolaridade</label>
@@ -601,7 +624,7 @@
                 <li class="col-porque-gostaria-jovem-aprendiz sortable" data-column="porque-gostaria-jovem-aprendiz" data-type="text">Por que ser Jovem Aprendiz?</li>
                 <li class="col-fonte-curriculo sortable" data-column="fonte-curriculo" data-type="text">Fonte Captação Currículo</li>
                 <li class="col-perfil-stacasa sortable" data-column="perfil-stacasa" data-type="text">Perfil Sta. Casa</li>
-                <li class="col-classificacao sortable" data-column="classificacao" data-type="text">Classificação</li>
+                <li class="col-classificacao sortable" data-column="classificacao" data-type="text">Perfil</li>
                 <li class="col-status sortable" data-column="status" data-type="text">Status</li>
                 <li class="col-entrevistado sortable" data-column="entrevistado" data-type="text">Entrevistado?</li>                
                 <li class="col-parecer sortable" data-column="parecer" data-type="text">Parecer do RH</li>
@@ -850,7 +873,7 @@
                     <li class="col-porque-gostaria-jovem-aprendiz">{{ $resume->interview->porque_ser_jovem_aprendiz }}</li>
                     <li class="col-fonte-curriculo">{{ $resume->interview->fonte_curriculo }}</li>
                     <li class="col-perfil-stacasa">{{ $resume->interview->perfil_santa_casa}}</li>
-                     <li class="col-classificacao">{{ $resume->interview->classificacao }}</li>
+                     <li class="col-classificacao">{{ $resume->interview->perfil }}</li>
                      <li class="col-status">
                         <b>Status</b>
                         @switch($resume->status)

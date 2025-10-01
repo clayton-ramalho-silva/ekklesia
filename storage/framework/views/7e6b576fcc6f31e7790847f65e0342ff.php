@@ -593,15 +593,14 @@ unset($__errorArgs, $__bag); ?>
                     <div class="col-3 form-campo">
                         <div class="mb-3">
                             <div class="floatlabel-wrapper ">
-                                <label for="classificacao" class="label-floatlabel" class="form-label floatlabel-label">Classificação?</label>
-                                <select name="classificacao" id="classificacao" class="form-select active-floatlabel" >
+                                <label for="perfil" class="label-floatlabel" class="form-label floatlabel-label">Perfil?</label>
+                                <select name="perfil" id="perfil" class="form-select active-floatlabel" >
                                     <option></option>
-                                    <option value="A" <?php echo e($interview->classificacao === 'A' ? 'selected' : ''); ?>> A</option>
-                                    <option value="B" <?php echo e($interview->classificacao === 'B' ? 'selected' : ''); ?>> B</option>
-                                    <option value="C" <?php echo e($interview->classificacao === 'C' ? 'selected' : ''); ?>> C</option>
-                                    <option value="D" <?php echo e($interview->classificacao === 'D' ? 'selected' : ''); ?>> D</option>
+                                    <option value="ADMINISTRATIVO" <?php echo e($interview->perfil === 'ADMINISTRATIVO' ? 'selected' : ''); ?>> ADMINISTRATIVO</option>
+                                    <option value="OPERACIONAL" <?php echo e($interview->perfil === 'OPERACIONAL' ? 'selected' : ''); ?>> OPERACIONAL</option>
+                                    <option value="ADM / OPERACIONAL" <?php echo e($interview->perfil === 'ADM / OPERACIONAL' ? 'selected' : ''); ?>> ADM / OPERACIONAL</option>                                    
                                 </select>
-                                <?php $__errorArgs = ['classificacao'];
+                                <?php $__errorArgs = ['perfil'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
