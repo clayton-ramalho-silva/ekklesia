@@ -211,6 +211,12 @@
 
 </head>
 <body>
+    {{-- Loader --}}
+    <div id="loader" style="display:none; position:fixed; z-index:9999; top:0; left:0; width:100vw; height:100vh; background-color:rgba(255,255,255,0.7); align-items:center; justify-content:center;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Carregando...</span>
+        </div>
+    </div>
     @if (session('success'))
     <div class="alert alert-success d-flex align-items-center" role="alert">
         <svg width="30px" height="30px" style="margin-bottom: 10px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -1366,6 +1372,50 @@ document.addEventListener("DOMContentLoaded", function () {
             errorElement.remove();
         }
     }
+
+
+
+    // Loader
+     // Mostrar o loader quando estiver saindo da página
+    window.addEventListener('beforeunload', function () {
+        const loader = document.getElementById('loader');
+        loader.style.display = 'flex';
+    });
+    
+    // Esconder o loader quando a página termina de carregar
+    window.addEventListener('load', function () {
+        const loader = document.getElementById('loader');
+        loader.style.display = 'none';
+    });
+    
+    // Esconder o loader quando usar o botão voltar/avançar
+    window.addEventListener('pageshow', function (event) {
+        const loader = document.getElementById('loader');
+        
+        // event.persisted indica que a página foi carregada do cache (botão voltar/avançar)
+        if (event.persisted) {
+            loader.style.display = 'none';
+        }
+    });
+    
+    // Botão voltar do navegador (histórico)
+    window.addEventListener('popstate', function () {
+        const loader = document.getElementById('loader');
+        loader.style.display = 'none';
+    });
+    
+    // Medida de segurança: esconder o loader após 5 segundos caso algo dê errado
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            const loader = document.getElementById('loader');
+            if (loader.style.display === 'flex') {
+                loader.style.display = 'none';
+            }
+        }, 5000);
+    });
+
+
+
 });
 
 

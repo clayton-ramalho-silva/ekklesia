@@ -19,7 +19,7 @@ class PublicResumeController extends Controller
 
     public function store(PublicResumeRequest $request)
     {
-        //dd($request->all());
+       // dd($request->all());
         $data = $request->validated();
 
         //dd($data);
