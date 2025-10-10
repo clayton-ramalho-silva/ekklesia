@@ -37,10 +37,15 @@
                         @method('PUT')
 
                         <div class="row">
+                            {{-- {{{ dd($job)}}} --}}
 
-                            <div class="mb-3 col-12">
+                            <div class="mb-3 col-6">
                                 <input type="text" name="company_id" id="company_id" class="floatlabel form-control" placeholder="Empresa" value="{{ $job->company->nome_fantasia}}" disabled>
                                 @error('company_id') <div class="alert alert-danger">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="mb-3 col-6 form-campo">
+                                <input type="text" placeholder="Área" class="floatlabel form-control" id="setor" name="setor" value="{{ $job->setor }}" required>
+                                @error('setor') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </div>
 
                             {{--
@@ -856,7 +861,7 @@ $("#form-jobs").validate({
     ignore: [],
     rules:{
         company_id:"required",
-        //setor:"required",
+        setor:"required",
         cargo:"required",
         genero:"required",
         qtd_vagas:"required",

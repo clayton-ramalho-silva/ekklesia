@@ -31,7 +31,7 @@
 
                 <div class="row">
 
-                    <div class="mb-3 col-12">
+                    <div class="mb-3 col-6">
                         <div class="floatlabel-wrapper required">
                             <label for="company_id" class="label-floatlabel" class="form-label floatlabel-label">Escolher Empresa</label>
                             <select name="company_id" id="company_id" class="form-select" required>
@@ -42,6 +42,10 @@
                             </select>
                             @error('company_id') <div class="alert alert-danger">{{ $message }}</div> @enderror
                         </div>
+                    </div>
+                    <div class="mb-3 col-6 form-campo">
+                        <input type="text" placeholder="Área" class="floatlabel form-control" id="setor" name="setor" value="{{ old('setor') }}" required>
+                        @error('setor') <div class="alert alert-danger">{{ $message }}</div> @enderror
                     </div>
 
                     <div class="mb-3 col-4 form-campo">
@@ -256,7 +260,7 @@ $("#form-jobs").validate({
     ignore: [],
     rules:{
         company_id:"required",
-        //setor:"required",
+        setor:"required",
         cbo:"required",
         cargo:"required",
         genero:"required",

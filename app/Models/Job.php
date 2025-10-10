@@ -18,7 +18,9 @@ class Job extends Model
     ];
 
     protected $fillable = [
-        'setor', 'cargo', 'cbo', 'descricao', 'genero',
+        'setor', // campo área no formulário, texto livre 
+        'cargo', // campo setor no formulário, select
+        'cbo', 'descricao', 'genero',
         'qtd_vagas','filled_positions', 'cidade', 'uf',
         'salario', 'dias_semana', 'horario', 'beneficios',
         'exp_profissional', 'informatica', 'ingles', 'data_inicio_contratacao',
