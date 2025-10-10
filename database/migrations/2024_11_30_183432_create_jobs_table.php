@@ -14,8 +14,8 @@ return new class extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->string('setor');
-            $table->string('cargo');            
+            $table->string('setor'); // representa a área texto livre
+            $table->string('cargo');  // representa o setor select          
             $table->string('cbo');
             $table->text('descricao')->nullable();
             $table->enum('genero', ['Masculino', 'Feminino', 'Indiferente']);

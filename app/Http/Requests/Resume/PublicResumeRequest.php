@@ -30,7 +30,7 @@ class PublicResumeRequest extends FormRequest
                 new \App\Rules\UniqueCpf('personal_info_resumes'),
                 ],
             'cnh' => 'required|string|max:255',
-            'rg' => 'required|string|max:255',
+            'rg' => 'nullable|string|max:255',
             'data_nascimento' => 'required|date',
             'nacionalidade' => 'required|string|max:500',
             'estado_civil' => 'required|string|max:255',

@@ -217,8 +217,8 @@ class JobController extends Controller
         //dd($request->all());
         $data = $request->validate([
 
-            //'setor' =>'required|string|max:255',
-            'cargo' =>'required|string|max:255',
+            'setor' =>'required|string|max:255', // campo área no formulário, texto livre
+            'cargo' =>'required|string|max:255', // campo setor no formulário, select
             'cbo' =>'required|string|max:255',
             'descricao' =>'nullable|string',
             'genero' =>'required|string|max:255',
@@ -239,8 +239,7 @@ class JobController extends Controller
 
         //dd($data);
 
-        $data['status'] = 'aberta';
-        $data['setor'] = '';
+        $data['status'] = 'aberta';        
 
        // dd($data);
 
@@ -290,8 +289,8 @@ class JobController extends Controller
 
         $data = $request->validate([
 
-            //'setor' =>'required|string|max:255',
-            'cargo' =>'required|string|max:255',
+            'setor' =>'required|string|max:255', // campo área no formulário, texto livre
+            'cargo' =>'required|string|max:255', // campo setor no formulário, select
             'cbo' =>'required|string|max:255',
             'descricao' =>'nullable|string',
             'genero' =>'required|string|max:255',
@@ -308,10 +307,7 @@ class JobController extends Controller
             'ingles' => 'required|string|max:255',
             'data_entrevista_empresa' => 'nullable|date',
 
-        ]);
-
-        $data['setor'] = '';
-
+        ]);      
 
         $job->update($data);
         $job->updateStatus();
@@ -320,7 +316,7 @@ class JobController extends Controller
         // Salvar Log de atualização
         $this->logAction('update', 'jobs', $job->id, 'Job atualizado com sucesso.');
 
-        return redirect()->route('jobs.index')->with('success', 'Vaga atualizada com sucesso');
+        return redirect()->back()->with('success', 'Vaga atualizada com sucesso');
     }
 
     public function updateDataEntrevistaEmpresa(Request $request, Job $job)

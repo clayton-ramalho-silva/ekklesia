@@ -208,25 +208,27 @@
                 $isAdmin = Auth::user()->role == 'admin' ? true : false;                        
             @endphp
             <ul class="tit-lista">
-                <li class="col1 {{ $isAdmin ? 'col1-admin' : ''}}">Empresa</li>
-                <li class="col2 {{ $isAdmin ? 'col2-admin' : ''}}">Título</li>
-                <li class="col3 {{ $isAdmin ? 'col3-admin' : ''}}">Vagas</li>
-                <li class="col4 {{ $isAdmin ? 'col4-admin' : ''}}">Recrutador</li>
-                <li class="col5 {{ $isAdmin ? 'col5-admin' : ''}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Início processo contratação">Início</li>
-                <li class="col6 {{ $isAdmin ? 'col6-admin' : ''}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Fim processo contratação">Fim</li>
-                <li class="col7 {{ $isAdmin ? 'col7-admin' : ''}}">Data Entrevista Empresa</li>
-                <li class="col7 {{ $isAdmin ? 'col7-admin' : ''}}">Status</li>
+                <li class="col1 sortable" data-column="empresa" data-type="text">Empresa</li>
+                <li class="col2 sortable" data-column="area" data-type="text">Área</li>
+                <li class="col3 sortable" data-column="titulo" data-type="text">Título</li>
+                <li class="col4 sortable" data-column="vagas" data-type="text">Vagas</li>
+                <li class="col5 sortable" data-column="recrutador" data-type="text">Recrutador</li>
+                <li class="col6 sortable" data-column="inicio_processo" data-type="date" >Início</li>
+                <li class="col7 sortable" data-column="fim_processo" data-type="date" >Fim</li>
+                <li class="col8 sortable" data-column="data_entrevista" data-type="date">Data Entrevista Empresa</li>
+                <li class="col9 sortable" data-column="status" data-type="text">Status</li>
                  @if ($isAdmin)
-                    <li class="col8 {{ $isAdmin ? 'col8-admin' : ''}}">Ações</li>                            
+                    <li class="col10">Ações</li>                            
                 @endif 
             </ul>
 
             @if ($jobs->count() > 0)
 
             @foreach ($jobs as $job)
-                <a href="{{ route('jobs.edit', $job) }}">
-                    <ul>
-                        <li class="col1 {{ $isAdmin ? 'col1-admin' : ''}}">
+                {{-- <a href="{{ route('jobs.edit', $job) }}"> --}}
+                     <ul class="row-list" onclick="window.open('{{ route('jobs.edit', $job) }}', '_blank')" title="Ver vaga"> 
+                    {{-- <ul> --}}
+                        <li class="col1">
                             @if ($job->company->logotipo)
                                 <b>Empresa</b>
                                 @if (file_exists(public_path('documents/companies/images/'.$job->company->logotipo)))
@@ -241,15 +243,21 @@
                                 <strong>{{ $job->company->nome_fantasia }}</strong>
                             </span>
                         </li>
-                        <li class="col2 {{ $isAdmin ? 'col2-admin' : ''}}">
-                            <b>Título</b>
-                            {!! limite($job->cargo, 28) !!}
+                        {{-- Este campo represnta o Campo Área com texto livre --}}
+                         <li class="col2">
+                            <b>Área</b>
+                            {!! limite($job->setor, 28) !!}
                         </li>
-                        <li class="col3 {{ $isAdmin ? 'col3-admin' : ''}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Preenchidas/Disponíveis">
+                        {{-- Este campo represnta o Setor select --}}
+                        <li class="col3">
+                            <b>Título</b>
+                            {!! limite($job->cargo, 28) !!} 
+                        </li>
+                        <li class="col4" data-bs-toggle="tooltip" data-bs-placement="top" title="Preenchidas/Disponíveis">
                             <b>Vagas</b>
                             {{ $job->filled_positions }} / {{ $job->qtd_vagas }}
                         </li>
-                        <li class="col4 {{ $isAdmin ? 'col4-admin' : ''}}">
+                        <li class="col5">
                             <b>Recrutador</b>
                             @if (count($job->recruiters) <= 0)
                             Nenhum recrutador associado
@@ -259,7 +267,7 @@
                             @endforeach
                             @endif
                         </li>
-                        <li class="col5 {{ $isAdmin ? 'col5-admin' : ''}}">
+                        <li class="col6">
                             <b>Início</b>
                             @if (!$job->data_inicio_contratacao)
                                 Processo não iniciado
@@ -268,7 +276,7 @@
 
                             @endif
                         </li>
-                        <li class="col6 {{ $isAdmin ? 'col6-admin' : ''}}">
+                        <li class="col7">
                             <b>Fim</b>
                             @if ($job->data_fim_contratacao && $job->data_fim_contratacao !== null)
                                 {{ $job->data_fim_contratacao->format('d/m/Y') }}
@@ -279,10 +287,10 @@
                                 Em andamento
                             @endif
                         </li>
-                        <li class="col7 {{ $isAdmin ? 'col7-admin' : ''}}">
+                        <li class="col8">
                             {{$job->data_entrevista_empresa ? $job->data_entrevista_empresa->format('d/m/Y') : '' }}
                         </li>
-                        <li class="col7 {{ $isAdmin ? 'col7-admin' : ''}}">
+                        <li class="col9">
                             <b>Status</b>
                             @switch($job->status)
                                 @case('aberta')
@@ -304,7 +312,7 @@
                        
                         </li>
                         @if ($isAdmin) 
-                        <li class="col8 {{ $isAdmin ? 'col8-admin' : ''}}">
+                        <li class="col10">
                             <form action="{{ route('jobs.destroy', $job->id) }}" method="post">
                                 @csrf
                                 @method('DELETE')
@@ -317,7 +325,7 @@
                         @endif 
 
                     </ul>
-                </a>
+                {{-- </a> --}}
                 @endforeach
 
             @else
@@ -434,6 +442,162 @@ $(document).ready(function() {
 });
 
 
+
+//////////
+class TableSorter {
+    constructor(containerSelector) {
+        this.container = document.querySelector(containerSelector);
+        this.headerRow = this.container.querySelector('.tit-lista');
+        this.dataRows = Array.from(this.container.querySelectorAll('ul:not(.tit-lista)'));
+        this.currentSort = { column: null, direction: null };
+        
+        this.init();
+    }
+    
+    init() {
+        // Adicionar event listeners para cada coluna ordenável
+        const sortableHeaders = this.headerRow.querySelectorAll('.sortable');
+        
+        sortableHeaders.forEach(header => {
+            header.addEventListener('click', (e) => {
+                this.handleSort(e.target);
+            });
+        });
+    }
+    
+    handleSort(clickedHeader) {
+        const column = clickedHeader.dataset.column;
+        const dataType = clickedHeader.dataset.type || 'text';
+        
+        // Determinar direção da ordenação
+        let direction = 'asc';
+        if (this.currentSort.column === column) {
+            direction = this.currentSort.direction === 'asc' ? 'desc' : 'asc';
+        }
+        
+        // Remover classes de ordenação de todos os headers
+        this.headerRow.querySelectorAll('.sortable').forEach(h => {
+            h.classList.remove('asc', 'desc');
+        });
+        
+        // Adicionar classe ao header atual
+        clickedHeader.classList.add(direction);
+        
+        // Realizar a ordenação
+        this.sortData(column, direction, dataType);
+        
+        // Atualizar estado atual
+        this.currentSort = { column, direction };
+    }
+    
+    sortData(column, direction, dataType) {
+        // Adicionar classe visual durante ordenação
+        this.container.classList.add('sorting');
+        
+        const columnIndex = this.getColumnIndex(column);
+        
+        // Ordenar os dados
+        this.dataRows.sort((a, b) => {
+            const aValue = this.getCellValue(a, columnIndex);
+            const bValue = this.getCellValue(b, columnIndex);
+            
+            let comparison = this.compareValues(aValue, bValue, dataType);
+            
+            return direction === 'desc' ? -comparison : comparison;
+        });
+        
+        // Reordenar os elementos no DOM
+        setTimeout(() => {
+            this.dataRows.forEach(row => {
+                this.container.appendChild(row);
+            });
+            
+            // Remover classe visual
+            this.container.classList.remove('sorting');
+        }, 100);
+    }
+    
+    getColumnIndex(column) {
+        const headers = Array.from(this.headerRow.children);
+        return headers.findIndex(header => header.dataset.column === column);
+    }
+    
+    getCellValue(row, columnIndex) {
+        const cell = row.children[columnIndex];
+        if (!cell) return '';
+        
+        // Para colunas com estrutura complexa (como nome com badge)
+        if (cell.querySelector('.info-nome strong')) {
+            return cell.querySelector('.info-nome strong').textContent.trim();
+        }
+        
+        // Para colunas com ícones de status
+        if (cell.textContent.includes('Disponível')) return 'Disponível';
+        if (cell.textContent.includes('Em processo')) return 'Em processo';
+        if (cell.textContent.includes('Contratado')) return 'Contratado';
+        if (cell.textContent.includes('Inativo')) return 'Inativo';
+        
+        return cell.textContent.trim();
+    }
+    
+    compareValues(a, b, dataType) {
+        if (a === '' && b === '') return 0;
+        if (a === '') return 1;
+        if (b === '') return -1;
+        
+        switch (dataType) {
+            case 'date':
+                return this.compareDates(a, b);
+            case 'number':
+                return this.compareNumbers(a, b);
+            case 'text':
+            default:
+                return a.localeCompare(b, 'pt-BR', { 
+                    numeric: true, 
+                    sensitivity: 'base' 
+                });
+        }
+    }
+    
+    compareDates(a, b) {
+        // Converte datas no formato DD/MM/YYYY para objeto Date
+        const parseDate = (dateStr) => {
+            if (!dateStr || dateStr === '-') return new Date(0);
+            const parts = dateStr.split('/');
+            if (parts.length === 3) {
+                return new Date(parts[2], parts[1] - 1, parts[0]);
+            }
+            return new Date(dateStr);
+        };
+        
+        const dateA = parseDate(a);
+        const dateB = parseDate(b);
+        
+        return dateA.getTime() - dateB.getTime();
+    }
+    
+    compareNumbers(a, b) {
+        const numA = parseFloat(a.replace(/[^\d.-]/g, '')) || 0;
+        const numB = parseFloat(b.replace(/[^\d.-]/g, '')) || 0;
+        return numA - numB;
+    }
+}
+
+// Inicializar o sistema de ordenação quando o DOM estiver carregado
+document.addEventListener('DOMContentLoaded', function() {
+    const sorter = new TableSorter('.lista-vagas');
+    
+    console.log('Sistema de ordenação inicializado!');
+});
+
+// Função auxiliar para reinicializar após mudanças AJAX (se necessário)
+window.reinitTableSorter = function() {
+    new TableSorter('.lista-vagas');
+};
+
+
+
+
 </script>
 @endpush
 
@@ -468,36 +632,6 @@ $(document).ready(function() {
     background-color: #808080 !important;
 }
 
-.col4, .col5, .col6, .col7{
-    width: 10% !important;
-}
-
-
-.col1-admin{
-width: 25% !important;
-}
-.col2-admin{
-    width: 10% !important;
-}
-.col3-admin{
-    width: 6% !important;
-}
-.col4-admin{
-    width: 10% !important;
-}
-.col5-admin{
-    width: 10% !important;
-}
-.col6-admin{
-    width: 10% !important;
-}
-.col7-admin{
-    width: 10% !important;
-}
-.col8-admin{
-    width: 5% !important;
-}
-
 .btn-deletar-entidades{    
     z-index: 0;
     background-color: #e4e4e4;
@@ -520,7 +654,10 @@ width: 25% !important;
     height: 450px;
     overflow: auto;
 }
-
+.table-container.lista-vagas ul{
+    flex-wrap: nowrap;
+    width: fit-content;
+}
 .table-container.lista-vagas .tit-lista{
     width: fit-content;
     position: sticky;
@@ -529,6 +666,68 @@ width: 25% !important;
     z-index: 4;
     min-width: 100%;
 }
+
+.col1, .col2{
+    width: 300px !important;
+    justify-content: start !important;
+}
+.col3, .col5{
+    width: 200px !important;
+    justify-content: start !important; 
+}
+.col5{
+    width: 150px !important;
+    justify-content: start !important; 
+}
+.col4, .col6, .col7,.col8, .col9, .col10{
+    width: 100px !important;
+    justify-content: start !important;
+}
+
+/******** CSS Personalizado **********/
+.sortable {
+    cursor: pointer;
+    position: relative;
+    padding-right: 20px;
+    user-select: none;
+}
+
+.sortable:hover {
+    /* background-color: #f8f9fa; */
+}
+
+.sortable::after {
+    content: "↕";
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.5;
+    font-size: 20px;
+}
+
+.sortable.asc::after {
+    content: "↑";
+    opacity: 1;
+    color: #007bff;
+}
+
+.sortable.desc::after {
+    content: "↓";
+    opacity: 1;
+    color: #007bff;
+}
+
+/* Animação suave para reordenação */
+.lista-curriculos ul {
+    transition: all 0.3s ease;
+}
+
+/* Destaque visual durante ordenação */
+.sorting {
+    opacity: 0.7;
+}
+
 
 </style>
 @endpush
