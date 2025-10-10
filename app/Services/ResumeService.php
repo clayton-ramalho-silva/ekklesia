@@ -77,7 +77,7 @@ class ResumeService
             'reservista_outro' => '',
             'cnh' => $data['cnh'] ?? '',
             'tipo_cnh' => $data['tipo_cnh'] ?? '',
-            //'rg' => $data['rg'],
+            'rg' => $data['rg'] ?? '',
             'cpf' => $data['cpf'] ?? '',
             'instagram' => $data['instagram'] ?? '',
             'linkedin' => $data['linkedin'] ?? '',
