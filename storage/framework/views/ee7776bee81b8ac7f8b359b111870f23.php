@@ -923,6 +923,82 @@ window.reinitTableSorter = function() {
 
 
 
+// Script para gerenciar a coluna fixa com efeitos visuais
+document.addEventListener('DOMContentLoaded', function() {
+    const tableContainer = document.querySelector('.table-container.lista-curriculos');
+    
+    if (!tableContainer) return;
+    
+    // Função para controlar a sombra baseada na posição do scroll
+    function handleScroll() {
+        const scrollLeft = tableContainer.scrollLeft;
+        
+        // Remove ou adiciona a classe 'no-shadow' baseado na posição
+        if (scrollLeft <= 5) {
+            tableContainer.classList.add('no-shadow');
+        } else {
+            tableContainer.classList.remove('no-shadow');
+        }
+    }
+    
+    // Adiciona o listener de scroll
+    tableContainer.addEventListener('scroll', handleScroll);
+    
+    // Verifica a posição inicial
+    handleScroll();
+    
+    // Opcional: Ajusta a largura da coluna nome dinamicamente
+    function adjustColumnWidth() {
+        const nomeColumns = document.querySelectorAll('.col-nome');
+        let maxWidth = 0;
+        
+        nomeColumns.forEach(col => {
+            const width = col.scrollWidth;
+            if (width > maxWidth) {
+                maxWidth = width;
+            }
+        });
+        
+        // Define uma largura mínima e máxima
+        const finalWidth = Math.max(200, Math.min(maxWidth + 20, 400));
+        
+        nomeColumns.forEach(col => {
+            col.style.minWidth = finalWidth + 'px';
+        });
+    }
+    
+    // Ajusta na carga da página
+    adjustColumnWidth();
+    
+    // Reajusta ao redimensionar a janela
+    window.addEventListener('resize', adjustColumnWidth);
+});
+
+// Função alternativa: Se quiser fixar múltiplas colunas
+function setupMultipleFrozenColumns(columns = ['col-inscricao', 'col-nome']) {
+    let cumulativeLeft = 0;
+    
+    columns.forEach((columnClass, index) => {
+        const columnElements = document.querySelectorAll(`.${columnClass}`);
+        
+        columnElements.forEach(el => {
+            el.style.position = 'sticky';
+            el.style.left = cumulativeLeft + 'px';
+            el.style.zIndex = 20 - index;
+            el.style.backgroundColor = '#fff';
+        });
+        
+        // Calcula a largura da coluna para a próxima
+        if (columnElements.length > 0) {
+            cumulativeLeft += columnElements[0].offsetWidth;
+        }
+    });
+}
+
+
+
+
+
 </script>
 <?php $__env->stopPush(); ?>
 
@@ -930,6 +1006,87 @@ window.reinitTableSorter = function() {
 
 <?php $__env->startPush('css-custom'); ?>
 <style>
+
+/* Estilo para o container da tabela */
+.table-container {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: calc(100vh - 200px); /* Ajuste conforme necessário */
+}
+
+/* Cabeçalho (tit-lista) - Fixo no topo */
+.tit-lista {
+    position: sticky !important;
+    top: 0;
+    z-index: 50 !important;
+    background-color: #f8f9fa; /* Ajuste conforme a cor do seu cabeçalho */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para as listas (linhas) */
+.lista-curriculos ul {
+    display: flex;
+    position: relative;
+    min-width: max-content;
+}
+
+/* Coluna Nome - Fixa */
+.col-nome {
+    position: sticky;
+    left: 0;
+    z-index: 10;
+    background-color: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Coluna Nome no cabeçalho - z-index maior para ficar acima de tudo */
+.tit-lista .col-nome {
+    z-index: 40;
+    background-color: #fff; /* Ajuste conforme a cor do seu cabeçalho */
+    font-weight: bold;
+}
+
+/* Remove a sombra quando estiver no início do scroll */
+.table-container.no-shadow .col-nome {
+    box-shadow: none;
+    background-color: transparent;
+}
+
+/* Opcional: Adicionar uma transição suave na sombra */
+.col-nome {
+    transition: box-shadow 0.3s ease;
+}
+
+/* Garante que o conteúdo da coluna nome não quebre */
+.col-nome {
+    white-space: nowrap;
+    min-width: 200px; /* Ajuste conforme necessário */
+}
+
+/* Ajuste para a coluna de ícone também ficar fixa (opcional) */
+.col-inscricao {
+    position: sticky;
+    left: 0;
+    z-index: 9;
+    /* background-color: #fff; */
+}
+
+.tit-lista .col-inscricao {
+    /* z-index: 39;
+    background-color: #f8f9fa; */
+}
+
+/* Se quiser fixar ambas (inscricao e nome), ajuste as posições */
+.col-nome.with-inscricao {
+    left: 150px; /* Largura da col-inscricao + margem */
+}
+
+
+
+
+/* Fim */
+
 .subtitulo{
     font-weight: 500;
     font-size: 12px;
