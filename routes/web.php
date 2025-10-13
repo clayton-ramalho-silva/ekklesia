@@ -34,6 +34,7 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 Route::redirect('/', '/dashboard');
 
+
 // Cadastro curriculo url publica
 Route::get('cadastro-curriculo', [PublicResumeController::class, 'create'])->name('publicResume.create');
 Route::post('cadastro-curriculo', [PublicResumeController::class, 'store'])->name('publicResume.store');
@@ -42,7 +43,7 @@ Route::post('cadastro-curriculo', [PublicResumeController::class, 'store'])->nam
 /** Rotas Privadas */ 
 
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth', 'perf.monitor'])->group(function(){
     // Jobs
     
     Route::put('/jobs/{job}/updateDataEntrevistaEmpresa', [JobController::class, 'updateDataEntrevistaEmpresa'])->name('jobs.updateDataEntrevistaEmpresa');
