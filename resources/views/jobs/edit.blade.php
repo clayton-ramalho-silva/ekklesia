@@ -549,6 +549,7 @@
 
                         
                         {{-- <ul onclick="window.location='{{ $rotaResume }}'" > --}}
+                        {{-- Está dando conflito com dessassociar. --}}
                         <ul onclick="window.open('{{ $rotaResume }}', '_blank')" >    
                             <li class="col1 col1-admin{{-- $isAdmin ? 'col1-admin' : ''--}}">
                                 <b>Nome</b>
@@ -616,6 +617,8 @@
                             
 
                         </ul>
+
+                        
                         @endforeach
 
                     @else
@@ -892,6 +895,44 @@ $(document).find('.select2').each(function(){
 
 });
 
+
+
+
+// Previne que o clique no botão de desassociar abra o link
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Seleciona todos os botões de desassociar
+    const botoesDesassociar = document.querySelectorAll('.col5-admin button[type="submit"]');
+    
+    botoesDesassociar.forEach(botao => {
+        botao.addEventListener('click', function(event) {
+            // Previne que o evento se propague para o <ul> pai
+            event.stopPropagation();
+            
+            // Opcional: adicionar confirmação antes de desassociar
+            if (!confirm('Tem certeza que deseja desassociar este currículo?')) {
+                event.preventDefault();
+                return false;
+            }
+        });
+    });
+    
+    // Também previne o clique em toda a coluna col5-admin
+    const colunasDesassociar = document.querySelectorAll('.col5-admin');
+    
+    colunasDesassociar.forEach(coluna => {
+        coluna.addEventListener('click', function(event) {
+            // Previne que o clique na coluna abra o link
+            event.stopPropagation();
+        });
+    });
+    
+});
+
+// Alternativa: Função inline que você pode usar diretamente no HTML
+function preventPropagation(event) {
+    event.stopPropagation();
+}
 
 
 
