@@ -1403,12 +1403,12 @@ unset($__errorArgs, $__bag); ?>
             </div>
 
         
-
-            <?php if($resume->curriculo_externo): ?>
-                <div class="mb-3 d-flex flex-column align-items-center">                                    
-                    <a href="<?php echo e($resume->curriculo_externo); ?>" target="_blank" class="fw-bold text-center">Baixar Currículo Externo</a>
-                </div>
-                
+            <?php if($curriculo = null || $curriculo == ''): ?>
+                <?php if($resume->curriculo_externo): ?>
+                    <div class="mb-3 d-flex flex-column align-items-center">                                    
+                        <a href="<?php echo e($resume->curriculo_externo); ?>" target="_blank" class="fw-bold text-center">Baixar Currículo Externo</a>
+                    </div>                    
+                <?php endif; ?>            
             <?php endif; ?>
 
             
