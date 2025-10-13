@@ -123,6 +123,12 @@ return [
             'path' => storage_path('logs/importacaoResumes.log'),
             'level' => 'debug',
         ],
+        'performance' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/performance.log'),
+            'level' => env('PERFORMANCE_LOG_LEVEL', 'info'),
+            'days' => 14,
+        ],
     ],
 
 ];
