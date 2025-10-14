@@ -110,4 +110,43 @@ class Job extends Model
         });
     }
 
+    // Exibir o CBO completo a partir do código
+    public function exibirCBO()
+    {
+        switch ($this->cbo) {
+            case '4110-10':
+                return '4110-10 / Assistente Administrativo';
+            case '4122-05':
+                return '4122-05 / Contínuo';
+            case '4211-25':
+                return '4211-25 / Operador de Caixa';
+            case '4221-05':
+                return '4221-05 / Recepcionista Geral';
+            case '5133-15':
+                return '5133-15 / Camareiro de Hotel';
+            case '5134-05':
+                return '5134-05 / Garçom';
+            case '5134-25':
+                return '5134-15 / Cumim';
+            case '4211-25':
+                return '5134-25 / Copeiro';
+            case '5134-35':
+                return '5134-35 / Atendente de lanchonete';
+            case '5135-05':
+                return '5135-05 / Aux. nos Serviços de Alimentação';
+            case '5142-25':
+                return '5142-25 / Trabalhador de serviços de limpeza e conservação';
+            case '5143-25':
+                return '5143-25 / Trabalhador na Manutenção de Edificações';
+            case '5211-25':
+                return '5211-25 / Repositor de Mercadorias';
+            case '5211-35':
+                return '5211-35 / Frentista';
+            case '5211-40':
+                return '5211-40 / Atendente de lojas e mercados';
+            default:
+                return $this->cbo; // Retorna o código original se não encontrar
+        }
+    }
+
 }

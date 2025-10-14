@@ -25,10 +25,10 @@
                         <label for="status" class="form-label">Status</label>
                         <select name="status" id="status" class="form-select">
                             <option>Todos</option>
-                            <option value="aberta"> Aberta</option>
-                            <option value="fechada"> Fechada</option>
-                            <option value="espera"> Espera</option>
-                            <option value="cancelada"> Cancelada</option>
+                            <option value="aberta" {{ request('aberta') == 'aberta' ? 'selected' : ''  }}> Aberta</option>
+                            <option value="fechada" {{ request('fechada') == 'fechada' ? 'selected' : ''  }}> Fechada</option>
+                            <option value="espera" {{ request('espera') == 'espera' ? 'selected' : ''  }}> Espera</option>
+                            <option value="cancelada" {{ request('cancelada') == 'cancelada' ? 'selected' : ''  }}> Cancelada</option>
                         </select>
                     </div>
 
@@ -36,24 +36,36 @@
                         <label for="filtro_data" class="form-label">Filtrar por Data</label>
                         <select name="filtro_data" id="filtro_data" class="form-select">
                             <option>Todas</option>
-                            <option value="7">Últimos 7 dias</option>
-                            <option value="15">Últimos 15 dias</option>
-                            <option value="30">Últimos 30 dias</option>
-                            <option value="90">Últimos 90 dias</option>
+                            <option value="7" {{ request('filtro_data') == '7' ? 'selected' : '' }}>Últimos 7 dias</option>
+                            <option value="15" {{ request('filtro_data') == '15' ? 'selected' : '' }}>Últimos 15 dias</option>
+                            <option value="30" {{ request('filtro_data') == '30' ? 'selected' : '' }}>Últimos 30 dias</option>
+                            <option value="90" {{ request('filtro_data') == '90' ? 'selected' : '' }}>Últimos 90 dias</option>
                         </select>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <label for="setor" class="form-label">Área</label>
+                        <input type="text" name="setor" id="setor" class="form-control" value="{{ request('setor') }}">
                     </div>
 
                     <div class="col-6">
-                        <label for="cargo" class="form-label">Setor</label>
-                        <select name="cargo" id="cargo" class="form-select" >
+                        <label for="cbo" class="form-label">CBO</label>
+                        <select name="cbo" id="cbo" class="form-select" >
                             <option>Todos</option>
-                            <option value="Copa & Cozinha">Copa & Cozinha</option>
-                            <option value="Administrativo">Administrativo</option>
-                            <option value="Camareiro(a) de Hotel">Camareiro(a) de Hotel</option>
-                            <option value="Recepcionista">Recepcionista</option>
-                            <option value="Atendente de Lojas e Mercados (Comércio & Varejo)">Atendente de Lojas e Mercados (Comércio & Varejo)</option>
-                            <option value="Construção e Reparos">Construção e Reparos</option>
-                            <option value="Conservação e Limpeza">Conservação e Limpeza</option>
+                            <option value="4110-10" {{ request('cbo') == '4110-10' ? 'selected' : '' }}>4110-10 / Assistente Administrativo</option>
+                            <option value="4122-05" {{ request('cbo') == '4122-05' ? 'selected' : '' }}>4122-05 / Contínuo</option>
+                            <option value="4211-25" {{ request('cbo') == '4211-25' ? 'selected' : '' }}>4211-25 / Operador de Caixa</option>
+                            <option value="4221-05" {{ request('cbo') == '4221-05' ? 'selected' : '' }}>4221-05 / Recepcionista Geral</option>
+                            <option value="5133-15" {{ request('cbo') == '5133-15' ? 'selected' : '' }}>5133-15 / Camareiro de Hotel</option>
+                            <option value="5134-05" {{ request('cbo') == '5134-05' ? 'selected' : '' }}>5134-05 / Garçom</option>
+                            <option value="5134-15" {{ request('cbo') == '5134-15' ? 'selected' : '' }}>5134-15 / Cumim</option>
+                            <option value="5134-25" {{ request('cbo') == '5134-25' ? 'selected' : '' }}>5134-25 / Copeiro</option>
+                            <option value="5134-35" {{ request('cbo') == '5134-35' ? 'selected' : '' }}>5134-35 / Atendente de lanchonete</option>
+                            <option value="5135-05" {{ request('cbo') == '5135-05' ? 'selected' : '' }}>5135-05 / Aux. nos Serviços de Alimentação</option>
+                            <option value="5142-25" {{ request('cbo') == '5142-25' ? 'selected' : '' }}>5142-25 / Trabalhador de serviços de limpeza e conservação</option>
+                            <option value="5143-25" {{ request('cbo') == '5143-25' ? 'selected' : '' }}>5143-25 / Trabalhador na Manutenção de Edificações</option>
+                            <option value="5211-25" {{ request('cbo') == '5211-25' ? 'selected' : '' }}>5211-25 / Repositor de Mercadorias</option>
+                            <option value="5211-35" {{ request('cbo') == '5211-35' ? 'selected' : '' }}>5211-35 / Frentista</option>
+                            <option value="5211-40" {{ request('cbo') == '5211-40' ? 'selected' : '' }}>5211-40 / Atendente de lojas e mercados</option>  
                         </select>
                     </div>
 
@@ -62,7 +74,9 @@
                         <select name="recruiters" id="recruiters" class="form-select">
                             <option>Todos</option>
                             @foreach ($recruiters as $recruiter)
-                                <option value="{{ $recruiter->name }}" > {{ $recruiter->name }}</option>
+                                <option value="{{ $recruiter->name }}"
+                                    {{ is_array(request('recruiters')) && in_array($recruiter->name, request('recruiters')) ? 'selected' : '' }}    
+                                > {{ $recruiter->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -71,9 +85,9 @@
                         <label for="sexo" class="form-label">Gênero</label>
                         <select name="sexo" id="sexo" class="form-select">
                             <option>Todos</option>
-                            <option value="Masculino"> Masculino</option>
-                            <option value="Feminino"> Feminino</option>
-                            <option value="Indiferente"> Indiferente</option>
+                            <option value="Masculino" {{request('sexo' == 'Masculino' ? 'selected' : '' )}}> Masculino</option>
+                            <option value="Feminino" {{request('sexo' == 'Feminino' ? 'selected' : '' )}}> Feminino</option>
+                            <option value="Indiferente" {{request('sexo' == 'Indiferente' ? 'selected' : '' )}}> Indiferente</option>
                         </select>
                     </div>
 
@@ -102,10 +116,10 @@
                         <label for="informatica" class="form-label">Informática</label>
                         <select name="informatica" id="informatica" class="form-select">
                             <option>Todos</option>
-                            <option value="Básico"> Básico</option>
-                            <option value="Intermediário"> Intermediário</option>
-                            <option value="Avançado"> Avançado</option>
-                            <option value="Nenhum"> Nenhum</option>
+                            <option value="Básico" {{ request('informatica') == 'Básico' ? 'selected' : ' '}}> Básico</option>
+                            <option value="Intermediário" {{ request('informatica') == 'Intermediário' ? 'selected' : ' '}}> Intermediário</option>
+                            <option value="Avançado" {{ request('informatica') == 'Avançado' ? 'selected' : ' '}}> Avançado</option>
+                            <option value="Nenhum" {{ request('informatica') == 'Nenhum' ? 'selected' : ' '}}> Nenhum</option>
                         </select>
                     </div>
 
@@ -114,10 +128,10 @@
                         <label for="ingles" class="form-label">Inglês</label>
                         <select name="ingles" id="ingles" class="form-select">
                             <option>Todos</option>
-                            <option value="Básico"> Básico</option>
-                            <option value="Intermediário"> Intermediário</option>
-                            <option value="Avançado"> Avançado</option>
-                            <option value="Nenhum"> Nenhum</option>
+                            <option value="Básico" {{ request('ingles') == 'Básico' ? 'selected' : ' '}}> Básico</option>
+                            <option value="Intermediário" {{ request('ingles') == 'Básico' ? 'selected' : ' '}}> Intermediário</option>
+                            <option value="Avançado" {{ request('ingles') == 'Básico' ? 'selected' : ' '}}> Avançado</option>
+                            <option value="Nenhum" {{ request('ingles') == 'Básico' ? 'selected' : ' '}}> Nenhum</option>
                         </select>
                     </div>
 
@@ -127,7 +141,9 @@
                         <select name="company" id="company_id" class="form-select" >
                             <option>Todas</option>
                             @foreach ($companies as $company)
-                                <option value="{{ $company->nome_fantasia }}" > {{ $company->nome_fantasia }}</option>
+                                <option value="{{ $company->nome_fantasia }}" 
+                                    {{ is_array(request('company')) && in_array($company->nome_fantasia, request('company')) ? 'selected' : '' }}    
+                                > {{ $company->nome_fantasia }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -152,9 +168,11 @@
                         <input type="date" name="data_max" id="data_max" class="form-control" value="{{ request('data_max')}}">
                     </div>
 
-                    <div class="col mt-1 d-flex justify-content-between">
-                        <button type="submit" class="btn btn-padrao btn-cadastrar" name="filtrar" value="filtrar">Filtrar</button>
-                        <button type="submit" class="btn btn-padrao btn-cancelar" name="limpar" value="limpar">Limpar</button>
+                    <div class="col-12 mt-1 d-flex justify-content-between">
+                        {{-- <button type="submit" class="btn btn-padrao btn-cadastrar" name="filtrar" value="filtrar">Filtrar</button>
+                        <button type="submit" class="btn btn-padrao btn-cancelar" name="limpar" value="limpar">Limpar</button> --}}
+                        <button type="submit" class="btn btn-padrao btn-cadastrar">Filtrar</button>                        
+                        <a href="{{ route('jobs.index') }}" class="btn btn-padrao btn-cancelar" name="limpar" value="limpar">Limpar</a>
                     </div>
 
                 </div>
@@ -210,7 +228,7 @@
             <ul class="tit-lista">
                 <li class="col1 sortable" data-column="empresa" data-type="text">Empresa</li>
                 <li class="col2 sortable" data-column="area" data-type="text">Área</li>
-                <li class="col3 sortable" data-column="titulo" data-type="text">Título</li>
+                <li class="col3 sortable" data-column="titulo" data-type="text">CBO</li>
                 <li class="col4 sortable" data-column="vagas" data-type="text">Vagas</li>
                 <li class="col5 sortable" data-column="recrutador" data-type="text">Recrutador</li>
                 <li class="col6 sortable" data-column="inicio_processo" data-type="date" >Início</li>
@@ -250,8 +268,8 @@
                         </li>
                         {{-- Este campo represnta o Setor select --}}
                         <li class="col3">
-                            <b>Título</b>
-                            {!! limite($job->cargo, 28) !!} 
+                            <b>Título</b>                            
+                            {!! limite($job->exibirCBO(), 28) !!} 
                         </li>
                         <li class="col4" data-bs-toggle="tooltip" data-bs-placement="top" title="Preenchidas/Disponíveis">
                             <b>Vagas</b>
@@ -357,8 +375,8 @@
 @push('scripts-custom')
 <script src="{{ asset('js/jquery.mask.js') }}"></script>
 <script>
-var envio   = '',
-    filtros = [];
+    // var envio   = '',
+    //     filtros = [];
 
 $(document).ready(function() {
 
@@ -382,7 +400,7 @@ $(document).ready(function() {
     $('#filtro_data').select2({
         placeholder: "Selecione",
     });
-    $('#cargo').select2({
+    $('#cbo').select2({
         placeholder: "Selecione",
     });
     $('#recruiters').select2({
@@ -407,37 +425,117 @@ $(document).ready(function() {
         placeholder: "Selecione",
     });
 
-    if(envio === 'limpar'){
-        $('.bloco-filtros-ativos').slideUp(150);
-        setTimeout(function(){
-            $('.bloco-filtros-ativos span').html('');
-        }, 170);
-    }
+    // if(envio === 'limpar'){
+    //     $('.bloco-filtros-ativos').slideUp(150);
+    //     setTimeout(function(){
+    //         $('.bloco-filtros-ativos span').html('');
+    //     }, 170);
+    // }
 
-    $('#filter-form-jobs').on('submit', function(e) {
+    // $('#filter-form-jobs').on('submit', function(e) {
 
+    //     e.preventDefault();
+    //     let formData = (envio === 'filtrar') ? $(this).serialize() : '';
+
+    //     get_form_filters($(this).serializeArray());
+
+    //     $.ajax({
+    //         url: "{{ route('jobs.index') }}",
+    //         type: "GET",
+    //         data: formData,
+    //         success: function(response) {
+    //             $('.table-container').html($(response).find('.table-container').html());
+    //             $('.dropdown-menu').removeClass('show');
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.error("Erro ao buscar dados:", error);
+    //         }
+    //     });
+
+    // });  
+
+
+     // Botão limpar - redireciona para URL sem parâmetros
+    $('button[name="limpar"]').on('click', function(e){
         e.preventDefault();
-        let formData = (envio === 'filtrar') ? $(this).serialize() : '';
-
-        get_form_filters($(this).serializeArray());
-
-        $.ajax({
-            url: "{{ route('jobs.index') }}",
-            type: "GET",
-            data: formData,
-            success: function(response) {
-                $('.table-container').html($(response).find('.table-container').html());
-                $('.dropdown-menu').removeClass('show');
-            },
-            error: function(xhr, status, error) {
-                console.error("Erro ao buscar dados:", error);
-            }
-        });
-
+        window.location.href = "{{ route('resumes.index') }}";
     });
 
-    
+    // Atualiza filtros ativos quando a página carrega
+    updateActiveFilters();
 
+
+});
+
+// Função para mostrar filtros ativos
+function updateActiveFilters(){
+    let params = new URLSearchParams(window.location.search);
+    let activeFilters = [];
+    let filtersContainer = $('.bloco-filtros-ativos span');
+    filtersContainer.empty(); // Limpa os filtros anteriores
+
+    params.forEach((value, key) => {
+        // Ignora parâmetros de paginação e vazios
+        if( key !== 'page' && value && value !== 'Todos' && value !== 'Todas'){
+            // Para arrays (selects múltiplos)
+            if (key.endsWith('[]')){
+                //activeFilters.push(createFilterBadge(key.replace('[]', ''), value));
+                activeFilters.push(createFilterBadge(key, value));
+            } else {
+                activeFilters.push(createFilterBadge(key, value));
+            }
+        }
+    });
+
+    if(activeFilters.length > 0) {
+        filtersContainer.append(activeFilters);
+        $('.bloco-filtros-ativos').slideDown(150);
+    } else {
+        $('.bloco-filtros-ativos').slideUp(150);
+    }
+}
+
+// Cria um badge para cada filtro com botão de remover
+function createFilterBadge(key, value) {
+    // Cria um elemento span para o badge
+    let badge = $('<span class="filter-badge"></span>');
+
+    // Adiciona o valor do filtro
+    badge.append(document.createTextNode(value));
+
+    // Adciona o botão de remover (x)
+    let removeBtn = $('<button class="remove-filter" data-key="'+key+'" data-value="'+value+'">x</button>');
+    badge.append(removeBtn);
+
+    return badge;
+}
+
+// Remove um filtro especifico e recarrega a pagina
+$(document).on('click', '.remove-filter', function(){
+    let key = $(this).data('key');
+    let value = $(this).data('value');
+    let url = new URL(window.location.href);
+    let params = new URLSearchParams(url.search);
+
+    // Para filtros multiplos (array)
+    if (key.endsWith('[]')){
+        let currentValues = params.getAll(key);
+        let newValues = currentValues.filter(v => v !== value);
+
+        // Remove o parametro completamente se não houver mais valores
+        params.delete(key);
+        newValues.forEach(v => params.append(key, v));
+    }
+    // Para filtro simples
+    else {
+        params.delete(key);
+    }
+
+    // Remove também a página para voltar a primeira
+    params.delete('paga');
+
+    // Atualiza a URL e recarrega
+    window.location.href = url.pathname + '?' + params.toString();
 
 });
 
@@ -726,6 +824,59 @@ window.reinitTableSorter = function() {
 /* Destaque visual durante ordenação */
 .sorting {
     opacity: 0.7;
+}
+
+/* Estilo dos badges de filtro*/
+.bloco-filtros-ativos {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+    font-weight: 700;
+    font-size: 12px;
+    margin: 10px 0;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -ms-border-radius: 20px;
+    padding: 3px 14px;
+    background-color: #F2F2F2;
+    letter-spacing: normal;
+}
+
+.filter-badge {
+    display: inline-block;
+    margin-right: 8px;   
+    padding: 5px 10px;
+    padding-left: 24px;
+    background: #fff;
+    border-radius: 15px;
+    font-size: 12px;
+    position: relative;
+}
+
+.remove-filter {
+    margin-left: 5px;
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 0 5px;
+    color: #ff0000;
+    font-size: 15px;
+    position: absolute;
+    top: 3px;
+    left: 0;
+    font-weight: 700;
+    font-family: 'Montserrat';
+    line-height: 1em;
+}
+
+.remove-filter:hover {
+    color: #dc3545;
+}
+
+.btn.btn-padrao.btn-cancelar{
+    padding: 8px 20px;
 }
 
 

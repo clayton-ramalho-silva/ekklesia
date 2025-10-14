@@ -39,7 +39,7 @@
                         <div class="row">
                             {{-- {{{ dd($job)}}} --}}
 
-                            <div class="mb-3 col-6">
+                            <div class="mb-3 col-12">
                                 <input type="text" name="company_id" id="company_id" class="floatlabel form-control" placeholder="Empresa" value="{{ $job->company->nome_fantasia}}" disabled>
                                 @error('company_id') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </div>
@@ -64,7 +64,7 @@
                             </div>
                             --}}
 
-                            <div class="mb-3 form-campo col-6">
+                            {{-- <div class="mb-3 form-campo col-6">
                                 <div class="floatlabel-wrapper required">
                                     <label for="cargo" class="label-floatlabel" class="form-label floatlabel-label">Setor</label>
                                     <select name="cargo" id="cargo" class="form-select active-floatlabel" required>
@@ -79,7 +79,7 @@
                                     </select>
                                     @error('cargo') <div class="alert alert-danger">{{ $message }}</div> @enderror
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="mb-3 form-campo col-6">
                                 <div class="floatlabel-wrapper required">
@@ -859,13 +859,16 @@ $('#informatica').select2({
 $('#ingles').select2({
     placeholder: "Selecione",
 });
+$('#cbo').select2({
+    placeholder: "Selecione",
+});
 
 $("#form-jobs").validate({
     ignore: [],
     rules:{
         company_id:"required",
-        setor:"required",
-        cargo:"required",
+        setor:"required",// area
+        //cargo:"required", // titulo - retirar
         genero:"required",
         qtd_vagas:"required",
         cidade:"required",

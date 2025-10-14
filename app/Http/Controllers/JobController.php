@@ -58,11 +58,16 @@ class JobController extends Controller
 
         }
 
-        // Filtro Setor
-        if ($request->filled('cargo')) {
+        // Filtro Área
+        if($request->filled('setor')){
+            $query->where('setor', 'like', '%' . $request->setor . '%');
+        }
 
-            if($request->cargo !== "Todos"){
-                $query->where('cargo', rawurldecode($request->cargo));
+        // Filtro Setor
+        if ($request->filled('cbo')) {
+
+            if($request->cbo !== "Todos"){
+                $query->where('cbo', rawurldecode($request->cbo));
             }
 
         }
@@ -187,7 +192,8 @@ class JobController extends Controller
 
         
         $query->orderBy('created_at', 'desc');
-        $jobs = $query->paginate(25)->appends($request->all()); // Ajustar o numero coforme necessário.  
+        //$jobs = $query->paginate(25)->appends($request->all()); // Ajustar o numero coforme necessário.  
+        $jobs = $query->paginate(25); // Ajustar o numero coforme necessário.  
 
         $companies = Company::all();
         $recruiters = User::where('role', 'recruiter')->get();
@@ -218,7 +224,7 @@ class JobController extends Controller
         $data = $request->validate([
 
             'setor' =>'required|string|max:255', // campo área no formulário, texto livre
-            'cargo' =>'required|string|max:255', // campo setor no formulário, select
+            //'cargo' =>'required|string|max:255', // campo setor no formulário, select - retirar
             'cbo' =>'required|string|max:255',
             'descricao' =>'nullable|string',
             'genero' =>'required|string|max:255',
@@ -290,7 +296,7 @@ class JobController extends Controller
         $data = $request->validate([
 
             'setor' =>'required|string|max:255', // campo área no formulário, texto livre
-            'cargo' =>'required|string|max:255', // campo setor no formulário, select
+            //'cargo' =>'required|string|max:255', // campo setor no formulário, select - retirar
             'cbo' =>'required|string|max:255',
             'descricao' =>'nullable|string',
             'genero' =>'required|string|max:255',
