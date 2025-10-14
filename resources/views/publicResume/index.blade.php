@@ -1008,82 +1008,7 @@
                                             </div>
                                             @error('foi_jovem_aprendiz') <div class="alert alert-danger">{{ $message }}</div> @enderror
                                         </div>
-                                    </div>
-                                
-                                    <!-- Uniformes-->
-                                    {{-- <div class="d-flex col-6 form-campo">
-
-                                        <div class="mb-3 form-checkbox">
-
-                                            <label for="tamanho_uniforme" class="form-label">Tamanho para Confecção dos Uniformes</label>
-
-                                            <div class="form-check form-check">
-                                                <input class="form-check-input" type="radio" name="tamanho_uniforme" id="tamanho_uniforme1" value="FEMININO: Baby Look P" {{ old('tamanho_uniforme') == 'FEMININO: Baby Look P' ? 'selected' : ''}}>
-                                                @error('tamanho_uniforme') <div class="alert alert-danger">{{ $message }}</div> @enderror
-                                                <label class="form-check-label" for="tamanho_uniforme1">
-                                                    FEMININO: Baby Look P
-                                                </label>
-                                            </div>
-
-                                            <div class="form-check form-check">
-                                                <input class="form-check-input" type="radio" name="tamanho_uniforme" id="tamanho_uniforme2" value="FEMININO: Baby Look M" {{ old('tamanho_uniforme')  == 'FEMININO: Baby Look M' ? 'selected' : ''}}>
-                                                @error('tamanho_uniforme') <div class="alert alert-danger">{{ $message }}</div> @enderror
-                                                <label class="form-check-label" for="tamanho_uniforme2">
-                                                FEMININO: Baby Look M
-                                                </label>
-                                            </div>
-
-                                            <div class="form-check form-check">
-                                                <input class="form-check-input" type="radio" name="tamanho_uniforme" id="tamanho_uniforme3" value="FEMININO: Baby Look G" {{ old('tamanho_uniforme')  == 'FEMININO: Baby Look G' ? 'selected' : ''}}>
-                                                @error('tamanho_uniforme') <div class="alert alert-danger">{{ $message }}</div> @enderror
-                                                <label class="form-check-label" for="tamanho_uniforme3">
-                                                FEMININO: Baby Look G
-                                                </label>
-                                            </div>
-
-                                            <div class="form-check form-check">
-                                                <input class="form-check-input" type="radio" name="tamanho_uniforme" id="tamanho_uniforme4" value="FEMININO: Baby Look GG" {{ old('tamanho_uniforme')  == 'FEMININO: Baby Look GG' ? 'selected' : ''}}>
-                                                @error('tamanho_uniforme') <div class="alert alert-danger">{{ $message }}</div> @enderror
-                                                <label class="form-check-label" for="tamanho_uniforme4">
-                                                FEMININO: Baby Look GG
-                                                </label>
-                                            </div>
-
-                                            <div class="form-check form-check">
-                                                <input class="form-check-input" type="radio" name="tamanho_uniforme" id="tamanho_uniforme5" value="MASCULINO:  P" {{ old('tamanho_uniforme')  == 'MASCULINO:  P' ? 'selected' : ''}}>
-                                                @error('tamanho_uniforme') <div class="alert alert-danger">{{ $message }}</div> @enderror
-                                                <label class="form-check-label" for="tamanho_uniforme5">
-                                                    MASCULINO:  P
-                                                </label>
-                                            </div>
-
-                                            <div class="form-check form-check">
-                                                <input class="form-check-input" type="radio" name="tamanho_uniforme" id="tamanho_uniforme6" value="MASCULINO:  M" {{ old('tamanho_uniforme')  == 'MASCULINO:  M' ? 'selected' : ''}}>
-                                                @error('tamanho_uniforme') <div class="alert alert-danger">{{ $message }}</div> @enderror
-                                                <label class="form-check-label" for="tamanho_uniforme6">
-                                                MASCULINO:  M
-                                                </label>
-                                            </div>
-
-                                            <div class="form-check form-check">
-                                                <input class="form-check-input" type="radio" name="tamanho_uniforme" id="tamanho_uniforme7" value="MASCULINO:  G" {{ old('tamanho_uniforme')  == 'MASCULINO:  G' ? 'selected' : ''}}>
-                                                @error('tamanho_uniforme') <div class="alert alert-danger">{{ $message }}</div> @enderror
-                                                <label class="form-check-label" for="tamanho_uniforme7">
-                                                MASCULINO:  G
-                                                </label>
-                                            </div>
-
-                                            <div class="form-check form-check">
-                                                <input class="form-check-input" type="radio" name="tamanho_uniforme" id="tamanho_uniforme8" value="MASCULINO:  GG" {{ old('tamanho_uniforme')  == 'MASCULINO:  GG' ? 'selected' : ''}}>
-                                                @error('tamanho_uniforme') <div class="alert alert-danger">{{ $message }}</div> @enderror
-                                                <label class="form-check-label" for="tamanho_uniforme8">
-                                                MASCULINO:  GG
-                                                </label>
-                                            </div>
-
-                                        </div>
-
-                                    </div> --}}
+                                    </div>                               
 
                                     <div class="d-flex col-6 form-campo">
 
@@ -1648,6 +1573,21 @@ $(document).ready(function() {
         }
     });
 });
+
+
+
+// Se o campo PCD for "Sim. Com Laudo" o campo CID deve ser obrigatório
+$(document).ready(function() {
+    $('#pcd').change(function() {
+        if ($(this).val() === 'Sim, com laudo.') {
+            $('#pcd_sim').prop('required', true);
+        } else {
+            $('#pcd_sim').prop('required', false);
+            $('#pcd_sim').val(''); // Limpa o campo se não for obrigatório
+        }
+    });
+});
+
 
 
 
