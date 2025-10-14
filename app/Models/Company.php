@@ -16,7 +16,8 @@ class Company extends Model
         'razao_social',
         'nome_fantasia',
         'logotipo',
-        'status'
+        'status',
+        'observacao',
     ];
 
     protected $casts = [

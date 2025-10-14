@@ -13,6 +13,7 @@ class ContactCompany extends Model
 
     protected $fillable = [
         'telefone',
+        'ramal',
         'email',
         'nome_contato',
         'whatsapp'

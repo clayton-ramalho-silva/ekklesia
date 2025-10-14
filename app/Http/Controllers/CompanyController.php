@@ -30,6 +30,10 @@ class CompanyController extends Controller
 
         }
 
+        // Filtro Nome empresa
+        if($request->filled('empresa')){
+            $query->where('nome_fantasia', 'like', '%' . $request->empresa . '%');
+        }
 
         // Filtro cidade
         if ($request->filled('cidade')) {
@@ -80,7 +84,8 @@ class CompanyController extends Controller
             }
         }
 
-        $companies = $query->get();
+         $query->orderBy('created_at', 'desc');
+        $companies = $query->paginate(25);
         
         return view('companies.index', compact('companies', 'form_busca'));
     }
@@ -91,7 +96,7 @@ class CompanyController extends Controller
     }
 
     public function store(Request $request)
-    {
+    {        
         $data = $request->validate([
                 'cnpj' => 'required|string|unique:companies,cnpj',
                 'razao_social' => 'required|string|max:255',
@@ -107,7 +112,9 @@ class CompanyController extends Controller
                 'nome_contato' => 'nullable|string|max:255',
                 'email' => 'nullable|email',
                 'telefone' => 'nullable|max:15',
+                'ramal' => 'nullable|max:10',
                 'whatsapp' => 'nullable|max:15',
+                'observacao' => 'nullable|string',
                 'logotipo' => 'nullable|file|mimes:jpg,jpeg,png|max:2048'
             ]);
 
@@ -129,12 +136,14 @@ class CompanyController extends Controller
             'cnpj' => $data['cnpj'],
             'razao_social' => $data['razao_social'],
             'nome_fantasia' => $data['nome_fantasia'],
-            'logotipo' => $data['logotipo'] ?? null
+            'logotipo' => $data['logotipo'] ?? null,
+            'observacao' => $data['observacao'] ?? null,
         ]);
 
         $company->contacts()->create([
             'telefone' => $data['telefone'],
             'email' => $data['email'],
+            'ramal' => $data['ramal'],
             'nome_contato' => $data['nome_contato'],
             'whatsapp' => $data['whatsapp']
         ]);
@@ -182,8 +191,10 @@ class CompanyController extends Controller
             'nome_contato' => 'nullable|string|max:255',
             'email' => 'nullable|email',
             'telefone' => 'nullable|string|max:15',
+            'ramal' => 'nullable|string|max:10',
             'whatsapp' => 'nullable|string|max:15',
-            'logotipo' => 'nullable|file|mimes:jpg,jpeg,png|max:2048'
+            'logotipo' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'observacao' => 'nullable|string',
         ]);
 
         //dd($data);
@@ -215,11 +226,14 @@ class CompanyController extends Controller
             'razao_social' => $data['razao_social'],
             'nome_fantasia' => $data['nome_fantasia'],
             'logotipo' => $data['logotipo'],
-            'status' => ($request->input('status') === 'on') ? 'ativo' : 'inativo'
+            'status' => ($request->input('status') === 'on') ? 'ativo' : 'inativo',
+            'observacao' => $data['observacao'] ?? null,
+
         ]);
 
         $company->contacts()->update([
             'telefone' => $data['telefone'],
+            'ramal' => $data['ramal'],
             'email' => $data['email'],
             'nome_contato' => $data['nome_contato'],
             'whatsapp' => $data['whatsapp']

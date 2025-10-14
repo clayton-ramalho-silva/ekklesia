@@ -118,14 +118,25 @@
                                 @error('email') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </div>
 
-                            <div class="col-6 mb-3 form-campo">
+                            <div class="col-4 mb-3 form-campo">
                                 <input type="tel" class="form-control floatlabel" id="telefone" name="telefone" value="{{ old('telefone', $company->contacts->telefone)  }}" placeholder="Telefone">
                                 @error('telefone') <div class="alert alert-danger">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="col-2 mb-3 form-campo">
+                                <input type="text" class="form-control floatlabel" id="ramal" name="ramal" value="{{ old('ramal', $company->contacts->ramal ?? '') }}" placeholder="Ramal">
+                                @error('ramal') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </div>
 
                             <div class="col-6 mb-3 form-campo">
                                 <input type="tel" class="form-control floatlabel" id="whatsapp" name="whatsapp" value="{{old('whatsapp', $company->contacts->whatsapp )  }}" placeholder="(Whatsapp)">
                                 @error('whatsapp') <div class="alert alert-danger">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="mb-3 col-12">
+                                <div class="floatlabel-wrapper form-textarea">
+                                    <label for="observacao" class="label-floatlabel" class="form-label floatlabel-label">Observações</label>
+                                    <textarea name="observacao" id="observacao" cols="30" rows="10" class="form-control">{{ old('observacao', $company->observacao) }}</textarea>
+                                    @error('observacao') <div class="alert alert-danger">{{ $message }}</div> @enderror
+                                </div>
                             </div>
 
                         </div>
