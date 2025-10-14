@@ -31,7 +31,7 @@
 
                 <div class="row">
 
-                    <div class="mb-3 col-6">
+                    <div class="mb-3 col-12">
                         <div class="floatlabel-wrapper required">
                             <label for="company_id" class="label-floatlabel" class="form-label floatlabel-label">Escolher Empresa</label>
                             <select name="company_id" id="company_id" class="form-select" required>
@@ -43,12 +43,12 @@
                             @error('company_id') <div class="alert alert-danger">{{ $message }}</div> @enderror
                         </div>
                     </div>
-                    <div class="mb-3 col-6 form-campo">
+                    <div class="mb-3 col-4 form-campo">
                         <input type="text" placeholder="Área" class="floatlabel form-control" id="setor" name="setor" value="{{ old('setor') }}" required>
                         @error('setor') <div class="alert alert-danger">{{ $message }}</div> @enderror
                     </div>
 
-                    <div class="mb-3 col-4 form-campo">
+                    {{-- <div class="mb-3 col-4 form-campo">
                         <div class="floatlabel-wrapper required">
                             <label for="cargo" class="label-floatlabel" class="form-label floatlabel-label">Setor</label>
                             <select name="cargo" id="cargo" class="form-select active-floatlabel" required>
@@ -63,7 +63,7 @@
                             </select>
                             @error('cargo') <div class="alert alert-danger">{{ $message }}</div> @enderror
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="mb-3 col-4 form-campo">
                         <div class="floatlabel-wrapper required">
@@ -260,9 +260,9 @@ $("#form-jobs").validate({
     ignore: [],
     rules:{
         company_id:"required",
-        setor:"required",
+        setor:"required", // Area - manter
         cbo:"required",
-        cargo:"required",
+       // cargo:"required", // Setro - Retirar
         genero:"required",
         qtd_vagas:"required",
         cidade:"required",
