@@ -224,7 +224,7 @@ class JobController extends Controller
         $data = $request->validate([
 
             'setor' =>'required|string|max:255', // campo área no formulário, texto livre
-            //'cargo' =>'required|string|max:255', // campo setor no formulário, select - retirar
+            //'cargo' =>'nullable|string|max:255', // campo setor no formulário, select - retirar
             'cbo' =>'required|string|max:255',
             'descricao' =>'nullable|string',
             'genero' =>'required|string|max:255',
@@ -245,7 +245,8 @@ class JobController extends Controller
 
         //dd($data);
 
-        $data['status'] = 'aberta';        
+        $data['status'] = 'aberta';  
+        $data['cargo'] = '';      
 
        // dd($data);
 
@@ -296,7 +297,7 @@ class JobController extends Controller
         $data = $request->validate([
 
             'setor' =>'required|string|max:255', // campo área no formulário, texto livre
-            //'cargo' =>'required|string|max:255', // campo setor no formulário, select - retirar
+            //'cargo' =>'nullable|string|max:255', // campo setor no formulário, select - retirar
             'cbo' =>'required|string|max:255',
             'descricao' =>'nullable|string',
             'genero' =>'required|string|max:255',
