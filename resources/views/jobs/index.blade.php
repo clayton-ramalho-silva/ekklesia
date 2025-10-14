@@ -541,7 +541,7 @@ $(document).on('click', '.remove-filter', function(){
 
 
 
-//////////
+////////// //////// SISTEMA DE ORDENAÇÃO /////////////////
 class TableSorter {
     constructor(containerSelector) {
         this.container = document.querySelector(containerSelector);
@@ -693,7 +693,7 @@ window.reinitTableSorter = function() {
     new TableSorter('.lista-vagas');
 };
 
-
+////// FIM SISTEMA DE ORDENAÇÃO ///////
 
 
 </script>
@@ -782,7 +782,7 @@ window.reinitTableSorter = function() {
     justify-content: start !important;
 }
 
-/******** CSS Personalizado **********/
+/******** CSS Personalizado sortable **********/
 .sortable {
     cursor: pointer;
     position: relative;
@@ -825,6 +825,10 @@ window.reinitTableSorter = function() {
 .sorting {
     opacity: 0.7;
 }
+
+
+/******** FIM CSS Personalizado sortable **********/
+
 
 /* Estilo dos badges de filtro*/
 .bloco-filtros-ativos {
