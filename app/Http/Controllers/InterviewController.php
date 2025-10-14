@@ -900,9 +900,9 @@ class InterviewController extends Controller
         
         
         //dd($resume->jobs()->exists());
-        if($resume->jobs()->exists()){
-            return redirect()->back()->with('danger', 'Candidato já está associado a uma vaga!');
-        }
+        // if($resume->jobs()->exists()){
+        //     return redirect()->back()->with('danger', 'Candidato já está associado a uma vaga!');
+        // }
 
         
         if(!$job->data_inicio_contratacao){

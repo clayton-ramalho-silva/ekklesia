@@ -21,7 +21,7 @@
 
                                 <ul class="tit-lista">
                                     <li class="col1">Empresa</li>
-                                    <li class="col2">Título</li>
+                                    <li class="col2">Área</li>
                                     <li class="col3">Vagas</li>
                                     <li class="col4">Cidade</li>
                                     <li class="col5">Candidatos Selecionados</li>
@@ -49,7 +49,7 @@
                                         </li>
                                         <li class="col2">
                                             <b>Título</b>
-                                            {!! limite($job->cargo, 28) !!}
+                                            {!! limite($job->setor, 28) !!}
                                         </li>
                                         <li class="col3" data-bs-toggle="tooltip" data-bs-placement="top" title="Preenchidas/Disponíveis">
                                             <b>Vagas</b>
