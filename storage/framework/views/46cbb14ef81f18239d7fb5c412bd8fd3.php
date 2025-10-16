@@ -31,7 +31,7 @@
 
                     <div class="col-6 mb-4">
                         <label for="telefone_contato" class="form-label">4 últimos dígitos do Tel. Contato</label>
-                        <input type="text" name="telefone_contato" id="telefone_contato" class="form-control" value="<?php echo e(request('celular')); ?>" placeholder="Ex: 9999">
+                        <input type="text" name="telefone_contato" id="telefone_contato" class="form-control" value="<?php echo e(request('telefone_contato')); ?>" placeholder="Ex: 9999">
                     </div>
                      <div class="col col-5 mb-4">
                         <div class="mb-3">

@@ -40,55 +40,173 @@ class ResumeController extends Controller
         // $query = Resume::with(['informacoesPessoais', 'contato', 'escolaridade'])->whereDoesntHave('interview');
         
         //Abaixo de 23 anos.
-        $query = Resume::with(['informacoesPessoais', 'contato', 'escolaridade'])
+        $query = Resume::with([
+                'informacoesPessoais:resume_id,data_nascimento,nome,cpf,cnh,tipo_cnh,nacionalidade,estado_civil,possui_filhos,filhos_sim,sexo,sexo_outro,pcd,pcd_sim,reservista,instagram,linkedin', 
+                'contato:resume_id,logradouro,cidade,uf,email,telefone_celular,telefone_residencial,nome_contato', 
+                'escolaridade:resume_id,escolaridade,escolaridade_outro,semestre,instituicao,superior_periodo,informatica,ingles'
+            ])
+            ->select('id','created_at','status','vagas_interesse','experiencia_profissional','foi_jovem_aprendiz','cras','fonte')
             ->whereDoesntHave('interview')
             ->whereHas('informacoesPessoais', function ($q) {
                 $q->whereNotNull('data_nascimento')
-                ->whereRaw('TIMESTAMPDIFF(YEAR, data_nascimento, CURDATE()) < 23');
+                // ->whereRaw('TIMESTAMPDIFF(YEAR, data_nascimento, CURDATE()) < 23');
+                ->where('data_nascimento', '>=', now()->subYears(23)->toDateString());
             });
 
-        // Forumulario Busca - nome candidato
+
         $form_busca = '';
-        if($request->filled('form_busca')) {
-            $query->whereHas('informacoesPessoais', function($q) use ($request) {
+
+        // Agrupando filtros por relacionamentos: informacoesPessoais
+        $query->whereHas('informacoesPessoais', function ($q) use ($request){
+            
+
+            // Forumulario Busca rápida - nome candidato
+            if($request->filled('form_busca')){
                 $q->where('nome', 'like', '%' . $request->form_busca . '%');
-            });
 
-            $form_busca = $request->form_busca;
-        }
+                $form_busca = $request->form_busca;
+            }
 
-        // Aplica os filtros somente quando fornecidos
-        // Filtro por nome - Busca pelo nome do candidato
-        if($request->filled('nome')) {
-            $query->whereHas('informacoesPessoais', function($q) use ($request) {
+            // Aplica os filtros somente quando fornecidos
+            // Filtro por nome - Busca pelo nome do candidato
+            if($request->filled('nome')) {
                 $q->where('nome', 'like', '%' . $request->nome . '%');
-            });
+            }
+
+            // Filtro por cpf - Busca pelo nome do candidato
+            if($request->filled('cpf')) {
+                $q->where('cpf', 'like', '%' . $request->cpf . '%');                
+            }
+
+             // Filtro gênero- múltiplas seleções
+            if ($request->filled('sexo') && is_array($request->sexo)) {
+                $opcoes = array_filter($request->sexo); // Remove valores vazios
+                
+                if (!empty($opcoes)) {
+                    $q->whereIn('sexo', $opcoes);                    
+                }
+            }
+
+             // Filtro cnh- múltiplas seleções
+            if ($request->filled('cnh') && is_array($request->cnh)) {
+                $opcoes = array_filter($request->cnh); // Remove valores vazios
+                
+                if (!empty($opcoes)) {
+                    $q->whereIn('cnh', $opcoes);                   
+                }
+            }
+
+            // Filtro Reservista- múltiplas seleções
+            if ($request->filled('reservista') && is_array($request->reservista)) {
+                $opcoes = array_filter($request->reservista); // Remove valores vazios
+                
+                if (!empty($opcoes)) {
+                    $q->whereIn('reservista', $opcoes);                      
+                }
+            }
+
+            if ($request->filled('foi_jovem_aprendiz') && is_array($request->foi_jovem_aprendiz)) {
+                $opcoes = array_filter($request->foi_jovem_aprendiz); // Remove valores vazios
+                
+                if (!empty($opcoes)) {
+                    $q->whereIn('foi_jovem_aprendiz', $opcoes);                    
+                }
+            }
+
+            // Filtro Idade
+            if ($request->filled('min_age')) {
+                $q->whereNotNull('data_nascimento')
+                    ->whereRaw('TIMESTAMPDIFF(YEAR, data_nascimento, CURDATE()) >= ?', [$request->min_age]);                
+            }
+        
+        });  
+        // Filtro PCD - múltiplas seleções
+        if ($request->filled('pcd') && is_array($request->pcd)) {
+            $pcdSelecionados = array_filter($request->pcd);
+            
+            if (!empty($pcdSelecionados)) {
+                $query->whereHas('informacoesPessoais', function($q) use ($pcdSelecionados) {
+                    $q->where(function($subQuery) use ($pcdSelecionados) {
+                        
+                        // Verifica se "Não" foi selecionado
+                        if (in_array('Não', $pcdSelecionados)) {
+                            $subQuery->where(function($naoQuery) {
+                                $naoQuery->whereNotIn('pcd', ['Sim, com laudo.', 'Sim, sem laudo.'])
+                                        ->orWhereNull('pcd')
+                                        ->orWhere('pcd', '');
+                            });
+                        }
+                        
+                        // Adiciona as outras opções selecionadas (Sim, com laudo. / Sim, sem laudo.)
+                        $outrasOpcoes = array_diff($pcdSelecionados, ['Não']);
+                        if (!empty($outrasOpcoes)) {
+                            if (in_array('Não', $pcdSelecionados)) {
+                                // Se "Não" também foi selecionado, usa OR
+                                $subQuery->orWhereIn('pcd', $outrasOpcoes);
+                            } else {
+                                // Se só tem "Sim" opções
+                                $subQuery->whereIn('pcd', $outrasOpcoes);
+                            }
+                        }
+                    });
+                });
+            }
         }
+        
+        
+        // Agrupando filtros por relacionamentos: escolaridade
+        $query->whereHas('escolaridade', function ($q) use ($request){
+            
+            // Filtro Informatica - múltiplas seleções
+            if ($request->filled('informatica') && is_array($request->informatica)) {
+                $opcoes = array_filter($request->informatica); // Remove valores vazios
+                
+                if (!empty($opcoes)) {
+                    $q->whereIn('informatica', $opcoes);                     
+                }
+            }
 
-        // Filtro por cpf - Busca pelo nome do candidato
-        if($request->filled('cpf')) {
-            $query->whereHas('informacoesPessoais', function($q) use ($request) {
-                $q->where('cpf', 'like', '%' . $request->cpf . '%');
-            });
-        }
+            // Filtro Ingles - múltiplas seleções
+            if ($request->filled('ingles') && is_array($request->ingles)) {
+                $opcoes = array_filter($request->ingles); // Remove valores vazios
+                
+                if (!empty($opcoes)) {
+                    $q->whereIn('ingles', $opcoes);                     
+                }
+            }   
+        });  
 
-        // Filtro Status
+        // Agrupando filtros por relacionamentos: contato
+        $query->whereHas('contato', function ($q) use ($request){
+            
+           // Filtro Cidade - múltiplas seleções
+            if ($request->filled('cidade') && is_array($request->cidade)) {
+                $opcoes = array_filter($request->cidade); // Remove valores vazios
+                
+                if (!empty($opcoes)) {
+                    $q->whereIn('cidade', $opcoes);  
+                   
+                }
+            }
 
-        // if ($request->filled('status') && $request->status !== "Todos") {
-        //     if ($request->status === "ativo" || $request->status === "inativo") {
-        //         $query->where('status', $request->status);
-        //     } else {
-        //         $query->whereHas('selections', function($q) use ($request) {
-        //             $q->where('status_selecao', $request->status);
-        //         });
-        //     }
-        // }
+            // Filtro Telefone Celular
 
-         // Filtro Status
+            //dd($request->celular);
+            if ($request->filled('celular') && strlen($request->celular) >= 4) {
+                $ultimosDigitos = substr($request->celular, -4);
+                $q->where('telefone_celular', 'like', '%' . $ultimosDigitos);               
+                
+            }
 
-        // if ($request->filled('status') && $request->status !== "Todos") {            
-        //         $query->where('status', $request->status);            
-        // }
+            // Filtro Telefone Contato
+
+            if ($request->filled('telefone_contato') && strlen($request->telefone_contato) >= 4) {
+                $ultimosDigitos = substr($request->telefone_contato, -4);
+                $q->where('telefone_residencial', 'like', '%' . $ultimosDigitos);                
+                
+            }
+        });  
+        
        
         // Filtro Status - múltiplas seleções
         if ($request->filled('status') && is_array($request->status)) {
@@ -102,165 +220,6 @@ class ResumeController extends Controller
         }
        
 
-        // Filtro gênero
-        // if ($request->filled('sexo') && $request->sexo !== "Todos"){
-        //     $query->whereHas('informacoesPessoais', function($q) use ($request) {
-        //         $q->where('sexo', $request->sexo);
-        //     });
-        // }        
-
-         // Filtro gênero- múltiplas seleções
-        if ($request->filled('sexo') && is_array($request->sexo)) {
-            $opcoes = array_filter($request->sexo); // Remove valores vazios
-            
-            if (!empty($opcoes)) {
-                $query->whereHas('informacoesPessoais', function($q) use ($opcoes) {
-                    $q->where(function($subQuery) use ($opcoes) {
-                        foreach ($opcoes as $opcao) {
-                            $subQuery->orWhere('sexo', 'like', '%' . $opcao . '%');
-                        }
-                    });
-                });
-            }
-        }
-
-        // Filtro CNH
-        // if ($request->filled('cnh') && $request->cnh !== "Todos") {
-        //     $query->whereHas('informacoesPessoais', function($q) use ($request) {
-        //         $q->where('cnh', $request->cnh);
-        //     });
-        // }
-
-         // Filtro CNH- múltiplas seleções
-        if ($request->filled('cnh') && is_array($request->cnh)) {
-            $opcoes = array_filter($request->cnh); // Remove valores vazios
-            
-            if (!empty($opcoes)) {
-                $query->whereHas('informacoesPessoais', function($q) use ($opcoes) {
-                    $q->where(function($subQuery) use ($opcoes) {
-                        foreach ($opcoes as $opcao) {
-                            $subQuery->orWhere('cnh', 'like', '%' . $opcao . '%');
-                        }
-                    });
-                });
-            }
-        }
-
-        // Filtro Idade
-        if ($request->filled('min_age')) {
-            $query->whereHas('informacoesPessoais', function ($q) use ($request) {
-                $q->whereNotNull('data_nascimento')
-                  ->whereRaw('TIMESTAMPDIFF(YEAR, data_nascimento, CURDATE()) >= ?', [$request->min_age]);
-            });
-        }
-
-        // Filtro Idade considerando idade minima e máxima por meses - EM DESENVOLVIMENTO
-        // if ($request->filled('min_age') || $request->filled('max_age')) {
-        //     $query->whereHas('informacoesPessoais', function ($q) use ($request) {
-        //         $q->whereNotNull('data_nascimento');
-
-        //         if ($request->filled('min_age')) {
-        //             $q->whereRaw('TIMESTAMPDIFF(MONTH, data_nascimento, CURDATE()) >= ?', [$request->min_age]);
-        //         }
-
-        //         if ($request->filled('max_age')) {
-        //             $q->whereRaw('TIMESTAMPDIFF(MONTH, data_nascimento, CURDATE()) <= ?', [$request->max_age]);
-        //         }
-        //     });
-        // }
-
-
-        
-
-         // Filtro Reservista- múltiplas seleções
-        if ($request->filled('reservista') && is_array($request->reservista)) {
-            $opcoes = array_filter($request->reservista); // Remove valores vazios
-            
-            if (!empty($opcoes)) {
-                $query->whereHas('informacoesPessoais', function($q) use ($opcoes) {
-                    $q->where(function($subQuery) use ($opcoes) {
-                        foreach ($opcoes as $opcao) {
-                            $subQuery->orWhere('reservista', 'like', '%' . $opcao . '%');
-                        }
-                    });
-                });
-            }
-        }
-        
-
-         // Filtro Já foi jovem aprendiz - múltiplas seleções
-        if ($request->filled('foi_jovem_aprendiz') && is_array($request->foi_jovem_aprendiz)) {
-            $opcoesJovemAprendiz = array_filter($request->foi_jovem_aprendiz); // Remove valores vazios
-            
-            if (!empty($opcoesJovemAprendiz)) {
-                $query->whereHas('informacoesPessoais', function($q) use ($opcoesJovemAprendiz) {
-                    $q->where(function($subQuery) use ($opcoesJovemAprendiz) {
-                        foreach ($opcoesJovemAprendiz as $jovem_aprendiz) {
-                            $subQuery->orWhere('foi_jovem_aprendiz', 'like', '%' . $jovem_aprendiz . '%');
-                        }
-                    });
-                });
-            }
-        }
-
-        // Filtro Informatica - múltiplas seleções
-        if ($request->filled('informatica') && is_array($request->informatica)) {
-            $opcoesInformatica = array_filter($request->informatica); // Remove valores vazios
-            
-            if (!empty($opcoesInformatica)) {
-                $query->whereHas('escolaridade', function($q) use ($opcoesInformatica) {
-                    $q->where(function($subQuery) use ($opcoesInformatica) {
-                        foreach ($opcoesInformatica as $informatica) {
-                            $subQuery->orWhere('informatica', 'like', '%' . $informatica . '%');
-                        }
-                    });
-                });
-            }
-        }
-
-        // Filtro Ingles - múltiplas seleções
-        if ($request->filled('ingles') && is_array($request->ingles)) {
-            $opcoesIngles = array_filter($request->ingles); // Remove valores vazios
-            
-            if (!empty($opcoesIngles)) {
-                $query->whereHas('escolaridade', function($q) use ($opcoesIngles) {
-                    $q->where(function($subQuery) use ($opcoesIngles) {
-                        foreach ($opcoesIngles as $ingles) {
-                            $subQuery->orWhere('ingles', 'like', '%' . $ingles . '%');
-                        }
-                    });
-                });
-            }
-        }
-
-
-        // No controller, ANTES de processar os filtros
-        // $opcoesIngles = ['Básico', 'Intermediário', 'Avançado', 'Nenhum'];
-
-        // if ($request->filled('ingles') && is_array($request->ingles)) {
-        //     $opcoesIngles = array_filter($request->ingles); // Remove valores vazios
-            
-        //     if (!empty($opcoesIngles)) {
-        //         $query->whereHas('escolaridade', function($q) use ($opcoesIngles) {
-        //             $q->where(function($subQuery) use ($opcoesIngles) {
-        //                 foreach ($opcoesIngles as $opcao) {
-        //                     $subQuery->orWhere('ingles', $opcao );
-        //                 }
-        //             });
-        //         });
-        //     }
-        // }
-
-
-
-
-
-        //  // Filtro Formação/Escolaridade
-        //  if ($request->filled('escolaridade') && $request->escolaridade !== "Todos") {
-        //     $query->whereHas('escolaridade', function($q) use ($request) {
-        //         $q->whereJsonContains('escolaridade', $request->escolaridade);
-        //     });
-        // } 
         
         // Filtro Formação/Escolaridade - múltiplas seleções
         if ($request->filled('escolaridade') && is_array($request->escolaridade)) {
@@ -294,51 +253,7 @@ class ResumeController extends Controller
         }
 
       
-        // Filtro Cidade - múltiplas seleções
-        if ($request->filled('cidade') && is_array($request->cidade)) {
-            $cidades = array_filter($request->cidade); // Remove valores vazios
-            
-            if (!empty($cidades)) {
-                $query->whereHas('contato', function($q) use ($cidades) {
-                    $q->where(function($subQuery) use ($cidades) {
-                        foreach ($cidades as $cidade) {
-                            $subQuery->orWhere('cidade', 'like', '%' . $cidade . '%');
-                        }
-                    });
-                });
-            }
-        }
-
-        // Filtro Telefone Celular
-
-        //dd($request->celular);
-        if ($request->filled('celular') && strlen($request->celular) >= 4) {
-            $ultimosDigitos = substr($request->celular, -4);
-            
-            $query->whereHas('contato', function($q) use ($ultimosDigitos) {
-                $q->where('telefone_celular', 'like', '%' . $ultimosDigitos);
-            });
-        }
-
-        // Filtro Telefone Contato
-
-        if ($request->filled('telefone_contato') && strlen($request->telefone_contato) >= 4) {
-            $ultimosDigitos = substr($request->telefone_contato, -4);
-            
-            $query->whereHas('contato', function($q) use ($ultimosDigitos) {
-                $q->where('telefone_residencial', 'like', '%' . $ultimosDigitos);
-            });
-        }
-
-        
-        // Filtro Candidato entrevistado/nao entrevistado/ todos
-        // if ($request->has('entrevistado') && $request->entrevistado !== "Todos") {
-        //     if ($request->entrevistado == '1') {
-        //         $query->whereHas('interview');
-        //     } elseif ($request->entrevistado == '0') {
-        //         $query->whereDoesntHave('interview');
-        //     }
-        // }
+       
 
          // Filtro Filtro data Resumes
 
@@ -363,80 +278,18 @@ class ResumeController extends Controller
 
         if($request->filled('data_max')){
             $query->whereDate('created_at', '<=', $request->data_max);
-        }
-
-
+        } 
        
-        //Controller - Filtro PCD
-        // if ($request->filled('pcd') && $request->pcd !== "Todos") {
-        //     $query->whereHas('informacoesPessoais', function($q) use ($request) {
-        //         if ($request->pcd === 'Não') {
-        //             // Se escolheu "Não", excluir os que têm "Sim, com laudo." e "Sim, sem laudo."
-        //             // Inclui registros com "Não", null, vazio ou outros valores
-        //             $q->where(function($subQuery) {
-        //                 $subQuery->whereNotIn('pcd', ['Sim, com laudo.', 'Sim, sem laudo.'])
-        //                         ->orWhereNull('pcd')
-        //                         ->orWhere('pcd', '');
-        //             });
-        //         } else {
-        //             // Para outras opções, mantém o comportamento original
-        //             $q->where('pcd', $request->pcd);
-        //         }
-        //     });
-        // }
 
-        // Filtro PCD - múltiplas seleções
-        if ($request->filled('pcd') && is_array($request->pcd)) {
-            $pcdSelecionados = array_filter($request->pcd);
-            
-            if (!empty($pcdSelecionados)) {
-                $query->whereHas('informacoesPessoais', function($q) use ($pcdSelecionados) {
-                    $q->where(function($subQuery) use ($pcdSelecionados) {
-                        
-                        // Verifica se "Não" foi selecionado
-                        if (in_array('Não', $pcdSelecionados)) {
-                            $subQuery->where(function($naoQuery) {
-                                $naoQuery->whereNotIn('pcd', ['Sim, com laudo.', 'Sim, sem laudo.'])
-                                        ->orWhereNull('pcd')
-                                        ->orWhere('pcd', '');
-                            });
-                        }
-                        
-                        // Adiciona as outras opções selecionadas (Sim, com laudo. / Sim, sem laudo.)
-                        $outrasOpcoes = array_diff($pcdSelecionados, ['Não']);
-                        if (!empty($outrasOpcoes)) {
-                            if (in_array('Não', $pcdSelecionados)) {
-                                // Se "Não" também foi selecionado, usa OR
-                                $subQuery->orWhereIn('pcd', $outrasOpcoes);
-                            } else {
-                                // Se só tem "Sim" opções
-                                $subQuery->whereIn('pcd', $outrasOpcoes);
-                            }
-                        }
-                    });
-                });
-            }
-        }
-
-
-
-
-
+        
 
 
         //Filtro Já foi jovem aprendiz
         if ($request->filled('cras') && $request->cras !== "cras") {
             $query->where('cras', $request->cras);
-        }
-        // Carregue as relações apenas após aplicar todos os filtros
-        // $query->with([
-        //     'informacoesPessoais',
-        //     'contato',
-        //     'interview',
-        //     'escolaridade'
-        // ]);
+        }   
 
-        //dd($query->toRawSql());
+        
 
         //NOVA FUNCIONALIDADE: Filtro de Ordenação
         $ordem = $request->get('ordem', 'desc'); // Por padrão será 'desc' (mais recente primeiro)
@@ -448,14 +301,8 @@ class ResumeController extends Controller
 
         $query->orderBy('created_at', $ordem);
 
-        
-         
 
-        
-
-
-
-            // Implementar paginação
+        // Implementar paginação
         $resumes = $query->paginate(50)->appends($request->all()); // Ajustar o numero coforme necessário.  
         
         $cidades = $this->cidadeService->getCidades();

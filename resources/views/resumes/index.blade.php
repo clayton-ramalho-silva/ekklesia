@@ -30,7 +30,7 @@
                     </div>
                     <div class="col-6 mb-4">
                         <label for="telefone_contato" class="form-label">4 últimos dígitos do Tel. Contato</label>
-                        <input type="text" name="telefone_contato" id="telefone_contato" class="form-control" value="{{ request('celular') }}" placeholder="Ex: 9999">
+                        <input type="text" name="telefone_contato" id="telefone_contato" class="form-control" value="{{ request('telefone_contato') }}" placeholder="Ex: 9999">
                     </div>
                      <div class="col col-5 mb-4">
                         <div class="mb-3">
@@ -497,7 +497,7 @@
                 <li class="col-ingles sortable" data-column="ingles" data-type="text">Inglês</li>
                 <li class="col-cras sortable" data-column="cras" data-type="text">Família atendida por algum equipamento Público?</li>
                 <li class="col-tamanho_uniforme sortable" data-column="tamanho_uniforme" data-type="text">Fonte Currículo</li>
-                <li class="col-entrevistado sortable" data-column="entrevistado" data-type="text">Entrevistado</li>
+                {{-- <li class="col-entrevistado sortable" data-column="entrevistado" data-type="text">Entrevistado</li> --}}
                 <li class="col-status sortable" data-column="status" data-type="text">Status</li>
             </ul>
 
@@ -710,14 +710,14 @@
                     </li> --}}
                    
                     
-                    <li class="col-entrevistado">
+                    {{-- <li class="col-entrevistado">
                         <b>Entrevista</b>
                         @if ($resume->interview)
                             <a href="{{ route('interviews.show', $resume->interview->id) }}#form-interview" class="link-entrevista text-success fw-bold"  data-bs-toggle="tooltip" data-bs-placement="top" title="Ver entrevista">Sim</a>
                         @else
                             <a href="{{ route('interviews.interviewResume', $resume) }}#form-interview"  class="link-entrevista text-danger fw-bold" data-bs-toggle="tooltip" data-bs-placement="top" title="Entrevistar">Não</a>
                         @endif
-                    </li>
+                    </li> --}}
                     <li class="col-status">
                         <b>Status</b>                    
 

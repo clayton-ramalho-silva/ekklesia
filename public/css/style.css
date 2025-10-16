@@ -177,3 +177,7 @@ font-size:11px;
 #filter-form-interviews, #filter-form{
     z-index: 51;
 }
+
+#dropdownFiltro,#dropdownFiltroEntrevistas{
+    z-index: 52;
+}

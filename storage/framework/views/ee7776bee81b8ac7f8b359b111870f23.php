@@ -28,7 +28,7 @@
                     </div>
                     <div class="col-6 mb-4">
                         <label for="telefone_contato" class="form-label">4 últimos dígitos do Tel. Contato</label>
-                        <input type="text" name="telefone_contato" id="telefone_contato" class="form-control" value="<?php echo e(request('celular')); ?>" placeholder="Ex: 9999">
+                        <input type="text" name="telefone_contato" id="telefone_contato" class="form-control" value="<?php echo e(request('telefone_contato')); ?>" placeholder="Ex: 9999">
                     </div>
                      <div class="col col-5 mb-4">
                         <div class="mb-3">
@@ -393,7 +393,7 @@ unset($__errorArgs, $__bag); ?>
                 <li class="col-ingles sortable" data-column="ingles" data-type="text">Inglês</li>
                 <li class="col-cras sortable" data-column="cras" data-type="text">Família atendida por algum equipamento Público?</li>
                 <li class="col-tamanho_uniforme sortable" data-column="tamanho_uniforme" data-type="text">Fonte Currículo</li>
-                <li class="col-entrevistado sortable" data-column="entrevistado" data-type="text">Entrevistado</li>
+                
                 <li class="col-status sortable" data-column="status" data-type="text">Status</li>
             </ul>
 
@@ -600,14 +600,7 @@ unset($__errorArgs, $__bag); ?>
                     
                    
                     
-                    <li class="col-entrevistado">
-                        <b>Entrevista</b>
-                        <?php if($resume->interview): ?>
-                            <a href="<?php echo e(route('interviews.show', $resume->interview->id)); ?>#form-interview" class="link-entrevista text-success fw-bold"  data-bs-toggle="tooltip" data-bs-placement="top" title="Ver entrevista">Sim</a>
-                        <?php else: ?>
-                            <a href="<?php echo e(route('interviews.interviewResume', $resume)); ?>#form-interview"  class="link-entrevista text-danger fw-bold" data-bs-toggle="tooltip" data-bs-placement="top" title="Entrevistar">Não</a>
-                        <?php endif; ?>
-                    </li>
+                    
                     <li class="col-status">
                         <b>Status</b>                    
 
