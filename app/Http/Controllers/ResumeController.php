@@ -40,7 +40,12 @@ class ResumeController extends Controller
         // $query = Resume::with(['informacoesPessoais', 'contato', 'escolaridade'])->whereDoesntHave('interview');
         
         //Abaixo de 23 anos.
-        $query = Resume::with(['informacoesPessoais', 'contato', 'escolaridade'])
+        $query = Resume::with([
+                'informacoesPessoais:resume_id,data_nascimento,nome,cpf,cnh,tipo_cnh,nacionalidade,estado_civil,possui_filhos,filhos_sim,sexo,sexo_outro,pcd,pcd_sim,reservista,instagram,linkedin', 
+                'contato:resume_id,logradouro,cidade,uf,email,telefone_celular,telefone_residencial,nome_contato', 
+                'escolaridade:resume_id,escolaridade,escolaridade_outro,semestre,instituicao,superior_periodo,informatica,ingles'
+            ])
+            ->select('id','created_at','status','vagas_interesse','experiencia_profissional','foi_jovem_aprendiz','cras','fonte')
             ->whereDoesntHave('interview')
             ->whereHas('informacoesPessoais', function ($q) {
                 $q->whereNotNull('data_nascimento')
