@@ -56,7 +56,7 @@ class SelectionController extends Controller
                 'observacao' => $selection->observacao,
             ]);
 
-
+            // Subistituir por função do Service que desassocia de todas as vagas
             $this->desassociarVaga($data['job_id'], $data['resume_id']);
 
             return redirect()->back()->with('success', 'Candidato reprovado com avaliação positiva!');  
@@ -81,7 +81,7 @@ class SelectionController extends Controller
                 'observacao' => $selection->observacao,
             ]);
 
-
+            // Substituir por função do Service que desassocia de todas as vagas
             $this->desassociarVaga($data['job_id'], $data['resume_id']);
 
             return redirect()->back()->with('success', 'Candidato reprovado com avaliação negativa!');  

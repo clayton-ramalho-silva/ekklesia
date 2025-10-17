@@ -882,42 +882,25 @@ class InterviewController extends Controller
     }
 
     // Andamento
-    public function associarVaga(Request $request)
+    public function associarVaga(Request $request, ResumeService $service)
     {
-       //dd($request->all());
-
-        $data = $request->validate([
+        $request->validate([
             'job_id' => 'required|exists:jobs,id',            
             'resume_id' => 'required|exists:resumes,id',            
            
-        ]);
-        
-        //dd($data);
+        ]);  
 
         
         $job = Job::findOrFail($request->job_id);
         $resume = Resume::findOrFail($request->resume_id);
-        
-        
-        //dd($resume->jobs()->exists());
-        // if($resume->jobs()->exists()){
-        //     return redirect()->back()->with('danger', 'Candidato já está associado a uma vaga!');
-        // }
 
-        
-        if(!$job->data_inicio_contratacao){
-            return redirect()->back()->with('danger', 'Processo de contratação ainda não foi iniciado!');    
+        if(!$job && !$resume) {
+            return redirect()->back()->with('danger', 'Currículo ou Vaga não encontrados!');
         }
-        
-        
-        $job->resumes()->attach($request->resume_id);
 
-        // Confirma se agora está associado
-        if ($resume->jobs()->where('jobs.id', $job->id)->exists()) {
-            // Aqui você pode mudar o status ou fazer outras ações
-            $resume->status = 'processo'; // exemplo
-            $resume->save();
-        }
+
+        $service->associarVaga($resume, $job);      
+        
 
 
         // Salvando Log de criação
@@ -926,32 +909,27 @@ class InterviewController extends Controller
         return redirect()->back()->with('success', 'Candidato associado a vaga com sucesso!');
     }
 
-    public function desassociarVaga(Request $request)
+    public function desassociarVaga(Request $request, ResumeService $service)
     {
-        $data = $request->validate([
-            'job_id' => 'required|exists:jobs,id',
+        $data = $request->validate([            
             'resume_id' => 'required|exists:resumes,id',
         ]);
         
-        $job = Job::findOrFail($data['job_id']);
+        // $job = Job::findOrFail($data['job_id']);
         $resume = Resume::findOrFail($data['resume_id']);
+
+        // Desassocia o resume de todas as vagas
+        $resume = $service->desassociarVagas($resume);
         
-        // Verifica se está associado antes de remover
-        if ($resume->jobs()->where('jobs.id', $job->id)->exists()) {
-            
-            $job->resumes()->detach($resume->id);
+        // (Opcional) Atualiza o status do currículo
+        $resume->status = 'ativo'; // ou outro status
+        $resume->save();
 
-            // (Opcional) Atualiza o status do currículo
-            $resume->status = 'ativo'; // ou outro status
-            $resume->save();
+        // Log de desassociação
+        $this->logAction('detach', 'job_resume', $resume->id, 'Candidato desassociado da vaga.');
 
-            // Log de desassociação
-            $this->logAction('detach', 'job_resume', $job->id, 'Candidato desassociado da vaga.');
-
-            return redirect()->back()->with('success', 'Candidato desassociado com sucesso!');
-        }
-
-        return redirect()->back()->with('danger', 'Candidato não estava associado a esta vaga.');
+        return redirect()->back()->with('success', 'Candidato desassociado com sucesso!');        
+        
     }
 
     public function destroy(Interview $interview)
