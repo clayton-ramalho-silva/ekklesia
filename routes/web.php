@@ -16,6 +16,8 @@ use App\Http\Controllers\PublicResumeController;
 use App\Http\Controllers\ResumeImportController;
 use App\Http\Controllers\SelectionController;
 use App\Models\Job;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -134,3 +136,7 @@ Route::middleware(['auth', 'role:recruiter'])->group(function(){
 
 // Verifica��o de CEP
 Route::post('/getCep', [AjaxController::class, 'getCep'])->name('getCep');
+
+
+
+
