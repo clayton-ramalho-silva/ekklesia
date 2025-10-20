@@ -30,7 +30,7 @@
                         <label for="telefone_contato" class="form-label">4 últimos dígitos do Tel. Contato</label>
                         <input type="text" name="telefone_contato" id="telefone_contato" class="form-control" value="<?php echo e(request('telefone_contato')); ?>" placeholder="Ex: 9999">
                     </div>
-                     <div class="col col-5 mb-4">
+                     <div class="col col-6 mb-4">
                         <div class="mb-3">
                             <label for="cpf" class="form-label">CPF:</label>
                             <input type="text" class="form-control" id="cpf" name="cpf"  value="<?php echo e(request('cpf')); ?>" placeholder="000.000.000-00" maxlength="14">
@@ -44,7 +44,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
-                    <div class="col col-4 mb-4">
+                    <div class="col col-6 mb-4">
                         <div class="form-group">
                             <label class="form-label">Ordenação:</label>
                             <select name="ordem" class="form-select select2" onchange="this.form.submit()">
@@ -54,9 +54,13 @@ unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
 
-                    <div class="col col-3">
+                    <div class="col col-6">
                         <label for="min_age" class="form-label">Idade mín.:</label>
                         <input type="number" name="min_age" id="min_age" class="form-control" value="<?php echo e(request('min_age')); ?>" >
+                    </div>
+                    <div class="col col-6">
+                        <label for="max_age" class="form-label">Idade máx.:</label>
+                        <input type="number" name="max_age" id="max_age" class="form-control" value="<?php echo e(request('max_age')); ?>" >
                     </div>
 
                     <div class="col-6">

@@ -229,6 +229,14 @@ class InterviewController extends Controller
             });
         }
 
+          // Filtro Idade
+        if ($request->filled('max_age')) {
+            $query->whereHas('informacoesPessoais', function ($q) use ($request) {
+                $q->whereNotNull('data_nascimento')
+                  ->whereRaw('TIMESTAMPDIFF(YEAR, data_nascimento, CURDATE()) <= ?', [$request->max_age]);
+            });
+        }
+
         // Filtro Reservista
         // if ($request->filled('reservista') && $request->reservista !== "Todos") {
         //     $query->whereHas('informacoesPessoais', function($q) use ($request) {
