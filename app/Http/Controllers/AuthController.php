@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Traits\LogsActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -22,12 +23,23 @@ class AuthController extends Controller
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required'
-        ]);
+        ]);         
 
-        if(Auth::attempt($credentials)){
-            $request->session()->regenerate();
-            return redirect()->route('dashboard')->with('success', 'Bem vindo '.Auth::user()->name.'!');
+
+        $user = User::where('email', $credentials['email'])->first();
+
+         // Verifica se usuário existe e se está ativo
+        if ($user && $user->status != 1) {
+            return back()->with('danger', 'Usuário inativo. Por favor entre em contato com o Administrador!');
         }
+
+        
+       // Tenta fazer login
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->route('dashboard')->with('success', 'Bem-vindo, '.Auth::user()->name.'!');
+        }     
+
 
         return back()->withErrors([
             'email' => 'As credenciais fornecidas estão incorretas',
@@ -69,6 +81,8 @@ class AuthController extends Controller
             'password.min'       => 'A senha precisa ter no mínimo 8 caracteres',
             'role'               => 'Selecione o perfil do usuário',
         ]);
+
+        
 
         // Salvando imagem no banco e movendo arquivo para pasta.
         if($request->hasFile('image') && $request->file('image')->isValid()){
@@ -162,10 +176,12 @@ class AuthController extends Controller
 
     public function update(Request $request, User $user)
     {
+
+        //dd($request->all());
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'confirmed', //'required|confirmed|min:8',
+            'password' => 'nullable|confirmed|min:8', //'required|confirmed|min:8',
             'role' => 'required|in:admin,recruiter',
             'image' => 'file|mimes:jpg,jpeg,png|max:2048'
         ],
@@ -174,9 +190,16 @@ class AuthController extends Controller
             'email.required'     => 'Preencha o e-mail',
             'email.email'        => 'Preencha um e-mail válido',
             'email.unique'       => 'O e-mail informado já está cadastrado',
-            'password.confirmed' => 'Senhas diferentes. ',            
+            'password.confirmed' => 'Senhas diferentes. ',    
+            'password.min'       => 'A senha precisa ter no mínimo 8 caracteres',        
             'role'               => 'Selecione o perfil do usuário',
         ]);
+
+        // Remove password do array se estiver vazio
+        if (empty($data['password'])) {
+            unset($data['password']);
+            unset($data['password_confirmation']);
+        }
 
 
         $foto_atual = $user->image;
@@ -194,8 +217,14 @@ class AuthController extends Controller
             $data['image'] = $fileName;
 
             if($foto_atual){
-                unlink(public_path('documents/users/image/'. $foto_atual));
+                $imagePath = public_path('documents/users/image/'. $foto_atual);
+                if(file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
             }
+            // if($foto_atual){
+            //     unlink(public_path('documents/users/image/'. $foto_atual));
+            // }
         }
 
         if($request->input('status') === 'on'){

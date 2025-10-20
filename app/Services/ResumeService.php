@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Models\Job;
 use App\Models\Resume;
 use Illuminate\Http\UploadedFile;
 
@@ -129,5 +130,51 @@ class ResumeService
         ]);
 
         return $resume;
+    }
+
+    public function associarVaga(Resume $resume, Job $job)
+    {
+        
+        if($resume->jobs()->exists()){
+            return redirect()->back()->with('danger', 'Candidato já está associado a uma vaga!');
+        }
+        
+        
+        if(!$job->data_inicio_contratacao){
+            return redirect()->back()->with('danger', 'Processo de contratação ainda não foi iniciado!');    
+        }
+        
+        
+        $job->resumes()->attach($resume->id);
+        //dd($resume->jobs()->exists());
+
+        // Confirma se agora está associado
+        if ($resume->jobs()->where('jobs.id', $job->id)->exists()) {
+            // Aqui você pode mudar o status ou fazer outras ações
+            $resume->status = 'processo'; // exemplo
+            $resume->save();
+        }
+
+        return $resume;
+
+    }
+
+    /**
+     * Função para desassociar o currriculo de todas as vagas atraves
+     * da relação jobs()
+     */
+    public function desassociarVagas(Resume $resume)
+    {
+
+        // Verifica se o resume possui alguma associação
+        if(!$resume->jobs()->exists()){
+            return redirect()->back()->with('danger', 'Currículo não está associado a nenhuma vaga!');
+        }
+
+        // Desassocia o candidato de todas as vagas.
+        $resume->jobs()->detach();
+
+        return $resume;
+
     }
 }

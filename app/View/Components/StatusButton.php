@@ -12,12 +12,14 @@ class StatusButton extends Component
     public $status;
     public $route;
     public $statusOptions;
+    public $resume;
     /**
      * Create a new component instance.
      */
-    public function __construct($id, $status, $route = 'resumes.updateStatus')
+    public function __construct($resume, $status, $route = 'resumes.updateStatus')
     {
-        $this->id = $id;
+        $this->resume = $resume;
+        $this->id = $resume->id;
         $this->status = $status;
         $this->route = $route;
         $this->statusOptions = [

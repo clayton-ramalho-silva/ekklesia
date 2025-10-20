@@ -113,10 +113,16 @@ class ResumeController extends Controller
                 }
             }
 
-            // Filtro Idade
+            // Filtro Idade minima
             if ($request->filled('min_age')) {
                 $q->whereNotNull('data_nascimento')
                     ->whereRaw('TIMESTAMPDIFF(YEAR, data_nascimento, CURDATE()) >= ?', [$request->min_age]);                
+            }
+
+            // Filtro Idade maxima
+            if ($request->filled('max_age')) {
+                $q->whereNotNull('data_nascimento')
+                    ->whereRaw('TIMESTAMPDIFF(YEAR, data_nascimento, CURDATE()) <= ?', [$request->max_age]);                
             }
         
         });  

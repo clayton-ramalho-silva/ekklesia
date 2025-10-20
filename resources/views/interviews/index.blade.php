@@ -35,7 +35,7 @@
                         <label for="telefone_contato" class="form-label">4 últimos dígitos do Tel. Contato</label>
                         <input type="text" name="telefone_contato" id="telefone_contato" class="form-control" value="{{ request('telefone_contato') }}" placeholder="Ex: 9999">
                     </div>
-                     <div class="col col-5 mb-4">
+                     <div class="col col-6 mb-4">
                         <div class="mb-3">
                             <label for="cpf" class="form-label">CPF:</label>
                             <input type="text" class="form-control" id="cpf" name="cpf"  value="{{ request('cpf') }}" placeholder="000.000.000-00" maxlength="14">
@@ -43,7 +43,7 @@
                         </div>
                     </div>
 
-                    <div class="col col-4 mb-4">
+                    <div class="col col-6 mb-4">
                         <div class="form-group">
                             <label class="form-label">Ordenação:</label>
                             <select name="ordem" class="form-select select2" onchange="this.form.submit()">
@@ -52,9 +52,13 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col col-3 mb-4">
+                    <div class="col col-6 mb-4">
                         <label for="min_age" class="form-label">Idade mínima:</label>
                         <input type="number" name="min_age" id="min_age" class="form-control" value="{{ request('min_age')}}" >
+                    </div>
+                    <div class="col col-6 mb-4">
+                        <label for="max_age" class="form-label">Idade máxima:</label>
+                        <input type="number" name="max_age" id="max_age" class="form-control" value="{{ request('max_age')}}" >
                     </div>
 
                     <div class="col-6">

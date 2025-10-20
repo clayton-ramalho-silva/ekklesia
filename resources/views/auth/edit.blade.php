@@ -64,7 +64,7 @@
                             </div>
 
                             <div class="mb-3 col-6 form-campo" style="position: relative">
-                                <input type="password" class="form-control floatlabel" placeholder="Senha" id="password" name="password" value="{{ $user->password }}">
+                                <input type="password" class="form-control floatlabel" placeholder="Senha" id="password" name="password">
                                 <span onclick="togglePasswordVisibility('password')" style="position:absolute; top:50%; right:50px; transform:translateY(-50%); cursor:pointer;">
                                     <!-- Olho aberto -->
                                     <svg id="eye-open-password" xmlns="http://www.w3.org/2000/svg" class="feather feather-eye" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="20" height="20">
@@ -82,7 +82,7 @@
                             </div>
 
                             <div class="mb-3 col-6 form-campo" style="position: relative">
-                                <input type="password" class="form-control floatlabel" placeholder="Confirme a Senha" id="password_confirmation" name="password_confirmation" value="{{ $user->password }}">
+                                <input type="password" class="form-control floatlabel" placeholder="Confirme a Senha" id="password_confirmation" name="password_confirmation">
                                 <span onclick="togglePasswordVisibility('password_confirmation')" style="position:absolute; top:50%; right:50px; transform:translateY(-50%); cursor:pointer;">
                                     <!-- Olho aberto -->
                                     <svg id="eye-open-password_confirmation" xmlns="http://www.w3.org/2000/svg" class="feather feather-eye" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="20" height="20">
@@ -97,6 +97,12 @@
                                         <line x1="1" y1="1" x2="23" y2="23"/>
                                     </svg>
                                 </span>
+                            </div>
+                            <!-- Adicione um texto informativo -->
+                            <div class="col-12">
+                                <small class="text-muted">
+                                    🔒 Deixe os campos de senha em branco para manter a senha atual
+                                </small>
                             </div>
 
                             <div class="mb-3">

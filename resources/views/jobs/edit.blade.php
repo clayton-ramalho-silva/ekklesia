@@ -538,18 +538,16 @@
                         
                         @php
                             if($resume->interview){
-                                //$rota = route('interviews.interviewResume', $resume->id);
+                                
                                 $rotaResume = route('interviews.show', $resume->interview->id);
                             }else{
-                                //dd('aqui nao');
-                                //$rota = route('resumes.edit', $resume);
+                               
                                 $rotaResume = route('resumes.edit', $resume);
                             }
                         @endphp
 
                         
-                        {{-- <ul onclick="window.location='{{ $rotaResume }}'" > --}}
-                        {{-- Está dando conflito com dessassociar. --}}
+                       
                         <ul onclick="window.open('{{ $rotaResume }}', '_blank')" >    
                             <li class="col1 col1-admin{{-- $isAdmin ? 'col1-admin' : ''--}}">
                                 <b>Nome</b>
@@ -657,7 +655,19 @@
                     @if ($job->selections()->count() > 0)
 
                         @foreach ($job->selections as $selecao)
-                        <ul data-bs-toggle="modal" data-bs-target="#modal-selecao-{{$selecao->id}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Processo Seletivo desta vaga">
+                        @php
+                            $resume = $selecao->resume;
+                            if($resume->interview){
+                                
+                                $rotaResume = route('interviews.show', $resume->interview->id);
+                            }else{
+                               
+                                $rotaResume = route('resumes.edit', $resume);
+                            }
+                        @endphp
+
+
+                        <ul onclick="window.open('{{ $rotaResume }}', '_blank')">
                             <li class="col1">
                                 <b>Candidato</b>
                                 <svg class="ico-lista" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path fill="none" d="M0 0h24v24H0z"></path><path d="M3 19V5.7a1 1 0 0 1 .658-.94l9.671-3.516a.5.5 0 0 1 .671.47v4.953l6.316 2.105a1 1 0 0 1 .684.949V19h2v2H1v-2h2zm2 0h7V3.855L5 6.401V19zm14 0v-8.558l-5-1.667V19h5z"></path></g></svg>
@@ -717,7 +727,71 @@
 
                         </ul>
 
+
+
+                        <!--
+                        <ul data-bs-toggle="modal" data-bs-target="#modal-selecao-{{$selecao->id}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Processo Seletivo desta vaga">
+                            <li class="col1">
+                                <b>Candidato</b>
+                                <svg class="ico-lista" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path fill="none" d="M0 0h24v24H0z"></path><path d="M3 19V5.7a1 1 0 0 1 .658-.94l9.671-3.516a.5.5 0 0 1 .671.47v4.953l6.316 2.105a1 1 0 0 1 .684.949V19h2v2H1v-2h2zm2 0h7V3.855L5 6.401V19zm14 0v-8.558l-5-1.667V19h5z"></path></g></svg>
+                                <span>
+                                    <strong>{{ $selecao->resume->informacoesPessoais->nome }}</strong>
+                                </span>
+                            </li>
+                            <li class="col2">
+                                <b>Tipo de Vaga</b>
+                                {{-- @foreach ($selecao->resume->vagas_interesse ?? [] as $vaga)
+                                    {{$vaga}},
+                                @endforeach --}}
+                                 @php
+                                    // Garantir que vagas_interesse é um array
+                                    if (!is_array($selecao->resume->vagas_interesse)) {
+                                        $selecao->resume->vagas_interesse = json_decode($selecao->resume->vagas_interesse, true) ?? [];
+                                    }
+                                @endphp
+
+
+                                @forelse ($resume->vagas_interesse ?? [] as $vaga)
+                                    {{ $vaga }}@if(!$loop->last),@endif
+                                @empty
+                                    Nenhuma vaga especificada
+                                @endforelse
+                            </li>
+                            <li class="col3">
+                                <b>Status da Seleção</b>
+                                {{ $selecao->status_selecao == 'aprovado' ? 'Contratado' : $selecao->status_selecao }}
+                            </li>
+                            <li class="col4">
+                                <b>Avaliação</b>
+                                {{ $selecao->avaliacao == 1 ? 'Positiva' : 'Negativa'}}
+                            </li>
+                            <li class="col5">
+                                <b>Obs.</b>
+                                {{ $selecao->observacao}}
+                            </li>
+                            <li class="col6">
+                                <b>Status</b>
+                                  @switch($selecao->resume->status)
+                                    @case('ativo')
+                                        <i class="status-ativo" title="Disponível"></i>Disponível
+                                        @break
+                                    @case('inativo')
+                                        <i class="status-inativo" title="Inativo"></i>Inativo
+                                        @break
+                                    @case('processo')
+                                        <i class="status-em-processo" title="Em processo"></i>Em processo
+                                        @break
+                                    @case('contratado')
+                                        <i class="status-contratado" title="Contratado"></i>Contratado
+                                        @break                           
+                                        
+                                @endswitch
+                            </li>
+
+                        </ul>
+                            -->
                         <!-- Modal -->
+                        <!--
                         <div class="modal fade modal-vagas" id="modal-selecao-{{$selecao->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
                             <div class="modal-dialog">
@@ -802,6 +876,7 @@
                             </div>
 
                         </div>
+                            -->
 
                     {{-- </div> --}}
                     @endforeach
