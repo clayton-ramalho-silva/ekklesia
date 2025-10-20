@@ -946,6 +946,7 @@ class InterviewController extends Controller
         return redirect()->route('interviews.index')->with('success', 'Entrevista excluída com sucesso!');
     }
 
+    // Verificar se essa função está sendo usada.
     public function updateStatus(Request $request, $jobId, $resumeId)
     {
 

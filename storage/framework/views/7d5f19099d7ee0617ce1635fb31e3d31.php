@@ -6,6 +6,15 @@
 
 <!-- Template Javascript -->
 <script src="<?php echo e(asset('js/main.js')); ?>"></script>
+ <!-- Inicializar popovers -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+            var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+                return new bootstrap.Popover(popoverTriggerEl)
+            })
+        });
+    </script>
 
 
 <?php /**PATH /home/case/Área de trabalho/2025/ldweb/Projeto asppe/painelasppe/resources/views/layouts/partials/scripts.blade.php ENDPATH**/ ?>

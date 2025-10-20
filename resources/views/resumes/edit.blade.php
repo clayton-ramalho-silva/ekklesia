@@ -33,6 +33,7 @@
                     <!--</div>-->   
                  @endif
             </div>
+            @if(!$resume->jobs()->exists())
             <div class="col">
                  <!-- Button trigger modal -->
                 <button type="button" class="btn-padrao btn-associar-vaga" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -40,6 +41,9 @@
                 </button>
                 @include('components.modal-associar-vaga')
             </div>
+            @endif
+            
+            
             @if (Auth::user()->role === 'admin')
             <div class="col">
 
@@ -81,8 +85,13 @@
                         
                     </div>
                     
+                     {{-- Botão mudar status --}}
+                     {{-- {{ dd($resume)}} --}}
+                            
+                    <x-status-button :resume="$resume" :status="$resume->status" />                                           
+                            {{-- Fim Botão mudar status --}} 
                     {{-- Botão mudar status --}}
-                    <div class="col-9 bloco-ativo d-flex mb-3">
+                    {{-- <div class="col-9 bloco-ativo d-flex mb-3">
                         <h5>Status</h5>
                                                             
                             <form id="statusForm" action="{{ route('resumes.updateStatus', $resume->id) }}" method="POST">
@@ -138,7 +147,7 @@
                             </form>
                         
                     </div>   
-                    
+                     --}}
                     {{-- Fim Botão mudar status --}}
                    
         
@@ -476,9 +485,6 @@ function updateStatus(newStatus) {
     
     return true;
 }
-
-
-
 
 
 </script>

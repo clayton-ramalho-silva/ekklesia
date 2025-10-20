@@ -50,6 +50,7 @@
                     <!--</div>-->   
                  <?php endif; ?>
             </div>
+            <?php if(!$resume->jobs()->exists()): ?>
             <div class="col">
                  <!-- Button trigger modal -->
                 <button type="button" class="btn-padrao btn-associar-vaga" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -57,6 +58,9 @@
                 </button>
                 <?php echo $__env->make('components.modal-associar-vaga', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             </div>
+            <?php endif; ?>
+            
+            
             <?php if(Auth::user()->role === 'admin'): ?>
             <div class="col">
 
@@ -98,64 +102,31 @@
                         
                     </div>
                     
+                     
+                     
+                            
+                    <?php if (isset($component)) { $__componentOriginal866ebe14907986e2fb699d5fd31e02df = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal866ebe14907986e2fb699d5fd31e02df = $attributes; } ?>
+<?php $component = App\View\Components\StatusButton::resolve(['resume' => $resume,'status' => $resume->status] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('status-button'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(App\View\Components\StatusButton::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal866ebe14907986e2fb699d5fd31e02df)): ?>
+<?php $attributes = $__attributesOriginal866ebe14907986e2fb699d5fd31e02df; ?>
+<?php unset($__attributesOriginal866ebe14907986e2fb699d5fd31e02df); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal866ebe14907986e2fb699d5fd31e02df)): ?>
+<?php $component = $__componentOriginal866ebe14907986e2fb699d5fd31e02df; ?>
+<?php unset($__componentOriginal866ebe14907986e2fb699d5fd31e02df); ?>
+<?php endif; ?>                                           
+                             
                     
-                    <div class="col-9 bloco-ativo d-flex mb-3">
-                        <h5>Status</h5>
-                                                            
-                            <form id="statusForm" action="<?php echo e(route('resumes.updateStatus', $resume->id)); ?>" method="POST">
-                                <?php echo csrf_field(); ?>
-                                <?php echo method_field('PUT'); ?>
-                                
-                                <!-- Campo hidden para armazenar o status -->
-                                <input type="hidden" name="status" id="statusInput" value="<?php echo e($resume->status); ?>">
-                                
-                                <div class="btn-group">
-                                    <!-- Botão principal que mostra o status atual -->
-                                    <button type="button" class="btn 
-                                        <?php if($resume->status == 'ativo'): ?> status-ativo
-                                        <?php elseif($resume->status == 'inativo'): ?> status-inativo
-                                        <?php elseif($resume->status == 'processo'): ?> status-processo
-                                        <?php elseif($resume->status == 'contratado'): ?> status-contratado
-                                        <?php endif; ?>">
-                                        <?php echo e(ucfirst($resume->status)); ?>
-
-                                    </button>
-                                    
-                                    <!-- Botão do dropdown -->
-                                    <button type="button" id="btn-dropdown-toggle" class="btn 
-                                        <?php if($resume->status == 'ativo'): ?> status-ativo
-                                        <?php elseif($resume->status == 'inativo'): ?> status-inativo
-                                        <?php elseif($resume->status == 'processo'): ?> status-processo
-                                        <?php elseif($resume->status == 'contratado'): ?> status-contratado
-                                        <?php endif; ?>
-                                        dropdown-toggle dropdown-toggle-split" 
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span class="visually-hidden">Toggle Dropdown</span>
-                                        <svg style="width: 13px;<?php echo e($resume->status == 'processo'? 'fill:#000' : 'fill:#fff'); ?>" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 386.257 386.257" style="enable-background:new 0 0 386.257 386.257;" xml:space="preserve"><polygon points="0,96.879 193.129,289.379 386.257,96.879 "></polygon><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>                                            </button>
-                                    
-                                    <!-- Itens do dropdown -->
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a class="dropdown-item <?php if($resume->status == 'ativo'): ?> active status-ativo <?php endif; ?>" 
-                                            href="#" onclick="updateStatus('ativo')">Ativo</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item <?php if($resume->status == 'inativo'): ?> active status-inativo <?php endif; ?>" 
-                                            href="#" onclick="updateStatus('inativo')">Inativo</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item <?php if($resume->status == 'processo'): ?> active status-processo <?php endif; ?>" 
-                                            href="#" onclick="updateStatus('processo')">Em processo</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item <?php if($resume->status == 'contratado'): ?> active status-contratado <?php endif; ?>" 
-                                            href="#" onclick="updateStatus('contratado')">Contratado</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </form>
-                        
-                    </div>   
                     
                     
                    
@@ -548,9 +519,6 @@ function updateStatus(newStatus) {
     
     return true;
 }
-
-
-
 
 
 </script>

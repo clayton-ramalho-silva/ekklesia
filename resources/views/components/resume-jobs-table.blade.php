@@ -12,6 +12,7 @@
                 <li class="col3">Vagas</li>                
                 <li class="col5">Recrutador</li>
                 <li class="col6">Status</li>
+                <li class="col6">Ações</li>
             </ul>
             
             {{-- {{ dd($vagasAssociadas)}} --}}
@@ -70,6 +71,12 @@
                                 @default
                                     
                             @endswitch                              
+                        </li>
+                        <li class="col7 col7-admin {{-- $isAdmin ? 'col5-admin' : ''--}}">
+                            
+                            {{-- Componente Botão Desassociar Vaga --}}
+                           <x-button-desassociar-vaga :resume="$resume" />                            
+                           {{-- Componente Botão Desassociar Vaga --}}
                         </li>
 
                     </ul>
@@ -220,3 +227,4 @@
 
     </article>
     <!-- Fim Vagas Associadas do candidato -->
+

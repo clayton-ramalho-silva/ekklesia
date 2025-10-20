@@ -977,6 +977,43 @@ function confirmarMudancaStatus(checkbox) {
         document.getElementById('statusForm').submit();
     }
 }
+
+
+// Previne que o clique no botão de desassociar abra o link
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Seleciona todos os botões de desassociar
+    const botoesDesassociar = document.querySelectorAll('.col7-admin button[type="submit"]');
+    
+    botoesDesassociar.forEach(botao => {
+        botao.addEventListener('click', function(event) {
+            // Previne que o evento se propague para o <ul> pai
+            event.stopPropagation();
+            
+            // Opcional: adicionar confirmação antes de desassociar
+            if (!confirm('Tem certeza que deseja desassociar este currículo?')) {
+                event.preventDefault();
+                return false;
+            }
+        });
+    });
+    
+    // Também previne o clique em toda a coluna col5-admin
+    const colunasDesassociar = document.querySelectorAll('.col7-admin');
+    
+    colunasDesassociar.forEach(coluna => {
+        coluna.addEventListener('click', function(event) {
+            // Previne que o clique na coluna abra o link
+            event.stopPropagation();
+        });
+    });
+    
+});
+
+// Alternativa: Função inline que você pode usar diretamente no HTML
+function preventPropagation(event) {
+    event.stopPropagation();
+}
 </script>
 @endpush
 

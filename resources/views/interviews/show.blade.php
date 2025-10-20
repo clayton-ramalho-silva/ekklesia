@@ -31,13 +31,18 @@
                     <!--</div>-->   
                  @endif
             </div>
-            <div class="col">
-                 <!-- Button trigger modal -->
-                <button type="button" class="btn-padrao btn-associar-vaga" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Associar a uma vaga
-                </button>
-                @include('components.modal-associar-vaga')
-            </div>
+            
+            {{-- mostra somente se o candidato não está associado a vagas --}}
+            @if(!$resume->jobs()->exists())
+                <div class="col">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn-padrao btn-associar-vaga" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Associar a uma vaga
+                    </button>
+                    @include('components.modal-associar-vaga')
+                </div>
+            @endif
+
             @if (Auth::user()->role === 'admin')
             <div class="col">
 
@@ -75,11 +80,13 @@
                             
                             {{-- Botão mudar status --}}
                             
-                            <x-status-button :id="$resume->id" :status="$resume->status" />                                           
-                            {{-- Fim Botão mudar status --}}               
-
+                            <x-status-button :resume="$resume" :status="$resume->status" />                                           
+                            {{-- Fim Botão mudar status --}} 
                             
-                        </div>
+                            
+                        </div>                        
+                       
+
                         <div class="col-6">
                             <div class="col-12 bloco-ativo d-flex mb-3">
 
@@ -787,6 +794,51 @@ function updateStatus(newStatus) {
     
     return true;
 }
+
+
+
+// // Previne que o clique no botão de desassociar abra o link
+// document.addEventListener('DOMContentLoaded', function() {
+    
+//     // Seleciona todos os botões de desassociar
+//     const botoesDesassociar = document.querySelectorAll('.col7-admin button[type="submit"]');
+    
+//     botoesDesassociar.forEach(botao => {
+//         botao.addEventListener('click', function(event) {
+//             // Previne que o evento se propague para o <ul> pai
+//             event.stopPropagation();
+            
+//             // Opcional: adicionar confirmação antes de desassociar
+//             if (!confirm('Tem certeza que deseja desassociar este currículo?')) {
+//                 event.preventDefault();
+//                 return false;
+//             }
+//         });
+//     });
+    
+//     // Também previne o clique em toda a coluna col5-admin
+//     const colunasDesassociar = document.querySelectorAll('.col7-admin');
+    
+//     colunasDesassociar.forEach(coluna => {
+//         coluna.addEventListener('click', function(event) {
+//             // Previne que o clique na coluna abra o link
+//             event.stopPropagation();
+//         });
+//     });
+    
+// });
+
+// // Alternativa: Função inline que você pode usar diretamente no HTML
+// function preventPropagation(event) {
+//     event.stopPropagation();
+// }
+
+
+
+
+
+
+
 </script>
 @endpush
 

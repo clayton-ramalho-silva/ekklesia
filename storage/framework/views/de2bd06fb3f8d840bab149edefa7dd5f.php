@@ -12,6 +12,7 @@
                 <li class="col3">Vagas</li>                
                 <li class="col5">Recrutador</li>
                 <li class="col6">Status</li>
+                <li class="col6">Ações</li>
             </ul>
             
             
@@ -73,6 +74,31 @@
                                 <?php default: ?>
                                     
                             <?php endswitch; ?>                              
+                        </li>
+                        <li class="col7 col7-admin ">
+                            
+                            
+                           <?php if (isset($component)) { $__componentOriginalbbd144822bdd23d6312c1c263e9182cd = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalbbd144822bdd23d6312c1c263e9182cd = $attributes; } ?>
+<?php $component = App\View\Components\ButtonDesassociarVaga::resolve(['resume' => $resume] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('button-desassociar-vaga'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(App\View\Components\ButtonDesassociarVaga::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalbbd144822bdd23d6312c1c263e9182cd)): ?>
+<?php $attributes = $__attributesOriginalbbd144822bdd23d6312c1c263e9182cd; ?>
+<?php unset($__attributesOriginalbbd144822bdd23d6312c1c263e9182cd); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalbbd144822bdd23d6312c1c263e9182cd)): ?>
+<?php $component = $__componentOriginalbbd144822bdd23d6312c1c263e9182cd; ?>
+<?php unset($__componentOriginalbbd144822bdd23d6312c1c263e9182cd); ?>
+<?php endif; ?>                            
+                           
                         </li>
 
                     </ul>
@@ -246,4 +272,6 @@ unset($__errorArgs, $__bag); ?>
         </div>
 
     </article>
-    <!-- Fim Vagas Associadas do candidato --><?php /**PATH /home/case/Área de trabalho/2025/ldweb/Projeto asppe/painelasppe/resources/views/components/resume-jobs-table.blade.php ENDPATH**/ ?>
+    <!-- Fim Vagas Associadas do candidato -->
+
+<?php /**PATH /home/case/Área de trabalho/2025/ldweb/Projeto asppe/painelasppe/resources/views/components/resume-jobs-table.blade.php ENDPATH**/ ?>
