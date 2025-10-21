@@ -30,7 +30,7 @@
                 <div class="col-6 d-flex justify-content-between mb-4">
 
                     {{-- Botão mudar status --}}
-                       <x-status-button :id="$resume->id" :status="$resume->status" />   
+                       <x-status-button :resume="$resume" :status="$resume->status" />   
                        
                    {{-- Fim Botão mudar status --}}
                     
