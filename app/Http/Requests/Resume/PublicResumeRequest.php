@@ -20,7 +20,7 @@ class PublicResumeRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
+    {        
         return [
             'nome' => 'required|string|max:255',
             'cpf' => [
@@ -60,17 +60,31 @@ class PublicResumeRequest extends FormRequest
             'semestre' => 'nullable|string|max:255',
             'instituicao' => 'nullable|string|max:255',
             'outro_modalidade' => 'nullable|string|max:255',
-            'superior_periodo' => 'string|nullable|max:255',
             'fundamental_periodo' => 'string|nullable|max:255',
             'fundamental_modalidade' => 'string|nullable|max:255',
             'medio_periodo' => 'string|nullable|max:255',
             'medio_modalidade' => 'string|nullable|max:255',
-            'tecnico_periodo' => 'string|nullable|max:255',
-            'tecnico_modalidade' => 'string|nullable|max:255',
+
             'tecnico_curso' => 'string|nullable|max:255',
+            'tecnico_semestre' => 'string|nullable|max:255',
+            'tecnico_instituicao' => 'string|nullable|max:255',
+            'tecnico_modalidade' => 'string|nullable|max:255',
+            'tecnico_periodo' => 'string|nullable|max:255',
+            
+            'tecnico_completo_curso' => 'string|nullable|max:255',
+            'tecnico_completo_instituicao' => 'string|nullable|max:255',
+            'tecnico_completo_data_conclusao' => 'string|nullable|max:255',
+            
             'superior_curso' => 'string|nullable|max:255',
+            'superior_termo' => 'string|nullable|max:255',
             'superior_instituicao' => 'string|nullable|max:255',
             'superior_semestre' => 'string|nullable|max:255',
+            'superior_periodo' => 'string|nullable|max:255',
+
+            'superior_completo_curso' => 'string|nullable|max:255',
+            'superior_completo_instituicao' => 'string|nullable|max:255',
+            'superior_completo_data_conclusao' => 'string|nullable|max:255',
+
             'foi_jovem_aprendiz' => 'required|string|max:255',
             'informatica' => 'required|string|max:255',
             'ingles' => 'required|string|max:255',

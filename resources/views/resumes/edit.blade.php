@@ -5,7 +5,7 @@
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ route('resumes.index') }}">Currículos</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Editar Currículo: {{ $resume->id }} </li>          
+          <li class="breadcrumb-item active" aria-current="page">Editar Currículo: {{ $resume->informacoesPessoais->nome }} </li>          
         </ol>
       </nav>
       

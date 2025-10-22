@@ -623,6 +623,20 @@
                                                 Ensino Técnico Completo
                                             </label>
                                         </div>
+                                         {{-- Campos ocultos caso checkbox Tecnico Completo seja escolhido --}}
+                                        
+                                        <div class="col-12 form-campo check-tecnico-completo" id="tecnicoCompletoContainer" style="display: none;">
+                                            <div class="mb-3">
+                                                <input  type="text" placeholder="Qual curso?" class="floatlabel form-control" id="tecnico_completo_curso" name="tecnico_completo_curso" value="{{ old('tecnico_completo_curso')}}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <input  type="text" placeholder="Qual instituição?" class="floatlabel form-control" id="tecnico_completo_instituicao" name="tecnico_completo_instituicao" value="{{ old('tecnico_completo_instituicao')}}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <input  type="text" placeholder="Qual data de conclusão?" class="floatlabel form-control" id="tecnico_completo_data_conclusao" name="tecnico_completo_data_conclusao" value="{{ old('tecnico_completo_data_conclusao')}}">
+                                            </div>                                                    
+                                        </div>
+
                                         <div class="form-check form-check">
                                             <input class="form-check-input" type="checkbox" name="escolaridade[]" id="escolaridade7" value="Ensino Técnico Cursando" 
                                              @if(old('escolaridade') && in_array('Ensino Técnico Cursando', old('escolaridade'))) checked @endif>
@@ -636,6 +650,12 @@
                                         <div class="col-12 form-campo check-tecnico-cursando" id="tecnicoCursandoContainer" style="display: none;">
                                             <div class="mb-3">
                                                 <input  type="text" placeholder="Qual curso?" class="floatlabel form-control" id="tecnico_curso" name="tecnico_curso" value="{{ old('tecnico_curso')}}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <input  type="text" placeholder="Qual semestre?" class="floatlabel form-control" id="tecnico_semestre" name="tecnico_semestre" value="{{ old('tecnico_semestre')}}">
+                                            </div>
+                                                <div class="mb-3">
+                                                <input  type="text" placeholder="Qual instituição?" class="floatlabel form-control" id="tecnico_instituicao" name="tecnico_instituicao" value="{{ old('tecnico_instituicao')}}">
                                             </div>
                                             <div class="mb-3">
                                                 <div class="floatlabel-wrapper">
@@ -676,6 +696,22 @@
                                                 Superior Completo
                                             </label>
                                         </div>
+
+                                        {{-- Campos ocultos caso checkbox Superior Completo seja escolhido --}}
+                                        
+                                        <div class="col-12 form-campo check-superior-completo" id="superiorCompletoContainer" style="display: none;">
+                                            <div class="mb-3">
+                                                <input  type="text" placeholder="Qual curso?" class="floatlabel form-control" id="superior_completo_curso" name="superior_completo_curso" value="{{ old('superior_completo_curso')}}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <input  type="text" placeholder="Qual instituição?" class="floatlabel form-control" id="superior_completo_instituicao" name="superior_completo_instituicao" value="{{ old('superior_completo_instituicao')}}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <input  type="text" placeholder="Qual data de conclusão?" class="floatlabel form-control" id="superior_completo_data_conclusao" name="superior_completo_data_conclusao" value="{{ old('superior_completo_data_conclusao')}}">
+                                            </div>                                                    
+                                        </div>
+
+                                        
                                         <div class="form-check form-check">
                                             <input class="form-check-input" type="checkbox" name="escolaridade[]" id="escolaridade9" value="Superior Cursando" 
                                             @if(old('escolaridade') && in_array('Superior Cursando', old('escolaridade'))) checked @endif>
@@ -688,6 +724,9 @@
                                         <div class="col-12 form-campo check-superior-cursando" id="superiorCursandoContainer" style="display: none;">
                                             <div class="mb-3">
                                                 <input  type="text" placeholder="Qual curso?" class="floatlabel form-control" id="superior_curso" name="superior_curso" value="{{ old('superior_curso')}}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <input  type="text" placeholder="Qual semestre?" class="floatlabel form-control" id="superior_termo" name="superior_termo" value="{{ old('superior_termo')}}">
                                             </div>
                                             <div class="mb-3">
                                                 <input  type="text" placeholder="Qual Instituição?" class="floatlabel form-control" id="superior_semestre" name="superior_instituicao" value="{{ old('superior_instituicao')}}">

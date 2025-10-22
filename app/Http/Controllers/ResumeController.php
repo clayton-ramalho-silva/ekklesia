@@ -448,9 +448,9 @@ class ResumeController extends Controller
         $resume->escolaridade()->create([
             'escolaridade' => $data['escolaridade'] ?? '', // Fundamental completo, Fundamental cursando, Medio completo, Medio cursando, Tecnico completo, Tecnico cursando, Superior Completo Superior Cursando ou Outro
             'escolaridade_outro' => $data['escolaridade_outro'] ?? '', // Qual curso Outro
-            'semestre' => $data['semestre'] ?? '', // Modalidade: Presencial, EAD, Hibrido, Outro. Quando cursando qq curso.
-            'instituicao' => $data['instituicao'] ?? '', // Quando for Superior Incompleto ou Outro
-            'outro_periodo' => $data['outro_periodo'] ?? '',
+            'semestre' => $data['semestre'] ?? '', // Modalidade: Presencial, EAD, Hibrido, Outro. Quando cursando curso.
+            'instituicao' => $data['instituicao'] ?? '', // Quando for Superior Outro
+            'outro_periodo' => $data['outro_periodo'] ?? '', //Outro
             'informatica' => $data['informatica'] ?? '',
             'obs_informatica' => $data['obs_informatica'] ?? '',
             'ingles' => $data['ingles'] ?? '',
@@ -459,13 +459,30 @@ class ResumeController extends Controller
             'fundamental_modalidade' => $data['fundamental_modalidade'] ?? '',
             'medio_periodo' => $data['medio_periodo'] ?? '',
             'medio_modalidade' => $data['medio_modalidade'] ?? '',
-            'tecnico_periodo' => $data['tecnico_periodo'] ?? '',
-            'tecnico_modalidade' => $data['tecnico_modalidade'] ?? '',
+
+             // Técnico Cursando
             'tecnico_curso' => $data['tecnico_curso'] ?? '',
+            'tecnico_semestre' => $data['tecnico_semestre'] ?? '', // Criar coluna no BD
+            'tecnico_instituicao' => $data['tecnico_instituicao'] ?? '', // Criar coluna no BD
+            'tecnico_modalidade' => $data['tecnico_modalidade'] ?? '',
+            'tecnico_periodo' => $data['tecnico_periodo'] ?? '',
+
+            // Técnico Completo
+            'tecnico_completo_curso' => $data['tecnico_completo_curso'] ?? '', // Criar coluna no BD
+            'tecnico_completo_instituicao' => $data['tecnico_completo_instituicao'] ?? '', // Criar coluna no BD
+            'tecnico_completo_data_conclusao' => $data['tecnico_completo_data_conclusao'] ?? '', // Criar coluna no BD
+            
+             // Superior Cursando
             'superior_curso' => $data['superior_curso'] ?? '', // Curso
+            'superior_termo' => $data['superior_termo'] ?? '', // usado para campo semestre. Criar no BD
             'superior_instituicao' => $data['superior_instituicao'] ?? '',
-            'superior_semestre' => $data['superior_semestre'] ?? '', // Modalidade
+            'superior_semestre' => $data['superior_semestre'] ?? '', // usado para campo Modalidade
             'superior_periodo' => $data['superior_periodo'] ?? '', // Periodo de estudo: Manhã, Tarde, Noite, Integral. Quando cursando qq curso.
+
+            // Superior Completo
+            'superior_completo_curso' => $data['superior_completo_curso'] ?? '', // Criar coluna no BD
+            'superior_completo_instituicao' => $data['superior_completo_instituicao'] ?? '', // Criar coluna no BD
+            'superior_completo_data_conclusao' => $data['superior_completo_data_conclusao'] ?? '', // Criar coluna no BD
 
         ]);
 

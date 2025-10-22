@@ -351,7 +351,24 @@ $('#escolaridade1').on('click', function(){
 
 });
 
-// Medio Tecnico
+// Medio Tecnico Completo
+$('#escolaridade6').on('click', function(){
+
+    if($(this).is(':checked')){
+        $('.check-tecnico-completo').slideDown(150);
+        $('#tecnico_completo_curso').prop('disabled', false);
+        $('#tecnico_completo_instituicao').prop('disabled', false);
+        $('#tecnico_completo_data_conclusao').prop('disabled', false);
+    } else {
+        $('.check-tecnico-completo').slideUp(150);
+        $('#tecnico_completo_curso').prop('disabled', true);
+        $('#tecnico_completo_instituicao').prop('disabled', true);
+        $('#tecnico_completo_data_conclusao').prop('disabled', true);
+    }
+
+});
+
+// Medio Tecnico Cursando
 $('#escolaridade7').on('click', function(){
 
     if($(this).is(':checked')){
@@ -364,6 +381,22 @@ $('#escolaridade7').on('click', function(){
 
 });
 
+// Medio Tecnico Completo
+$('#escolaridade8').on('click', function(){
+
+    if($(this).is(':checked')){
+        $('.check-superior-completo').slideDown(150);
+        $('#superior_completo_curso').prop('disabled', false);
+        $('#superior_completo_instituicao').prop('disabled', false);
+        $('#superior_completo_data_conclusao').prop('disabled', false);
+    } else {
+        $('.check-superior-completo').slideUp(150);
+        $('#superior_completo_curso').prop('disabled', true);
+        $('#superior_completo_instituicao').prop('disabled', true);
+        $('#superior_completo_data_conclusao').prop('disabled', true);
+    }
+
+});
 
 
 // Superior Cursando

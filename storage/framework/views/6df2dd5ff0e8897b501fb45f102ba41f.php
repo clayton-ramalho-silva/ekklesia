@@ -3,7 +3,7 @@
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="<?php echo e(route('resumes.index')); ?>">Currículos</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Editar Currículo: <?php echo e($resume->id); ?> </li>          
+          <li class="breadcrumb-item active" aria-current="page">Editar Currículo: <?php echo e($resume->informacoesPessoais->nome); ?> </li>          
         </ol>
       </nav>
       
