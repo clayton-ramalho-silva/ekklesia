@@ -870,9 +870,24 @@ unset($__errorArgs, $__bag); ?>
                                             : []
                                     )): echo 'checked'; endif; ?>>
                                 <label class="form-check-label" for="escolaridade6">
-                                    Ensino Técnico Completo
+                                    Ensino Técnico Completo 
                                 </label>
                             </div>
+                            
+                                        
+                            <div class="col-12 form-campo check-tecnico-completo campo-escondido" id="tecnicoCompletoContainer" <?php echo is_array($resume->escolaridade?->escolaridade) ? ((in_array('Ensino Técnico Completo', $resume->escolaridade?->escolaridade ?? [])) ? ' style="display:block"' : '') : ($resume->escolaridade?->escolaridade === 'Ensino Técnico Completo' ? ' style="display:block"' : ''); ?>>
+                                <div class="mb-3">
+                                    <input  type="text" placeholder="Qual curso?" class="floatlabel form-control" id="tecnico_completo_curso" name="tecnico_completo_curso" value="<?php echo e(old('tecnico_completo_curso', $resume->escolaridade->tecnico_completo_curso)); ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <input  type="text" placeholder="Qual instituição?" class="floatlabel form-control" id="tecnico_completo_instituicao" name="tecnico_completo_instituicao" value="<?php echo e(old('tecnico_completo_instituicao', $resume->escolaridade->tecnico_completo_instituicao)); ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <input  type="text" placeholder="Qual data de conclusão?" class="floatlabel form-control" id="tecnico_completo_data_conclusao" name="tecnico_completo_data_conclusao" value="<?php echo e(old('tecnico_completo_data_conclusao', $resume->escolaridade->tecnico_completo_data_conclusao)); ?>">
+                                </div>                                                    
+                            </div>
+
+                            
 
                             <div class="form-check form-check">
                                 <input class="form-check-input" type="checkbox" name="escolaridade[]" id="escolaridade7" value="Ensino Técnico Cursando" 
@@ -891,7 +906,13 @@ unset($__errorArgs, $__bag); ?>
                     
                             <div class="col-12 form-campo check-tecnico-cursando campo-escondido" id="tecnicoCursandoContainer" <?php echo is_array($resume->escolaridade?->escolaridade) ? ((in_array('Ensino Técnico Cursando', $resume->escolaridade?->escolaridade ?? [])) ? ' style="display:block"' : '') : ($resume->escolaridade?->escolaridade === 'Ensino Técnico Cursando' ? ' style="display:block"' : ''); ?>>
                                 <div class="mb-3">
-                                    <input  type="text" placeholder="Qual curso?" class="floatlabel form-control" id="tecnico_curso" name="tecnico_curso" value="<?php echo e($resume->escolaridade->tecnico_curso); ?>">
+                                    <input  type="text" placeholder="Qual curso?" class="floatlabel form-control" id="tecnico_curso" name="tecnico_curso" value="<?php echo e(old('tecnico_curso', $resume->escolaridade->tecnico_curso)); ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <input  type="text" placeholder="Qual semestre?" class="floatlabel form-control" id="tecnico_semestre" name="tecnico_semestre" value="<?php echo e(old('tecnico_semestre', $resume->escolaridade->tecnico_semestre)); ?>">
+                                </div>
+                                    <div class="mb-3">
+                                    <input  type="text" placeholder="Qual instituição?" class="floatlabel form-control" id="tecnico_instituicao" name="tecnico_instituicao" value="<?php echo e(old('tecnico_instituicao', $resume->escolaridade->tecnico_instituicao)); ?>">
                                 </div>
                                 <div class="mb-3">
                                     <div class="floatlabel-wrapper">
@@ -953,6 +974,20 @@ unset($__errorArgs, $__bag); ?>
                                 </label>
                             </div>
 
+                             
+                                        
+                            <div class="col-12 form-campo check-superior-completo campo-escondido" id="superiorCompletoContainer" <?php echo is_array($resume->escolaridade?->escolaridade) ? ((in_array('Superior Completo', $resume->escolaridade?->escolaridade ?? [])) ? ' style="display:block"' : '') : ($resume->escolaridade?->escolaridade === 'Superior Completo' ? ' style="display:block"' : ''); ?>>
+                                <div class="mb-3">
+                                    <input  type="text" placeholder="Qual curso?" class="floatlabel form-control" id="superior_completo_curso" name="superior_completo_curso" value="<?php echo e(old('superior_completo_curso', $resume->escolaridade->superior_completo_curso)); ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <input  type="text" placeholder="Qual instituição?" class="floatlabel form-control" id="superior_completo_instituicao" name="superior_completo_instituicao" value="<?php echo e(old('superior_completo_instituicao', $resume->escolaridade->superior_completo_instituicao)); ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <input  type="text" placeholder="Qual data de conclusão?" class="floatlabel form-control" id="superior_completo_data_conclusao" name="superior_completo_data_conclusao" value="<?php echo e(old('superior_completo_data_conclusao', $resume->escolaridade->superior_completo_data_conclusao)); ?>">
+                                </div>                                                    
+                            </div>
+
                             <div class="form-check form-check">
                                 <input class="form-check-input" type="checkbox" name="escolaridade[]" id="escolaridade9" value="Superior Cursando" 
                                     <?php if(in_array(
@@ -970,10 +1005,13 @@ unset($__errorArgs, $__bag); ?>
                     
                             <div class="col-12 form-campo check-superior-cursando campo-escondido" id="superiorCursandoContainer" <?php echo is_array($resume->escolaridade?->escolaridade) ? ((in_array('Superior Cursando', $resume->escolaridade?->escolaridade ?? [])) ? ' style="display:block"' : '') : ($resume->escolaridade?->escolaridade === 'Superior Cursando' ? ' style="display:block"' : ''); ?>>
                                 <div class="mb-3">
-                                    <input  type="text" placeholder="Qual curso?" class="floatlabel form-control" id="superior_curso" name="superior_curso" value="<?php echo e($resume->escolaridade->superior_curso); ?>">
+                                    <input  type="text" placeholder="Qual curso?" class="floatlabel form-control" id="superior_curso" name="superior_curso" value="<?php echo e(old('superior_curso', $resume->escolaridade->superior_curso)); ?>">
                                 </div>
                                 <div class="mb-3">
-                                    <input  type="text" placeholder="Qual Instituição?" class="floatlabel form-control" id="superior_semestre" name="superior_instituicao" value="<?php echo e($resume->escolaridade->superior_instituicao); ?>">
+                                                <input  type="text" placeholder="Qual semestre?" class="floatlabel form-control" id="superior_termo" name="superior_termo" value="<?php echo e(old('superior_termo', $resume->escolaridade->superior_termo)); ?>">
+                                            </div>
+                                <div class="mb-3">
+                                    <input  type="text" placeholder="Qual Instituição?" class="floatlabel form-control" id="superior_semestre" name="superior_instituicao" value="<?php echo e(old('superior_instituicao', $resume->escolaridade->superior_instituicao)); ?>">
                                 </div>
                                 <div class="mb-3">
                                     <div class="floatlabel-wrapper">

@@ -3,7 +3,7 @@
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="<?php echo e(route('resumes.index')); ?>">Currículos</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Editar Currículo: <?php echo e($resume->id); ?> </li>          
+          <li class="breadcrumb-item active" aria-current="page">Editar Currículo: <?php echo e($resume->informacoesPessoais->nome); ?> </li>          
         </ol>
       </nav>
       
@@ -623,6 +623,18 @@ background-color: rgb(225, 0, 0) !important;
     z-index: 9999;
 }
 
+.status-aberta{
+    background-color: #ffff00 !important;
+}
+.status-fechada{
+    background-color: #008000 !important;
+}
+.status-espera{
+    background-color: #808080 !important;
+}
+.status-cancelada{
+    background-color: #ff0000 !important;
+}
 
 
 </style>

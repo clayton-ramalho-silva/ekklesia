@@ -18,17 +18,29 @@ class AcademicInfoResume extends Model
     //     'ingles',
     //     'obs_ingles',
     //     'created_at',
+
+    //     // Cursando
     //     'fundamental_periodo',
     //     'fundamental_modalidade',
+    //     'fundamental_data_conclusao'
+
     //     'medio_periodo',
     //     'medio_modalidade',
-    //     'tecnico_periodo',
-    //     'tecnico_modalidade',
+    //     'medio_data_conclusao',  
+
+    //     
     //     'tecnico_curso',
+    //     'tecnico_semestre'
+    //     'tecnico_instituicao',
+    //     'tecnico_modalidade',
+    //     'tecnico_periodo',
+
+
     //     'superior_curso',
     //     'superior_instituicao',
     //     'superior_periodo', // Periodo de estudo: Manhã, Tarde, Noite, Integral. Quando cursando qq curso.
     //     'superior_semestre', // Superior Modalidade: Presencial, EAD, Hibrido, Outro. Quando cursando qq curso.
+    
     //     'escolaridade_outro', // Qual curso? Quando for Outro
     //     'instituicao', // Quando for Superior Incompleto ou Outro. 
     //     'semestre', // Modalidade: Presencial, EAD, Hibrido, Outro. Quando cursando qq curso.
@@ -38,7 +50,7 @@ class AcademicInfoResume extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'escolaridade' => 'array',                     
+        'escolaridade' => 'array',                            
     ];
 
     public function resume()

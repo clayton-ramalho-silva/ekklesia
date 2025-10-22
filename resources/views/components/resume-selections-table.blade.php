@@ -42,7 +42,7 @@
                         </li>
                         <li class="col2">
                             <b>Título</b>
-                            {{ $jobAprovado->cargo }}
+                            {{ $jobAprovado->setor }}
                         </li>
                         <li class="col3" data-bs-toggle="tooltip" data-bs-placement="top" title="Preenchidas/Disponíveis">
                             <b>Vagas</b>
@@ -107,7 +107,7 @@
                                                     </li>
                                                     <li class="col2">
                                                         <b>Setor</b>
-                                                        {{ $jobAprovado->cargo }}
+                                                        {{ $jobAprovado->setor }}
                                                     </li>
                                                     <li class="col3" data-bs-toggle="tooltip" data-bs-placement="top" title="Preenchidas/Disponíveis">
                                                         <b>Vagas</b>
@@ -153,10 +153,11 @@
                                                             <div class="floatlabel-wrapper required">
                                                                 <label for="status_selecao" class="label-floatlabel" class="form-label floatlabel-label">Status da Seleção:</label>
                                                                 <select name="status_selecao" id="status_selecao" class="form-select active-floatlabel" required>
+                                                                    <option value="aguardando" {{ $selection->status_selecao == 'aguardando' ? 'selected' : '' }}> Aguardando</option>
                                                                     <option value="aprovado" {{ $selection->status_selecao == 'aprovado' ? 'selected' : '' }} > Aprovado</option>
                                                                     <option value="reprovado" {{ $selection->status_selecao == 'reprovado' ? 'selected' : '' }} > Reprovado</option>
-                                                                    <option value="aguardando" {{ $selection->status_selecao == 'aguardando' ? 'selected' : '' }}> Aguardando</option>
-                                                                    {{-- <option value="Fila de Espera" {{ $selection->status_selecao == 'Fila de Espera' ? 'selected' : '' }}> Fila de Espera</option> --}}
+                                                                    <option value="desistente" {{ $selection->status_selecao == 'desistente' ? 'selected' : '' }}> Desistente</option>
+                                                                    <option value="cancelada" {{ $selection->status_selecao == 'cancelada' ? 'selected' : '' }}> Vaga Cancelada</option>                                                                    
                                                                 </select>
                                                                 @error('status_selecao') <div class="alert alert-danger">{{ $message }}</div> @enderror
                                                             </div>
@@ -238,7 +239,7 @@
                             </li>
                             <li class="col2">
                                 <b>Título</b>
-                                {{ $selecao->job->cargo }}
+                                {{ $selecao->job->setor }}
                             </li>
                             <li class="col3" data-bs-toggle="tooltip" data-bs-placement="top" title="Preenchidas/Disponíveis">
                                 <b>Vagas</b>
@@ -321,7 +322,7 @@
                                                         </li>
                                                         <li class="col2">
                                                             <b>Setor</b>
-                                                            {{ $selecao->job->cargo }}
+                                                            {{ $selecao->job->setor }}
                                                         </li>
                                                         <li class="col3" data-bs-toggle="tooltip" data-bs-placement="top" title="Preenchidas/Disponíveis">
                                                             <b>Vagas</b>
@@ -367,6 +368,8 @@
                                                                         <option value="aprovado" {{ $selecao->status_selecao == 'aprovado' ? 'selected' : '' }} > Contratado</option>
                                                                         <option value="reprovado" {{ $selecao->status_selecao == 'reprovado' ? 'selected' : '' }} > Reprovado</option>
                                                                         <option value="aguardando" {{ $selecao->status_selecao == 'aguardando' ? 'selected' : '' }}> Aguardando</option>
+                                                                        <option value="desistente" {{ $selecao->status_selecao == 'desistente' ? 'selected' : '' }}> Desistente</option>
+                                                                        <option value="cancelada" {{ $selecao->status_selecao == 'cancelada' ? 'selected' : '' }}> Vaga Cancelada</option>                                                                    
                                                                         {{-- <option value="Fila de Espera" {{ $selecao->status_selecao == 'Fila de Espera' ? 'selected' : '' }}> Fila de Espera</option> --}}
                                                                     </select>
                                                                     @error('status_selecao') <div class="alert alert-danger">{{ $message }}</div> @enderror
@@ -456,6 +459,23 @@ width: 10% !important;
 width: 10% !important;
 }
 
+
+.lista-info-vaga ul li.col1{
+width: 100% !important;
+border-right: none !important;
+}
+
+.lista-info-vaga ul li.col2{
+width: 33% !important;
+border-bottom: none !important;
+border-right: 1px solid #dedede;
+}
+.lista-info-vaga ul li.col3{
+width: 33% !important;
+}
+.lista-info-vaga ul li.col4{
+width: 33% !important;
+}
 
 
 

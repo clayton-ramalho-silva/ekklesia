@@ -10,11 +10,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\LogsActivity;
 use Carbon\Carbon;
-
+use App\Services\JobService;
 class JobController extends Controller
 {
-
     use LogsActivity;
+
+
+    public function __construct(private JobService $jobService){ }
 
     public function index(Request $request)
     {
@@ -449,39 +451,14 @@ class JobController extends Controller
     // Iniciar contratação
     public function startContraction(Request $request,  $jobId)
     {
-        $job = Job::findOrFail($jobId);
-        $now = Carbon::now();
-
-        /** Verifica se o usuario logado é admim ou recrutador associado a vaga */
-        // Solicitado retirada dessa verificação para o admin e recrutador poder editar qualquer vaga  
-        // if(!$job->isEditableBy(Auth::user()) ){
-
-        //     return redirect()->back()->with('danger', 'Somente o Adminstrador ou Recrutador associado podem iniciar um processo!');
-        // }
-
-        $job->data_inicio_contratacao = $now;
-
-        $job->save();
-
+        $this->jobService->startContraction($jobId);
         return back()->with('success', 'Contratação iniciada com sucesso');
     }
 
     // Finalizar contratação
     public function endContraction(Request $request, $jobId)
     {
-        $job = Job::findOrFail($jobId);
-        $now = Carbon::now();
-
-          /** Verifica se o usuario logado é admim ou recrutador associado a vaga */
-          // Solicitado retirada dessa verificação para o admin e recrutador poder editar qualquer vaga  
-        // if(!$job->isEditableBy(Auth::user()) ){
-
-        //     return redirect()->back()->with('danger', 'Somente o Adminstrador ou Recrutador associado podem finalizar um processo!');
-        // }
-
-        $job->data_fim_contratacao = $now;
-        $job->status = 'fechada';
-        $job->save();
+       $this->jobService->endContraction($jobId);
 
         return back()->with('success', 'Contratação finalizada com sucesso');
 

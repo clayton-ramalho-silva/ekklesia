@@ -951,5 +951,20 @@ function updateStatus(newStatus) {
     z-index: 9999999 !important;
 }
 
+
+.status-aberta{
+    background-color: #ffff00 !important;
+}
+.status-fechada{
+    background-color: #008000 !important;
+}
+.status-espera{
+    background-color: #808080 !important;
+}
+.status-cancelada{
+    background-color: #ff0000 !important;
+}
+
+
 </style>
 @endpush

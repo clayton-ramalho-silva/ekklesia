@@ -7,10 +7,14 @@ use App\Models\Resume;
 use App\Models\Selection;
 use Illuminate\Http\Request;
 use App\Traits\LogsActivity;
+use App\Services\JobService;
 
 class SelectionController extends Controller
 {
     use LogsActivity;
+
+    public function __construct(private JobService $jobService){}
+
     /**
      * Processo Seletivo 
      * */
@@ -18,15 +22,15 @@ class SelectionController extends Controller
     // Primeira interação no processo seletivo
     public function storeSelection(Request $request )
     {       
-        
+        //dd($request->all());
         $data = $request->validate([
             'job_id' => 'required|exists:jobs,id',
             'resume_id' => 'required|exists:resumes,id',
             'status_selecao' => 'required|string|max:255',
             'avaliacao' => 'nullable|boolean',
             'observacao' => 'nullable|string',            
-        ]);
-        //dd($data);
+        ]);    
+        
 
         $resume = Resume::findOrFail($data['resume_id']);
         // Verifica se o resume está com status 'contratado'
@@ -35,7 +39,13 @@ class SelectionController extends Controller
         }
         
         
-        $selection = Selection::create($data);
+        $selection = Selection::create([
+            'job_id' => $data['job_id'],
+            'resume_id' => $data['resume_id'],
+            'status_selecao' => $data['status_selecao'],
+            'avaliacao' => $data['avaliacao'] ?? 1,
+            'observacao' => $data['observacao'] ?? ''
+        ]);
 
         // Reprovado com avaliação positiva. Volta a ficar disponível.
         if($selection->status_selecao == 'reprovado' && $selection->avaliacao == 1) {
@@ -47,13 +57,13 @@ class SelectionController extends Controller
             ]);
 
             $resume->observacoes()->create([
-                'observacao' => $selection->observacao,
+                'observacao' => $selection->observacao ?? '',
             ]);
 
             // Grava observação na vaga
             $job = $selection->job;
             $job->observacoes()->create([
-                'observacao' => $selection->observacao,
+                'observacao' => $selection->observacao ?? '',
             ]);
 
             // Subistituir por função do Service que desassocia de todas as vagas
@@ -72,13 +82,13 @@ class SelectionController extends Controller
             ]);
 
             $resume->observacoes()->create([
-                'observacao' => $selection->observacao,
+                'observacao' => $selection->observacao ?? '',
             ]);
             
             // Grava observação na vaga
             $job = $selection->job;
             $job->observacoes()->create([
-                'observacao' => $selection->observacao,
+                'observacao' => $selection->observacao ?? '',
             ]);
 
             // Substituir por função do Service que desassocia de todas as vagas
@@ -106,13 +116,13 @@ class SelectionController extends Controller
                 ]);
 
                 $resume->observacoes()->create([
-                    'observacao' => $selection->observacao,
+                    'observacao' => $selection->observacao ?? '',
                 ]);
 
                 // Grava observação na vaga
                 $job = $selection->job;
                 $job->observacoes()->create([
-                    'observacao' => $selection->observacao,
+                    'observacao' => $selection->observacao ?? '',
                 ]);
                 
                 return redirect()->back()->with('success', 'Candidato Contratado com sucesso!');        
@@ -124,27 +134,72 @@ class SelectionController extends Controller
             } 
         }
 
-        if ($selection->status_selecao == 'aguardando'){
-             // Atualiza o status e grava observação no curriculo
-            $resume = $selection->resume;
+        // if ($selection->status_selecao == 'aguardando'){
+        //     // Atualiza o status e grava observação no curriculo
+        //     $selection->update([
+        //         'status_selecao' => 'aguardando'
+        //     ]);
+
+
+
+        //     // $resume = $selection->resume;
+        //     // $resume->update([
+        //     //     'status' => 'ativo',                
+        //     // ]);
+
+        //     // $resume->observacoes()->create([
+        //     //     'observacao' => $selection->observacao ?? '',
+        //     // ]);
+            
+        //     // // Grava observação na vaga
+        //     // $job = $selection->job;
+        //     // $job->observacoes()->create([
+        //     //     'observacao' => $selection->observacao ?? '',
+        //     // ]);           
+
+        //     return redirect()->back()->with('success', 'Seleção atualizado para Aguardando!');
+        // }
+
+        // Desistente. Muda status do candidato para ativo e desassocia de vagas.
+        if ($selection->status_selecao == 'desistente') {
+
+            //dd('desistente');
+            
+            // Atualiza status do candidato
             $resume->update([
-                'status' => 'ativo',                
+                'status' => 'ativo',
             ]);
 
-            $resume->observacoes()->create([
-                'observacao' => $selection->observacao,
-            ]);
-            
-            // Grava observação na vaga
+            // Desassocia ele de vagas.
+            $resume->jobs()->detach();
+
+             // Grava observação na vaga
             $job = $selection->job;
             $job->observacoes()->create([
-                'observacao' => $selection->observacao,
-            ]);           
+                'observacao' => $selection->observacao ?? '',
+            ]);  
 
-            return redirect()->back()->with('success', 'Seleção atualizado para Aguardando!');
+            return redirect()->back()->with('success', 'Seleção atualizada: Candidato desistiu do processo!');            
         }
 
-        
+        // Vaga Cancelada. Vaga é encerrada.
+        if($selection->status_selecao == 'cancelada') {
+            
+           $job = $selection->job;
+
+            $this->jobService->endContraction($job->id);
+
+            $job->update([
+                'status' => 'cancelada'
+            ]);
+
+            $job->resumes->detach();
+
+
+            return redirect()->back()->with('success', 'Seleção atualizada com sucesso.');
+        }
+
+         return redirect()->back()->with('success', 'Seleção atualizada com sucesso.');
        
     }
 
@@ -161,11 +216,23 @@ class SelectionController extends Controller
             
            
         ]);
+        //dd($data);
         
+        $resume = Resume::findOrFail($data['resume_id']);
+        // Verifica se o resume está com status 'contratado'
+        if ($resume->status == 'contratado') {
+            return redirect()->back()->with('danger', 'Candidato já está com status de "Contratado". Não é possível seguir com a contratação.');
+        }
 
         $selection = Selection::findOrFail($selectionId);
 
-        $selection->update($data);      
+        $selection->update([
+            'job_id' => $data['job_id'],
+            'resume_id' => $data['resume_id'],
+            'status_selecao' => $data['status_selecao'],
+            'avaliacao' => $data['avaliacao'] ?? 1,
+            'observacao' => $data['observacao'] ?? ''
+        ]);     
 
         //dd($selection);
 
@@ -178,13 +245,13 @@ class SelectionController extends Controller
             ]);
 
             $resume->observacoes()->create([
-                'observacao' => $selection->observacao,
+                'observacao' => $selection->observacao ?? '',
             ]);
 
             // Grava observação na vaga
             $job = $selection->job;
             $job->observacoes()->create([
-                'observacao' => $selection->observacao,
+                'observacao' => $selection->observacao ?? '',
             ]);
 
 
@@ -203,13 +270,13 @@ class SelectionController extends Controller
             ]);
 
             $resume->observacoes()->create([
-                'observacao' => $selection->observacao,
+                'observacao' => $selection->observacao ?? '',
             ]);
             
             // Grava observação na vaga
             $job = $selection->job;
             $job->observacoes()->create([
-                'observacao' => $selection->observacao,
+                'observacao' => $selection->observacao ?? '',
             ]);
 
 
@@ -244,13 +311,13 @@ class SelectionController extends Controller
                     ]);
 
                     $resume->observacoes()->create([
-                        'observacao' => $selection->observacao,
+                        'observacao' => $selection->observacao ?? '',
                     ]);
 
                     // Grava observação na vaga
                     $job = $selection->job;
                     $job->observacoes()->create([
-                        'observacao' => $selection->observacao,
+                        'observacao' => $selection->observacao ?? '',
                     ]);
                     
                     return redirect()->back()->with('success', 'Candidato Contrado com sucesso!');        
@@ -266,94 +333,152 @@ class SelectionController extends Controller
         }
 
          // Aguardando.
-        if($data['status_selecao'] == 'aguardando') {
+        // if($data['status_selecao'] == 'aguardando') {
 
-            if ($selection->resume->status != 'contratado') {
+        //     // Atualiza o status e grava observação no curriculo
+        //     // $selection->update([
+        //     //     'status_selecao' => 'aguardando'
+        //     // ]);
 
-                // Grava no banco de dados
-                $selection->update($data);
+        //     // $resume = $selection->resume;
+        //     // $resume->update([
+        //     //     'status' => 'ativo',                
+        //     // ]);
+
+        //     // $resume->observacoes()->create([
+        //     //     'observacao' => $selection->observacao ?? '',
+        //     // ]);
+            
+        //     // // Grava observação na vaga
+        //     // $job = $selection->job;
+        //     // $job->observacoes()->create([
+        //     //     'observacao' => $selection->observacao ?? '',
+        //     // ]);           
+
+        //     return redirect()->back()->with('success', 'Seleção atualizado para Aguardando!');
+        //     // if ($selection->resume->status != 'contratado') {
+
+        //     //     // Grava no banco de dados
+        //     //     $selection->update($data);
 
 
-                $job = $selection->job;  
-                $job->updateStatus();
+        //     //     $job = $selection->job;  
+        //     //     $job->updateStatus();
                                     
-                if ($job->status == 'aberta') {
-                    $job->filled_positions += 1;
-                    $job->updateStatus();
-                    $selection->status_contratacao = 'aprovado';
-                    $selection->update();
+        //     //     if ($job->status == 'aberta') {
+        //     //         $job->filled_positions += 1;
+        //     //         $job->updateStatus();
+        //     //         $selection->status_contratacao = 'aprovado';
+        //     //         $selection->update();
 
-                    // Atualiza o status e grava observação no curriculo
-                    $resume = $selection->resume;
-                    $resume->update([
-                        'status' => 'contratado',                
-                    ]);
+        //     //         // Atualiza o status e grava observação no curriculo
+        //     //         $resume = $selection->resume;
+        //     //         $resume->update([
+        //     //             'status' => 'contratado',                
+        //     //         ]);
 
-                    $resume->observacoes()->create([
-                        'observacao' => $selection->observacao,
-                    ]);
+        //     //         $resume->observacoes()->create([
+        //     //             'observacao' => $selection->observacao,
+        //     //         ]);
 
-                    // Grava observação na vaga
-                    $job = $selection->job;
-                    $job->observacoes()->create([
-                        'observacao' => $selection->observacao,
-                    ]);
+        //     //         // Grava observação na vaga
+        //     //         $job = $selection->job;
+        //     //         $job->observacoes()->create([
+        //     //             'observacao' => $selection->observacao,
+        //     //         ]);
                     
-                    return redirect()->back()->with('success', 'Candidato Contrado com sucesso!');        
-                } else {
+        //     //         return redirect()->back()->with('success', 'Candidato Contrado com sucesso!');        
+        //     //     } else {
                     
-                    $selection->status_contratacao = 'Fila de Espera';
-                    $selection->update();               
-                    return redirect()->back()->with('success', 'Vaga fechada Contrado colocado na Fila de espera!');
-                } 
-            } 
+        //     //         $selection->status_contratacao = 'Fila de Espera';
+        //     //         $selection->update();               
+        //     //         return redirect()->back()->with('success', 'Vaga fechada Contrado colocado na Fila de espera!');
+        //     //     } 
+        //     // } 
 
             
-            if ($selection->resume->status == 'contratado') {
-                $selecao_aprovada = $selection->resume->selections->where('status_selecao', 'aprovado')->first();
+        //     // if ($selection->resume->status == 'contratado') {
+        //     //     $selecao_aprovada = $selection->resume->selections->where('status_selecao', 'aprovado')->first();
     
-                if ($selecao_aprovada->job_id != $data['job_id']) {
-                    return redirect()->back()->with('danger', 'Candidato já está com status de "Contratado". Não é possível alterar o status.');
-                } 
+        //     //     if ($selecao_aprovada->job_id != $data['job_id']) {
+        //     //         return redirect()->back()->with('danger', 'Candidato já está com status de "Contratado". Não é possível alterar o status.');
+        //     //     } 
                 
-                if ($selecao_aprovada->job_id == $data['job_id']) {
-                    // Grava no banco de dados
-                    $selection->update($data);
+        //     //     if ($selecao_aprovada->job_id == $data['job_id']) {
+        //     //         // Grava no banco de dados
+        //     //         $selection->update($data);
 
-                    $job = $selection->job;  
-                    $job->updateStatus();
+        //     //         $job = $selection->job;  
+        //     //         $job->updateStatus();
                                         
-                    if ($job->status == 'aberta') {
-                        $job->filled_positions -= 1;
-                        $job->updateStatus();
-                        $selection->status_contratacao = 'aguardando';
-                        $selection->update();
+        //     //         if ($job->status == 'aberta') {
+        //     //             $job->filled_positions -= 1;
+        //     //             $job->updateStatus();
+        //     //             $selection->status_contratacao = 'aguardando';
+        //     //             $selection->update();
 
-                        // Atualiza o status e grava observação no curriculo
-                        $resume = $selection->resume;
-                        $resume->update([
-                            'status' => 'ativo',                
-                        ]);
+        //     //             // Atualiza o status e grava observação no curriculo
+        //     //             $resume = $selection->resume;
+        //     //             $resume->update([
+        //     //                 'status' => 'ativo',                
+        //     //             ]);
 
-                        $resume->observacoes()->create([
-                            'observacao' => $selection->observacao,
-                        ]);
+        //     //             $resume->observacoes()->create([
+        //     //                 'observacao' => $selection->observacao,
+        //     //             ]);
 
-                        // Grava observação na vaga
-                        $job = $selection->job;
-                        $job->observacoes()->create([
-                            'observacao' => $selection->observacao,
-                        ]);
+        //     //             // Grava observação na vaga
+        //     //             $job = $selection->job;
+        //     //             $job->observacoes()->create([
+        //     //                 'observacao' => $selection->observacao,
+        //     //             ]);
                         
-                        return redirect()->back()->with('success', 'Seleção atualizada com sucesso!');        
-                    } 
-                }
+        //     //             return redirect()->back()->with('success', 'Seleção atualizada com sucesso!');        
+        //     //         } 
+        //     //     }
                 
-            }
+        //     // }
 
 
 
             
+        // }
+
+        // Desistente. Muda status do candidato para ativo e desassocia de vagas.
+        if ($selection->status_selecao == 'desistente') {
+            
+            // Atualiza status do candidato
+            $resume->update([
+                'status' => 'ativo',
+            ]);
+
+            // Desassocia ele de vagas.
+            $resume->jobs()->detach();
+
+             // Grava observação na vaga
+            $job = $selection->job;
+            $job->observacoes()->create([
+                'observacao' => $selection->observacao ?? '',
+            ]);  
+
+            return redirect()->back()->with('success', 'Seleção atualizada: Candidato desistiu do processo!');            
+        }
+
+        // Vaga Cancelada. Vaga é encerrada.
+        if($selection->status_selecao == 'cancelada') {
+            //dd('chegou');
+            $job = $selection->job;
+
+            $this->jobService->endContraction($job->id);
+
+            $job->update([
+                'status' => 'cancelada'
+            ]);
+
+            $job->resumes()->detach();
+
+
+            return redirect()->back()->with('success', 'Seleção atualizada com sucesso.');
         }
 
         return redirect()->back()->with('success', 'Seleção atualizada com sucesso.');

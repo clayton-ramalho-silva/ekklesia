@@ -37,7 +37,7 @@
                         </li>
                         <li class="col2">
                             <b>Título</b>
-                            {{ $job->cargo }}
+                            {{ $job->setor }}
                         </li>
                         <li class="col3" data-bs-toggle="tooltip" data-bs-placement="top" title="Preenchidas/Disponíveis">
                             <b>Vagas</b>
@@ -119,7 +119,7 @@
                                                     </li>
                                                     <li class="col2">
                                                         <b>Setor</b>
-                                                        {{ $job->cargo }}
+                                                        {{ $job->setor }}
                                                     </li>
                                                     <li class="col3" data-bs-toggle="tooltip" data-bs-placement="top" title="Preenchidas/Disponíveis">
                                                         <b>Vagas</b>
@@ -166,6 +166,8 @@
                                                                     <option value="aguardando" selected> Aguardando</option>
                                                                     <option value="aprovado" > Contratado</option>
                                                                     <option value="reprovado" > Reprovado</option>
+                                                                    <option value="desistente" > Desistente</option>
+                                                                    <option value="cancelada" > Vaga Cancelada</option>
                                                                     {{-- <option value="Fila de Espera" > Fila de Espera</option> --}}
                                                                 </select>
                                                                 @error('status_selecao') <div class="alert alert-danger">{{ $message }}</div> @enderror
@@ -177,10 +179,9 @@
 
                                                             <div class="floatlabel-wrapper required col-12">
                                                                 <label for="avaliacao" class="label-floatlabel" class="form-label floatlabel-label">Avaliação</label>
-                                                                <select name="avaliacao" id="avaliacao" class="form-select active-floatlabel" required>
-                                                                    <option>Escolher</option>
+                                                                <select name="avaliacao" id="avaliacao" class="form-select active-floatlabel" required>                                                                    
+                                                                    <option value="1" selected> Positiva</option>
                                                                     <option value="0" > Negativa</option>
-                                                                    <option value="1" > Positiva</option>
                                                                 </select>
                                                                 @error('avaliacao') <div class="alert alert-danger">{{ $message }}</div> @enderror
                                                             </div>
@@ -227,4 +228,3 @@
 
     </article>
     <!-- Fim Vagas Associadas do candidato -->
-
