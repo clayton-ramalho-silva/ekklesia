@@ -589,6 +589,18 @@ background-color: rgb(225, 0, 0) !important;
     z-index: 9999;
 }
 
+.status-aberta{
+    background-color: #ffff00 !important;
+}
+.status-fechada{
+    background-color: #008000 !important;
+}
+.status-espera{
+    background-color: #808080 !important;
+}
+.status-cancelada{
+    background-color: #ff0000 !important;
+}
 
 
 </style>
