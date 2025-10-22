@@ -37,7 +37,7 @@
                         </li>
                         <li class="col2">
                             <b>Título</b>
-                            <?php echo e($job->cargo); ?>
+                            <?php echo e($job->setor); ?>
 
                         </li>
                         <li class="col3" data-bs-toggle="tooltip" data-bs-placement="top" title="Preenchidas/Disponíveis">
@@ -141,7 +141,7 @@
                                                     </li>
                                                     <li class="col2">
                                                         <b>Setor</b>
-                                                        <?php echo e($job->cargo); ?>
+                                                        <?php echo e($job->setor); ?>
 
                                                     </li>
                                                     <li class="col3" data-bs-toggle="tooltip" data-bs-placement="top" title="Preenchidas/Disponíveis">
@@ -191,6 +191,8 @@
                                                                     <option value="aguardando" selected> Aguardando</option>
                                                                     <option value="aprovado" > Contratado</option>
                                                                     <option value="reprovado" > Reprovado</option>
+                                                                    <option value="desistente" > Desistente</option>
+                                                                    <option value="cancelada" > Vaga Cancelada</option>
                                                                     
                                                                 </select>
                                                                 <?php $__errorArgs = ['status_selecao'];
@@ -209,10 +211,9 @@ unset($__errorArgs, $__bag); ?>
 
                                                             <div class="floatlabel-wrapper required col-12">
                                                                 <label for="avaliacao" class="label-floatlabel" class="form-label floatlabel-label">Avaliação</label>
-                                                                <select name="avaliacao" id="avaliacao" class="form-select active-floatlabel" required>
-                                                                    <option>Escolher</option>
+                                                                <select name="avaliacao" id="avaliacao" class="form-select active-floatlabel" required>                                                                    
+                                                                    <option value="1" selected> Positiva</option>
                                                                     <option value="0" > Negativa</option>
-                                                                    <option value="1" > Positiva</option>
                                                                 </select>
                                                                 <?php $__errorArgs = ['avaliacao'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -273,5 +274,4 @@ unset($__errorArgs, $__bag); ?>
 
     </article>
     <!-- Fim Vagas Associadas do candidato -->
-
 <?php /**PATH /home/case/Área de trabalho/2025/ldweb/Projeto asppe/painelasppe/resources/views/components/resume-jobs-table.blade.php ENDPATH**/ ?>

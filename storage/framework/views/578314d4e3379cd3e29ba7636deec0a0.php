@@ -42,7 +42,7 @@
                         </li>
                         <li class="col2">
                             <b>Título</b>
-                            <?php echo e($jobAprovado->cargo); ?>
+                            <?php echo e($jobAprovado->setor); ?>
 
                         </li>
                         <li class="col3" data-bs-toggle="tooltip" data-bs-placement="top" title="Preenchidas/Disponíveis">
@@ -111,7 +111,7 @@
                                                     </li>
                                                     <li class="col2">
                                                         <b>Setor</b>
-                                                        <?php echo e($jobAprovado->cargo); ?>
+                                                        <?php echo e($jobAprovado->setor); ?>
 
                                                     </li>
                                                     <li class="col3" data-bs-toggle="tooltip" data-bs-placement="top" title="Preenchidas/Disponíveis">
@@ -160,10 +160,11 @@
                                                             <div class="floatlabel-wrapper required">
                                                                 <label for="status_selecao" class="label-floatlabel" class="form-label floatlabel-label">Status da Seleção:</label>
                                                                 <select name="status_selecao" id="status_selecao" class="form-select active-floatlabel" required>
+                                                                    <option value="aguardando" <?php echo e($selection->status_selecao == 'aguardando' ? 'selected' : ''); ?>> Aguardando</option>
                                                                     <option value="aprovado" <?php echo e($selection->status_selecao == 'aprovado' ? 'selected' : ''); ?> > Aprovado</option>
                                                                     <option value="reprovado" <?php echo e($selection->status_selecao == 'reprovado' ? 'selected' : ''); ?> > Reprovado</option>
-                                                                    <option value="aguardando" <?php echo e($selection->status_selecao == 'aguardando' ? 'selected' : ''); ?>> Aguardando</option>
-                                                                    
+                                                                    <option value="desistente" <?php echo e($selection->status_selecao == 'desistente' ? 'selected' : ''); ?>> Desistente</option>
+                                                                    <option value="cancelada" <?php echo e($selection->status_selecao == 'cancelada' ? 'selected' : ''); ?>> Vaga Cancelada</option>                                                                    
                                                                 </select>
                                                                 <?php $__errorArgs = ['status_selecao'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -266,7 +267,7 @@ unset($__errorArgs, $__bag); ?>
                             </li>
                             <li class="col2">
                                 <b>Título</b>
-                                <?php echo e($selecao->job->cargo); ?>
+                                <?php echo e($selecao->job->setor); ?>
 
                             </li>
                             <li class="col3" data-bs-toggle="tooltip" data-bs-placement="top" title="Preenchidas/Disponíveis">
@@ -353,7 +354,7 @@ unset($__errorArgs, $__bag); ?>
                                                         </li>
                                                         <li class="col2">
                                                             <b>Setor</b>
-                                                            <?php echo e($selecao->job->cargo); ?>
+                                                            <?php echo e($selecao->job->setor); ?>
 
                                                         </li>
                                                         <li class="col3" data-bs-toggle="tooltip" data-bs-placement="top" title="Preenchidas/Disponíveis">
@@ -402,6 +403,8 @@ unset($__errorArgs, $__bag); ?>
                                                                         <option value="aprovado" <?php echo e($selecao->status_selecao == 'aprovado' ? 'selected' : ''); ?> > Contratado</option>
                                                                         <option value="reprovado" <?php echo e($selecao->status_selecao == 'reprovado' ? 'selected' : ''); ?> > Reprovado</option>
                                                                         <option value="aguardando" <?php echo e($selecao->status_selecao == 'aguardando' ? 'selected' : ''); ?>> Aguardando</option>
+                                                                        <option value="desistente" <?php echo e($selecao->status_selecao == 'desistente' ? 'selected' : ''); ?>> Desistente</option>
+                                                                        <option value="cancelada" <?php echo e($selecao->status_selecao == 'cancelada' ? 'selected' : ''); ?>> Vaga Cancelada</option>                                                                    
                                                                         
                                                                     </select>
                                                                     <?php $__errorArgs = ['status_selecao'];
@@ -512,6 +515,23 @@ width: 10% !important;
 width: 10% !important;
 }
 
+
+.lista-info-vaga ul li.col1{
+width: 100% !important;
+border-right: none !important;
+}
+
+.lista-info-vaga ul li.col2{
+width: 33% !important;
+border-bottom: none !important;
+border-right: 1px solid #dedede;
+}
+.lista-info-vaga ul li.col3{
+width: 33% !important;
+}
+.lista-info-vaga ul li.col4{
+width: 33% !important;
+}
 
 
 
