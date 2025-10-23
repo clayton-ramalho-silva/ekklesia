@@ -532,7 +532,7 @@ class ResumeController extends Controller
         // }
 
         // $jobs = $jobsQuery->get();   
-        $jobs = Job::where('status', 'aberta')->get();
+        $jobs = Job::where('status', 'aberta')->get();        
 
         $jobsAssociados = $resume->jobs;
 
