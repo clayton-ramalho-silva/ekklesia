@@ -90,7 +90,7 @@ class PublicResumeRequest extends FormRequest
             'ingles' => 'required|string|max:255',
             'cras' => 'required|string|max:255',
             'fonte' => 'required|string|max:255',
-            'curriculo_doc' => 'file|mimes:pdf|max:2048',
+            'curriculo_doc' => 'required|file|mimes:pdf|max:2048',
             //'foto_candidato' => 'file|mimes:jpg,jpeg,png|max:2048',
             'filhos_sim' => 'string|nullable|max:255', // idade
             'filhos_qtd' => 'string|nullable|max:255',
@@ -157,6 +157,7 @@ class PublicResumeRequest extends FormRequest
             'fonte' => 'O campo Como ficou sabendo do programa é obrigatório.',
             'curriculo_doc.mime' => 'O Arquivo deve ser em formato PDF',            
             'curriculo_doc.max' => 'O Arquivo de ter no máximo 2MB',
+            'curriculo_doc.required' => 'O Currículo é obrigatório.',
             
             'cpf.unique' =>'Currículo já cadastrado neste CPF.',
             'email.unique' => 'E-mail já cadastrado.',
