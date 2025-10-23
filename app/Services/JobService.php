@@ -13,7 +13,7 @@ class JobService
     {
         $job = Job::findOrFail($jobId);
         
-        $job->upadate([
+        $job->update([
             'data_inicio_contratacao' => Carbon::now(),
         ]);
     }
