@@ -295,19 +295,26 @@ unset($__errorArgs, $__bag); ?>
 
                                 <b>Status</b>
                                
-                                  <?php switch($resume->status):
-                                    case ('ativo'): ?>
-                                        <i class="status-ativo" title="Disponível"></i>Disponível
+                                  <?php switch($selecao->status_selecao):
+                                    case ('reprovado'): ?>
+                                            <?php if($selecao->avaliacao == 0): ?>
+                                                <i class="status-inativo" title="Inativo"></i>Reprovado - Avaliação Negativa        
+                                            <?php else: ?>
+                                                <i class="status-ativo" title="Disponível"></i>Reprovado - Avaliação Positiva                                                
+                                            <?php endif; ?>
                                         <?php break; ?>
-                                    <?php case ('inativo'): ?>
-                                        <i class="status-inativo" title="Inativo"></i>Inativo
+                                    <?php case ('aguardando'): ?>
+                                        <i class="status-ativo" title="Disponível"></i>Disponível - Aguardando
                                         <?php break; ?>
-                                    <?php case ('processo'): ?>
-                                        <i class="status-em-processo" title="Em processo"></i>Em processo
+                                    <?php case ('desistente'): ?>
+                                        <i class="status-ativo" title="Disponível"></i>Disponível - Desistente
                                         <?php break; ?>
                                     <?php case ('contratado'): ?>
                                         <i class="status-contratado" title="Contratado"></i>Contratado
-                                        <?php break; ?>                           
+                                        <?php break; ?>          
+                                    <?php case ('cancelada'): ?>
+                                        <i class="status-inativo" title="Inativo"></i>Disponível - Vaga Cancelada
+                                        <?php break; ?>                  
                                         
                                 <?php endswitch; ?> 
 
