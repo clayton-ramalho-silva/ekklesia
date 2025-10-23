@@ -263,19 +263,26 @@
 
                                 <b>Status</b>
                                
-                                  @switch($resume->status)
-                                    @case('ativo')
-                                        <i class="status-ativo" title="Disponível"></i>Disponível
+                                  @switch($selecao->status_selecao)
+                                    @case('reprovado')
+                                            @if ($selecao->avaliacao == 0)
+                                                <i class="status-inativo" title="Inativo"></i>Reprovado - Avaliação Negativa        
+                                            @else
+                                                <i class="status-ativo" title="Disponível"></i>Reprovado - Avaliação Positiva                                                
+                                            @endif
                                         @break
-                                    @case('inativo')
-                                        <i class="status-inativo" title="Inativo"></i>Inativo
+                                    @case('aguardando')
+                                        <i class="status-ativo" title="Disponível"></i>Disponível - Aguardando
                                         @break
-                                    @case('processo')
-                                        <i class="status-em-processo" title="Em processo"></i>Em processo
+                                    @case('desistente')
+                                        <i class="status-ativo" title="Disponível"></i>Disponível - Desistente
                                         @break
                                     @case('contratado')
                                         <i class="status-contratado" title="Contratado"></i>Contratado
-                                        @break                           
+                                        @break          
+                                    @case('cancelada')
+                                        <i class="status-inativo" title="Inativo"></i>Disponível - Vaga Cancelada
+                                        @break                  
                                         
                                 @endswitch 
 

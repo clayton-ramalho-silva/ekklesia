@@ -138,7 +138,7 @@ class PublicResumeController extends Controller
         ]);
 
         // Salvando Log de criação
-        $this->logAction('create', 'jobs', $resume->id, 'Currículo cadastrado pelo candidado com sucesso.');
+        $this->logAction('create', 'resume', $resume->id, 'Currículo cadastrado pelo candidado com sucesso.');
 
         
         return view('publicResume.confirmacao');

@@ -67,7 +67,8 @@ class SelectionController extends Controller
             ]);
 
             // Subistituir por função do Service que desassocia de todas as vagas
-            $this->desassociarVaga($data['job_id'], $data['resume_id']);
+            $resume->jobs()->detach();
+            //$this->desassociarVaga($data['job_id'], $data['resume_id']);
 
             return redirect()->back()->with('success', 'Candidato reprovado com avaliação positiva!');  
         }
@@ -92,7 +93,8 @@ class SelectionController extends Controller
             ]);
 
             // Substituir por função do Service que desassocia de todas as vagas
-            $this->desassociarVaga($data['job_id'], $data['resume_id']);
+            $resume->jobs()->detach();
+            //$this->desassociarVaga($data['job_id'], $data['resume_id']);
 
             return redirect()->back()->with('success', 'Candidato reprovado com avaliação negativa!');  
         }
@@ -255,7 +257,8 @@ class SelectionController extends Controller
             ]);
 
 
-            $this->desassociarVaga($selection->job->id, $selection->resume->id);
+            $resume->jobs()->detach();
+            //$this->desassociarVaga($selection->job->id, $selection->resume->id);
 
             return redirect()->back()->with('success', 'Candidato reprovado com avaliação positiva!');  
         }
@@ -280,7 +283,8 @@ class SelectionController extends Controller
             ]);
 
 
-            $this->desassociarVaga($selection->job->id, $selection->resume->id);
+            $resume->jobs()->detach();
+            //$this->desassociarVaga($selection->job->id, $selection->resume->id);
 
             return redirect()->back()->with('success', 'Candidato reprovado com avaliação negativa!');  
         }

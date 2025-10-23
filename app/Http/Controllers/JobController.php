@@ -270,18 +270,30 @@ class JobController extends Controller
 
         $selections = $job->selections;
 
-        $buscarNome = request('buscar_nome');
-
-        $curriculosParaAssociar = Resume::where('status', 'ativo')
+        $buscarNome = request('buscar_nome');     
+       
+        $curriculosParaAssociar = Resume::query()
+            ->select('id', 'vagas_interesse')
+            ->where('status', 'ativo')
             ->whereDoesntHave('jobs')
-            //->whereHas('interview')
-            ->when($buscarNome, function($query, $buscarNome){
-                $query->whereHas('informacoesPessoais', function($subQuery) use ($buscarNome){
-                    $subQuery->where('nome', 'LIKE', '%' . $buscarNome . '%');
+            // ->whereHas('interview')
+            ->when($buscarNome, function ($query, $buscarNome) {
+                $query->whereHas('informacoesPessoais', function ($subQuery) use ($buscarNome) {
+                    $subQuery->where('nome', 'LIKE', "%{$buscarNome}%");
                 });
             })
+            ->whereHas('informacoesPessoais', function ($query) {
+                $query->whereNotNull('data_nascimento')
+                    ->where('data_nascimento', '>=', now()->subYears(23));
+            })
+            ->with([
+                'informacoesPessoais:resume_id,nome,cnh',
+                'escolaridade:resume_id,informatica,ingles'
+            ])
             ->paginate(50);
-       
+
+
+
 
         return view('jobs.edit', compact('job', 'companies', 'recruiters', 'curriculosParaAssociar'));
     }
