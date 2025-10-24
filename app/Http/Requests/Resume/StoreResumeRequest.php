@@ -87,7 +87,7 @@ class StoreResumeRequest extends FormRequest
             'ingles' => 'nullable|string|max:255',
             'cras' => 'string|nullable|max:255',
             'fonte' => 'string|nullable|max:255',
-            'curriculo_doc' => 'file|mimes:pdf|max:2048',
+            'curriculo_doc' => 'required|file|mimes:pdf|max:2048',
             'foto_candidato' => 'file|mimes:jpg,jpeg,png|max:2048',
             'filhos_sim' => 'string|nullable|max:255', // Idade dos filhos
             'filhos_qtd' => 'string|nullable|max:255',
@@ -102,4 +102,16 @@ class StoreResumeRequest extends FormRequest
             //'tamanho_uniforme' => 'nullable|string|max:255',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'curriculo_doc.mime' => 'O Arquivo deve ser em formato PDF',            
+            'curriculo_doc.max' => 'O Arquivo de ter no máximo 2MB',
+            'curriculo_doc.required' => 'O Currículo é obrigatório.'            
+           
+        ];
+    }
 }
+
+

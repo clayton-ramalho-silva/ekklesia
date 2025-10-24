@@ -363,7 +363,7 @@ class ResumeController extends Controller
     {
         
 
-        //dd($request->all());
+       // dd($request->all());
 
         $data = $request->validated();
 
