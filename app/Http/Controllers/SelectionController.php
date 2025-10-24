@@ -79,7 +79,7 @@ class SelectionController extends Controller
             // Atualiza o status e grava observação no curriculo
             $resume = $selection->resume;
             $resume->update([
-                'status' => 'inativo',                
+                'status' => 'ativo',                
             ]);
 
             $resume->observacoes()->create([
@@ -221,10 +221,7 @@ class SelectionController extends Controller
         //dd($data);
         
         $resume = Resume::findOrFail($data['resume_id']);
-        // Verifica se o resume está com status 'contratado'
-        if ($resume->status == 'contratado') {
-            return redirect()->back()->with('danger', 'Candidato já está com status de "Contratado". Não é possível seguir com a contratação.');
-        }
+       
 
         $selection = Selection::findOrFail($selectionId);
 
@@ -269,7 +266,7 @@ class SelectionController extends Controller
             // Atualiza o status e grava observação no curriculo
             $resume = $selection->resume;
             $resume->update([
-                'status' => 'inativo',                
+                'status' => 'ativo',                
             ]);
 
             $resume->observacoes()->create([
@@ -291,6 +288,11 @@ class SelectionController extends Controller
 
         // Aprovado.
         if($data['status_selecao'] == 'aprovado') {
+
+             // Verifica se o resume está com status 'contratado'
+            if ($resume->status == 'contratado') {
+                return redirect()->back()->with('danger', 'Candidato já está com status de "Contratado". Não é possível seguir com a contratação.');
+            }
 
             // Verifica se o resume está com status 'contratado'
             if ($selection->resume->status != 'contratado') {
@@ -447,6 +449,26 @@ class SelectionController extends Controller
 
             
         // }
+
+        // Desistente. Muda status do candidato para ativo e desassocia de vagas.
+        if ($selection->status_selecao == 'aguardando') {
+            
+            // Atualiza status do candidato
+            $resume->update([
+                'status' => 'ativo',
+            ]);
+
+            // Desassocia ele de vagas.
+            //$resume->jobs()->detach();
+
+             // Grava observação na vaga
+            // $job = $selection->job;
+            // $job->observacoes()->create([
+            //     'observacao' => $selection->observacao ?? '',
+            // ]);  
+
+            return redirect()->back()->with('success', 'Seleção atualizada: Candidato desistiu do processo!');            
+        }
 
         // Desistente. Muda status do candidato para ativo e desassocia de vagas.
         if ($selection->status_selecao == 'desistente') {
