@@ -87,7 +87,7 @@ class UpdateResumeRequest extends FormRequest
             'ingles' => 'nullable|string|max:255',
             'cras' => 'string|nullable|max:255',
             'fonte' => 'string|nullable|max:255',
-            'curriculo_doc' => 'required|file|mimes:pdf|max:2048',
+            'curriculo_doc' => 'file|mimes:pdf|max:2048',
             'foto_candidato' => 'file|mimes:jpg,jpeg,png|max:2048',
             'filhos_sim' => 'string|nullable|max:255', // idade
             'filhos_qtd' => 'string|nullable|max:255',
