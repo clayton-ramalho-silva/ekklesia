@@ -298,7 +298,7 @@ unset($__errorArgs, $__bag); ?>
                                   <?php switch($selecao->status_selecao):
                                     case ('reprovado'): ?>
                                             <?php if($selecao->avaliacao == 0): ?>
-                                                <i class="status-inativo" title="Inativo"></i>Reprovado - Avaliação Negativa        
+                                                <i class="status-ativo" title="Inativo"></i>Reprovado - Avaliação Negativa        
                                             <?php else: ?>
                                                 <i class="status-ativo" title="Disponível"></i>Reprovado - Avaliação Positiva                                                
                                             <?php endif; ?>
