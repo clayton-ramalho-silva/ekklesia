@@ -37,4 +37,17 @@ class JobService
         // }
     }
 
+    // Função para buscar recrutadores ativos no sistema.
+    // Pode ser adminstradores ou recrutadores comuns.
+    // Excluir email: marketing@asppe.org, clayton@email.com, flavio@marcasite.com.br
+    public function getActiveRecruiters()
+    {
+        $excludedUserEmails = ['marketing@asppe.org', 'clayton@email.com', 'flavio@marcasite.com.br'];
+        return \App\Models\User::whereIn('role', ['admin', 'recruiter'])
+            ->whereNotIn('email', $excludedUserEmails)
+            ->where('status', true)
+            ->get();
+            
+    }
+
 }

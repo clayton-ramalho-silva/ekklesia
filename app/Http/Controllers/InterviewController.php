@@ -21,10 +21,12 @@ class InterviewController extends Controller
     use LogsActivity;
 
     protected $cidadeService;
+    protected $resumeService;
 
-    public function __construct(CidadeService $cidadeService)
+    public function __construct(CidadeService $cidadeService, ResumeService $resumeService)
     {
         $this->cidadeService = $cidadeService;
+        $this->resumeService = $resumeService;
     }
 
     public function index(Request $request)
@@ -90,7 +92,8 @@ class InterviewController extends Controller
         // Filtro por cpf - Busca pelo nome do candidato
         if($request->filled('cpf')) {
             $query->whereHas('informacoesPessoais', function($q) use ($request) {
-                $q->where('cpf', 'like', '%' . $request->cpf . '%');
+                //$q->where('cpf', 'like', '%' . $request->cpf . '%');
+                $this->resumeService->applyCpfFilter($q, $request->cpf); 
             });
         }
 
