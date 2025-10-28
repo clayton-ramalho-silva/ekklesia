@@ -194,4 +194,19 @@ class ResumeService
         return $resume;
 
     }
+
+    public function applyCpfFilter($query, $cpf)
+    {
+        // Remove formação do CPF informado.
+        $cleanCpf = preg_replace('/[^0-9]/', '', $cpf);
+
+        // Adiciona formatação padrão
+        $formattedCpf = preg_replace('/(\d{3})(\d{3})(\d{3})(\d{2})/', '$1.$2.$3-$4', $cleanCpf);
+        
+        return $query->where(function($q) use ($cleanCpf, $formattedCpf, $cpf) {
+            $q->where('cpf', 'like', '%' . $cleanCpf . '%')
+            ->orWhere('cpf', 'like', '%' . $formattedCpf . '%')
+            ->orWhere('cpf', 'like', '%' . $cpf . '%');
+        });
+    }
 }

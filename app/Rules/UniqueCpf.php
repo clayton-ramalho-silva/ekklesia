@@ -26,8 +26,11 @@ class UniqueCpf implements Rule
         
         // Verifica se existe nos dois formatos
         $query = DB::table($this->table)
-            ->where('cpf', $cleanCpf)
-            ->orWhere('cpf', $formattedCpf);
+            ->whereNull('deleted_at') // Ignora registros soft deleted
+            ->where(function($q) use ($cleanCpf, $formattedCpf) {
+                $q->where('cpf', $cleanCpf)
+                ->orWhere('cpf', $formattedCpf);
+            });
             
         // Ignora o registro atual em updates
         if ($this->ignoreId) {

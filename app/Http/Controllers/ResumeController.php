@@ -21,10 +21,12 @@ class ResumeController extends Controller
     use LogsActivity;
 
     protected $cidadeService;
+    protected $resumeService;
 
-    public function __construct(CidadeService $cidadeService)
+    public function __construct(CidadeService $cidadeService, ResumeService $resumeService)
     {
         $this->cidadeService = $cidadeService;
+        $this->resumeService = $resumeService;
     }
 
     public function index(Request $request)
@@ -75,7 +77,8 @@ class ResumeController extends Controller
 
             // Filtro por cpf - Busca pelo nome do candidato
             if($request->filled('cpf')) {
-                $q->where('cpf', 'like', '%' . $request->cpf . '%');                
+                //$q->where('cpf', 'like', '%' . $request->cpf . '%');   
+                $this->resumeService->applyCpfFilter($q, $request->cpf);             
             }
 
              // Filtro gênero- múltiplas seleções

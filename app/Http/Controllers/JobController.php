@@ -198,7 +198,7 @@ class JobController extends Controller
         $jobs = $query->paginate(25); // Ajustar o numero coforme necessário.  
 
         $companies = Company::all();
-        $recruiters = User::where('role', 'recruiter')->get();
+        $recruiters = $this->jobService->getActiveRecruiters();      
         $min_salario = $request->min_salario ?? '';
         $max_salario = $request->max_salario ?? '';
 
