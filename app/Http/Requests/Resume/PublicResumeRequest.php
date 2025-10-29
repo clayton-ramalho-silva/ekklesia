@@ -155,7 +155,7 @@ class PublicResumeRequest extends FormRequest
             'ingles' => 'O campo Conhecimento em inglês é obrigatório.',
             'cras' => 'O campo CRAS é obrigatório.',
             'fonte' => 'O campo Como ficou sabendo do programa é obrigatório.',
-            'curriculo_doc.mime' => 'O Arquivo deve ser em formato PDF',            
+            'curriculo_doc.mimes' => 'O Arquivo deve ser em formato PDF',            
             'curriculo_doc.max' => 'O Arquivo de ter no máximo 2MB',
             'curriculo_doc.required' => 'O Currículo é obrigatório.',
             
