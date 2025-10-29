@@ -1215,7 +1215,7 @@ Estou ciente de que essa autorização não se estende a divulgação pública e
 
                                 <div class="mb-3">
                                     <label for="formFile" class="form-label fw-bold text-center">Faça Upload do Currículo</label>
-                                    <input class="form-control form-control-sm" type="file" accept=".pdf"  id="formFile" name="curriculo_doc">
+                                    <input class="form-control form-control-sm" type="file" accept=".pdf"  id="formFile" name="curriculo_doc" required>
                                     @error('curriculo_doc') <div class="alert alert-danger">{{ $message }}</div> @enderror
                                     <span class="mensagem-arquivo text-center">O arquivo deve ser no formato PDF e ter o tamanho máximo de 2MB.</span>
                                  
