@@ -42,7 +42,7 @@ class JobService
     // Excluir email: marketing@asppe.org, clayton@email.com, flavio@marcasite.com.br
     public function getActiveRecruiters()
     {
-        $excludedUserEmails = ['marketing@asppe.org', 'clayton@email.com', 'flavio@marcasite.com.br'];
+        $excludedUserEmails = ['marketing@asppe.org', 'clayton@email.com', 'flavio@marcasite.com.br', 'leticia@movidaria.com.br'];
         return \App\Models\User::whereIn('role', ['admin', 'recruiter'])
             ->whereNotIn('email', $excludedUserEmails)
             ->where('status', true)

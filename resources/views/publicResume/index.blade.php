@@ -1206,21 +1206,30 @@ Estou ciente de que essa autorização não se estende a divulgação pública e
 
                                 <div id="bloco-submit-desktop" class="col-9 bloco-submit d-flex mt-3">
                                     <button type="submit" class="btn-padrao btn-cadastrar">Cadastrar</button>
-                                    <a href="{{ route('resumes.index')}}" class="btn-padrao btn-cancelar ms-3">Cancelar</a>
+                                    <a href="{{ route('resumes.index')}}" class="btn-padrao btn-cancelar ms-3">Cancelar</a>                                   
                                 </div>
 
                             </div>
                         
                             <div class="col-3 border-start py-0 ps-5 form-r">
+
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label fw-bold text-center">Faça Upload do Currículo</label>
+                                    <input class="form-control form-control-sm" type="file" accept=".pdf"  id="formFile" name="curriculo_doc" required>
+                                    @error('curriculo_doc') <div class="alert alert-danger">{{ $message }}</div> @enderror
+                                    <span class="mensagem-arquivo text-center">O arquivo deve ser no formato PDF e ter o tamanho máximo de 2MB.</span>
+                                 
+                                </div>
         
-                                <div class="mb-3 d-flex flex-column align-items-center">
+                                {{-- <div class="mb-3 d-flex flex-column align-items-center">
                                     <p class="fw-bold text-center">Faça Upload do Currículo</p>
-                                    
+                                     --}}
         
                                     {{-- Aceita apenas pdf --}}
-                                    <input type="file" id="file-upload" class="file-input"
-                                        accept=".pdf" name="curriculo_doc" required>
-        
+                                    {{-- <input type="file" id="" class=""
+                                        accept=".pdf" name="curriculo_doc" required> --}}
+                                        
+{{--         
                                     <div class="preview-container mb-3">
         
                                         <div id="preview-doc" class="preview-doc" style="display: none;">
@@ -1229,11 +1238,11 @@ Estou ciente de que essa autorização não se estende a divulgação pública e
                                         </div>
                                     </div>
         
-                                    <label for="file-upload" class="btn-select-file btn-padrao">Selecionar</label>                                    
+                                    <label for="file-upload" class="btn-select-file btn-padrao">Selecionar</label>                                     --}}
         
-                                    @error('curriculo_doc') <div class="alert alert-danger">{{ $message }}</div> @enderror
+                                    {{-- @error('curriculo_doc') <div class="alert alert-danger">{{ $message }}</div> @enderror
                                     <span class="mensagem-arquivo">O arquivo deve ser no formato PDF e ter o tamanho máximo de 2MB.</span>
-                                </div>                                
+                                </div>                                 --}}
                             </div>
 
                             <div id="bloco-submit-mobile" class="col-9 bloco-submit mt-3">
@@ -1278,65 +1287,65 @@ Estou ciente de que essa autorização não se estende a divulgação pública e
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    const fileUpload = document.getElementById('file-upload');
+    // const fileUpload = document.getElementById('file-upload');
     
-    // Evento change para quando um arquivo for selecionado
-    fileUpload.addEventListener('change', function (event) {
-        // Remover mensagem de erro se existir
-        removeErrorMessage();
+    // // Evento change para quando um arquivo for selecionado
+    // fileUpload.addEventListener('change', function (event) {
+    //     // Remover mensagem de erro se existir
+    //     removeErrorMessage();
         
-        if (event.target.files.length === 0) {
-            return; // Sai da função se nenhum arquivo for selecionado
-        }
+    //     if (event.target.files.length === 0) {
+    //         return; // Sai da função se nenhum arquivo for selecionado
+    //     }
         
-        const file = event.target.files[0]; // Obtém o arquivo selecionado
+    //     const file = event.target.files[0]; // Obtém o arquivo selecionado
         
-        // Verifica se o arquivo é um PDF
-        if (file.type !== "application/pdf") {
-            showErrorMessage("Por favor, selecione um arquivo PDF.");
-            event.target.value = ""; // Limpa o campo
-            return;
-        }
+    //     // Verifica se o arquivo é um PDF
+    //     if (file.type !== "application/pdf") {
+    //         showErrorMessage("Por favor, selecione um arquivo PDF.");
+    //         event.target.value = ""; // Limpa o campo
+    //         return;
+    //     }
         
-        // Atualiza a prévia do documento
-        document.getElementById("file-name").textContent = file.name;
-        document.getElementById("file-download").href = URL.createObjectURL(file);
-        document.getElementById("preview-doc").style.display = "block";
-    });
+    //     // Atualiza a prévia do documento
+    //     document.getElementById("file-name").textContent = file.name;
+    //     document.getElementById("file-download").href = URL.createObjectURL(file);
+    //     document.getElementById("preview-doc").style.display = "block";
+    // });
     
     // Validação no envio do formulário
-    const form = fileUpload.closest('form');
-    form.addEventListener('submit', function(event) {
-        if (!fileUpload.value) {
-            event.preventDefault(); // Impede o envio do formulário
-            showErrorMessage("O currículo é obrigatório. Por favor, selecione um arquivo PDF.");
-            // Fazer scroll para o campo de upload para chamar atenção do usuário
-            fileUpload.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    });
+    // const form = fileUpload.closest('form');
+    // form.addEventListener('submit', function(event) {
+    //     if (!fileUpload.value) {
+    //         event.preventDefault(); // Impede o envio do formulário
+    //         showErrorMessage("O currículo é obrigatório. Por favor, selecione um arquivo PDF.");
+    //         // Fazer scroll para o campo de upload para chamar atenção do usuário
+    //         fileUpload.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    //     }
+    // });
     
     // Função para mostrar mensagem de erro
-    function showErrorMessage(message) {
-        // Remover mensagem anterior se existir
-        removeErrorMessage();
+    // function showErrorMessage(message) {
+    //     // Remover mensagem anterior se existir
+    //     removeErrorMessage();
         
-        // Criar e inserir nova mensagem de erro após o botão de seleção
-        const errorDiv = document.createElement('div');
-        errorDiv.id = 'curriculo-error';
-        errorDiv.className = 'alert alert-danger mt-2';
-        errorDiv.textContent = message;
+    //     // Criar e inserir nova mensagem de erro após o botão de seleção
+    //     const errorDiv = document.createElement('div');
+    //     errorDiv.id = 'curriculo-error';
+    //     errorDiv.className = 'alert alert-danger mt-2';
+    //     errorDiv.textContent = message;
         
-        const labelElement = document.querySelector('label[for="file-upload"]');
-        labelElement.insertAdjacentElement('afterend', errorDiv);
-    }
+    //     const labelElement = document.querySelector('label[for="file-upload"]');
+    //     labelElement.insertAdjacentElement('afterend', errorDiv);
+    // }
     
     // Função para remover mensagem de erro
-    function removeErrorMessage() {
-        const errorElement = document.getElementById('curriculo-error');
-        if (errorElement) {
-            errorElement.remove();
-        }
-    }
+    // function removeErrorMessage() {
+    //     const errorElement = document.getElementById('curriculo-error');
+    //     if (errorElement) {
+    //         errorElement.remove();
+    //     }
+    // }
 
 
 
