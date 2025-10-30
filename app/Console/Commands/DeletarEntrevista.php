@@ -28,7 +28,7 @@ class DeleteResumesFromJson extends Command
      */
     public function handle()
     {
-        $jsonPath = storage_path('app/imports/entrevistas-excluir.json');
+        $jsonPath = storage_path('app/imports/deletar-resumes.json');
         
         if (!file_exists($jsonPath)) {
             $this->error("Arquivo não encontrado: {$jsonPath}");
