@@ -51,9 +51,9 @@ class ResumeController extends Controller
             ->whereDoesntHave('interview')
             ->whereHas('informacoesPessoais', function ($q) {
                 $q->whereNotNull('data_nascimento')
-                // ->whereRaw('TIMESTAMPDIFF(YEAR, data_nascimento, CURDATE()) < 23');
+                //->whereRaw('TIMESTAMPDIFF(YEAR, data_nascimento, CURDATE()) < 23');
                 ->where('data_nascimento', '>=', now()->subYears(23)->toDateString());
-            });
+            });            
 
 
         $form_busca = '';
