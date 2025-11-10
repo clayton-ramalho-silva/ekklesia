@@ -30,42 +30,21 @@ class InterviewController extends Controller
     }
 
     public function index(Request $request)
-    {
-
-        // Busca entrevistas filtrado por admin e recrutador
-
-        /*
-         $user = Auth::user();
- 
-         if ( $user->role === 'admin'){
-             $interviews = Interview::with(['resume.jobs'])->get();            
-         } else {
-             $interviews = Interview::with(['resume.jobs'])
-             ->whereHas('resume.jobs.recruiters', function($query) use ($user){
-                 $query->where('recruiter_id', $user->id);
-             })
-             ->get();            
-         }    
-          
-         */
-
-        // Busca todas as entrevistas
-        //$query = Resume::with(['informacoesPessoais', 'contato', 'interview', 'escolaridade']);
-        // $query = Resume::with(['informacoesPessoais', 'contato', 'escolaridade'])->whereHas('interview');
+    {       
 
         //Abaixo de 23 anos.
         $query = Resume::with(['informacoesPessoais', 'contato', 'escolaridade', 'interview'])
             ->whereHas('interview')
             ->whereHas('informacoesPessoais', function ($q) {
                 $q->whereNotNull('data_nascimento')
-                ->whereRaw('TIMESTAMPDIFF(YEAR, data_nascimento, CURDATE()) < 23');
-            });      
-
-
-
-        //$query = Resume::query();
-
-        
+                //->whereRaw('TIMESTAMPDIFF(YEAR, data_nascimento, CURDATE()) < 23');
+                ->where('data_nascimento', '>=', now()->subYears(23)->toDateString());
+           });   
+           
+       
+            
+ 
+   
 
 
         // Forumulario Busca - nome candidato
@@ -148,29 +127,8 @@ class InterviewController extends Controller
             if (!empty($statusSelecionados)) {
                 $query->whereIn('status', $statusSelecionados);
             }
-        }
-        
-        
-        // if($request->filled('status')){           
-        //    $query->where('status', $request->status);            
-        // }     
-      
-       
-         // Filtro Candidato entrevistado/nao entrevistado/ todos
-        //  if(request()->has('entrevistado')){
-        //     if (request()->entrevistado == '1'){
-        //         $query->whereHas('interview'); // Apenas candidatos que já foram entrevistados
-        //     } elseif (request()->entrevistado == '0'){
-        //         $query->whereDoesntHave('interview'); // Apenas candidatos que ainda não foram entrevistados
-        //     }
-        // }
-
-         // Filtro gênero
-        // if ($request->filled('sexo') && $request->sexo !== "Todos"){
-        //     $query->whereHas('informacoesPessoais', function($q) use ($request) {
-        //         $q->where('sexo', $request->sexo);
-        //     });
-        // }      
+        }    
+         
         
          // Filtro gênero- múltiplas seleções
         if ($request->filled('sexo') && is_array($request->sexo)) {
