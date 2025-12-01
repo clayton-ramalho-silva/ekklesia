@@ -69,7 +69,7 @@ unset($__errorArgs, $__bag); ?>
                     <div class="col-6">
                         <label for="vagas_interesse" class="form-label">Vagas de Interesse</label>
                         <select name="vagas_interesse[]" id="vagas_interesse" class="form-select" multiple>
-                            <?php $__currentLoopData = ['Copa & Cozinha', 'Camareiro(a) de Hotel', 
+                            <?php $__currentLoopData = ['Administrativo', 'Copa & Cozinha', 'Camareiro(a) de Hotel', 
                                         'Recepcionista', 'Atendente de Lojas e Mercados (Comércio & Varejo)',
                                         'Construção e Reparos', 'Conservação e Limpeza']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($option); ?>" <?php echo e(in_array($option, request('vagas_interesse', []))? 'selected' : ''); ?>>
@@ -82,7 +82,7 @@ unset($__errorArgs, $__bag); ?>
                     <div class="col-6">
                         <label for="experiencia_profissional" class="form-label">Experiência Profissional</label>
                         <select name="experiencia_profissional[]" id="experiencia_profissional" class="form-select" multiple>
-                            <?php $__currentLoopData = ['Nenhuma por enquanto', 'Copa & Cozinha', 'Camareiro(a) de Hotel', 
+                            <?php $__currentLoopData = ['Nenhuma por enquanto', 'Administrativo','Copa & Cozinha', 'Camareiro(a) de Hotel', 
                                         'Recepcionista', 'Atendente de Lojas e Mercados (Comércio & Varejo)', 'TI (Tecnologia da Informação',
                                         'Construção e Reparos', 'Conservação e Limpeza']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($option); ?>" <?php echo e(in_array($option, request('experiencia_profissional', []))? 'selected' : ''); ?>>
