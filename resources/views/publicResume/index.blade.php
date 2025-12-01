@@ -1639,7 +1639,114 @@ $(document).ready(function() {
     });
 });
 
+$(document).ready(function() {
+    // Mapear checkboxes com seus containers e campos obrigatórios
+    const escolaridadeConfig = {
+        'escolaridade5': { // Fundamental Cursando
+            container: '.check-fundamental-cursando',
+            campos: ['fundamental_periodo', 'fundamental_modalidade']
+        },
+        'escolaridade1': { // Médio Cursando
+            container: '.check-medio-cursando',
+            campos: ['medio_periodo', 'medio_modalidade']
+        },
+        'escolaridade6': { // Técnico Completo
+            container: '.check-tecnico-completo',
+            campos: ['tecnico_completo_curso', 'tecnico_completo_instituicao', 'tecnico_completo_data_conclusao']
+        },
+        'escolaridade7': { // Técnico Cursando
+            container: '.check-tecnico-cursando',
+            campos: ['tecnico_curso', 'tecnico_semestre', 'tecnico_instituicao', 'tecnico_periodo', 'tecnico_modalidade']
+        },
+        'escolaridade8': { // Superior Completo
+            container: '.check-superior-completo',
+            campos: ['superior_completo_curso', 'superior_completo_instituicao', 'superior_completo_data_conclusao']
+        },
+        'escolaridade9': { // Superior Cursando
+            container: '.check-superior-cursando',
+            campos: ['superior_curso', 'superior_termo', 'superior_instituicao', 'superior_periodo', 'superior_semestre']
+        },
+        'escolaridade3': { // Outro
+            container: '.check-escolaridade',
+            campos: ['escolaridade_outro', 'instituicao', 'outro_periodo', 'semestre']
+        }
+    };
 
+    // Função para tornar campos obrigatórios ou não
+    function toggleCamposObrigatorios(checkboxId, marcarObrigatorio) {
+        const config = escolaridadeConfig[checkboxId];
+        if (!config) return;
+
+        const container = $(config.container);
+        
+        if (marcarObrigatorio) {
+            container.show();
+            config.campos.forEach(campo => {
+                const elemento = $(`#${campo}, [name="${campo}"]`);
+                elemento.prop('required', true);
+                elemento.attr('required', 'required');
+            });
+        } else {
+            container.hide();
+            config.campos.forEach(campo => {
+                const elemento = $(`#${campo}, [name="${campo}"]`);
+                elemento.prop('required', false);
+                elemento.removeAttr('required');
+                elemento.val(''); // Limpa o valor ao desmarcar
+            });
+        }
+    }
+
+    // Inicializar estado dos campos ao carregar a página
+    Object.keys(escolaridadeConfig).forEach(checkboxId => {
+        const checkbox = $(`#${checkboxId}`);
+        if (checkbox.is(':checked')) {
+            toggleCamposObrigatorios(checkboxId, true);
+        }
+    });
+
+    // Adicionar evento de mudança para cada checkbox
+    Object.keys(escolaridadeConfig).forEach(checkboxId => {
+        $(`#${checkboxId}`).on('change', function() {
+            toggleCamposObrigatorios(checkboxId, $(this).is(':checked'));
+        });
+    });
+
+    // Validação customizada no submit do formulário
+    $('form').on('submit', function(e) {
+        let camposInvalidos = [];
+        
+        Object.keys(escolaridadeConfig).forEach(checkboxId => {
+            const checkbox = $(`#${checkboxId}`);
+            if (checkbox.is(':checked')) {
+                const config = escolaridadeConfig[checkboxId];
+                config.campos.forEach(campo => {
+                    const elemento = $(`#${campo}, [name="${campo}"]`);
+                    if (elemento.prop('required') && !elemento.val()) {
+                        camposInvalidos.push(elemento);
+                    }
+                });
+            }
+        });
+
+        if (camposInvalidos.length > 0) {
+            e.preventDefault();
+            // Focar no primeiro campo inválido
+            camposInvalidos[0].focus();
+            // Adicionar classe de erro visual
+            camposInvalidos.forEach(campo => {
+                campo.addClass('is-invalid');
+            });
+            alert('Por favor, preencha todos os campos obrigatórios da escolaridade selecionada.');
+            return false;
+        }
+    });
+
+    // Remover classe de erro ao preencher
+    $('input, select').on('change input', function() {
+        $(this).removeClass('is-invalid');
+    });
+});
 
 
 document.addEventListener('DOMContentLoaded', function() {
