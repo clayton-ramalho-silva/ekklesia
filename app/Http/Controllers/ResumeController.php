@@ -231,22 +231,46 @@ class ResumeController extends Controller
 
         
         // Filtro Formação/Escolaridade - múltiplas seleções
+        // if ($request->filled('escolaridade') && is_array($request->escolaridade)) {
+        //     $escolaridades = array_filter($request->escolaridade, function($item) {
+        //         return $item !== '' && $item !== 'Todos';
+        //     });
+            
+        //     if (!empty($escolaridades)) {
+        //         $query->whereHas('escolaridade', function($q) use ($escolaridades) {
+        //             $q->where(function($subQuery) use ($escolaridades) {
+        //                 foreach ($escolaridades as $escolaridade) {
+        //                     $subQuery->orWhereJsonContains('escolaridade', $escolaridade);
+        //                 }
+        //             });
+        //         });
+        //     }
+        // }
+
         if ($request->filled('escolaridade') && is_array($request->escolaridade)) {
-            $escolaridades = array_filter($request->escolaridade, function($item) {
-                return $item !== '' && $item !== 'Todos';
-            });
+            $escolaridades = array_filter($request->escolaridade, fn($item) => 
+                $item !== '' && $item !== 'Todos'
+            );
             
             if (!empty($escolaridades)) {
                 $query->whereHas('escolaridade', function($q) use ($escolaridades) {
+                    // Remove as validações daqui
                     $q->where(function($subQuery) use ($escolaridades) {
                         foreach ($escolaridades as $escolaridade) {
-                            $subQuery->orWhereJsonContains('escolaridade', $escolaridade);
+                            // Aplica as validações JUNTO com cada orWhere
+                            $subQuery->orWhere(function($innerQuery) use ($escolaridade) {
+                                $innerQuery->whereNotNull('escolaridade')
+                                        ->where('escolaridade', '!=', '')
+                                        ->where('escolaridade', '!=', '[]') // Array vazio
+                                        ->whereJsonContains('escolaridade', $escolaridade);
+                            });
                         }
                     });
                 });
             }
         }
 
+        
         // Filtro Vagas Interesse
         if ($request->filled('vagas_interesse')) {
             foreach ($request->vagas_interesse as $vaga) {
