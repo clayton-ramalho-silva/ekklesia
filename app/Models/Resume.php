@@ -24,7 +24,7 @@ class Resume extends Model
     //     'experiencia_profissional','experiencia_profissional_outro', 
     //     'participou_selecao', 'participou_selecao_outro', 'foi_jovem_aprendiz', 
     //     'curriculo_doc', 'status','created_at', 'codigo_unico', 'curriculo_externo',
-    //     'cras', 'fonte', 'autorizacao_uso_dados', 'autorizacao_responsavel_menor'
+    //     'cras', 'fonte', 'autorizacao_uso_dados', 'autorizacao_responsavel_menor' 
     // ];
 
     protected $guarded = [];
@@ -43,7 +43,7 @@ class Resume extends Model
 
     public function escolaridade()
     {
-        return $this->hasOne(AcademicInfoResume::class);
+        return $this->hasOne(AcademicInfoResume::class, 'resume_id');
     }
 
     public function contato()
