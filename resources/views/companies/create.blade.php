@@ -194,7 +194,8 @@ spOptions = {
     }
 };
 $('#telefone').mask(SPMaskBehavior, spOptions);
-$('#whatsapp').mask('(00) 00000-0000', {clearIfNotMatch: true});
+$('#whatsapp').mask(SPMaskBehavior, spOptions);
+//$('#whatsapp').mask('(00) 00000-0000', {clearIfNotMatch: true});
 $('#cnpj').mask('00.000.000/0000-00', {clearIfNotMatch: true});
 $('#cep').mask('00000-000', {clearIfNotMatch: true});
 $('#numero').mask('0000000000');
