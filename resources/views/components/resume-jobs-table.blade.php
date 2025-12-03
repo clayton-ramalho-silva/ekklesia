@@ -7,12 +7,13 @@
         <div class="table-container lista-processos-seletivos">
 
             <ul class="tit-lista">
-                <li class="col1">Empresa</li>
-                <li class="col2">Título</li>
-                <li class="col3">Vagas</li>                
-                <li class="col5">Recrutador</li>
-                <li class="col6">Status</li>
-                <li class="col6">Ações</li>
+                <li class="w-30">Empresa</li>
+                <li class="w-15">Título</li>
+                <li class="w-10">Dt. Associação</li>
+                <li class="w-15">Vagas</li>                
+                <li class="w-10">Recrutador</li>
+                <li class="w-10">Status</li>
+                <li class="w-10">Ações</li>
             </ul>
             
             {{-- {{ dd($vagasAssociadas)}} --}}
@@ -20,7 +21,7 @@
                 @foreach ($vagasAssociadas as $job)                  
 
                     <ul data-bs-toggle="modal" data-bs-target="#modal-selection-{{$job->id}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Processo Seletivo desta vaga">
-                        <li class="col1">
+                        <li class="w-30">
                             @if ($job->company->logotipo)
                                 <b>Empresa</b>
                                 @if (file_exists(public_path('documents/companies/images/'.$job->company->logotipo)))
@@ -35,15 +36,23 @@
                                 <strong>{{ $job->company->nome_fantasia }}</strong>
                             </span>
                         </li>
-                        <li class="col2">
+                        <li class="w-15">
                             <b>Título</b>
                             {{ $job->setor }}
                         </li>
-                        <li class="col3" data-bs-toggle="tooltip" data-bs-placement="top" title="Preenchidas/Disponíveis">
+                        <li class="w-10">
+                            <b>Data Associação</b>
+                            @if($job->pivot->created_at)
+                                {{ $job->pivot->created_at->format('d/m/Y') }}
+                            @else
+                                <span class="text-muted">Não disponível</span>
+                            @endif
+                        </li>
+                        <li class="w-15" data-bs-toggle="tooltip" data-bs-placement="top" title="Preenchidas/Disponíveis">
                             <b>Vagas</b>
                             {{$job->filled_positions}} / {{ $job->qtd_vagas }}
                         </li>                        
-                        <li class="col5">
+                        <li class="w-10">
                             <b>Recrutador</b>
                             @if (count($job->recruiters) <= 0)
                             Nenhum recrutador associado
@@ -53,7 +62,7 @@
                             @endforeach
                             @endif
                         </li>
-                        <li class="col6">
+                        <li class="w-10">
                            @switch($job->status)
                                 @case('aberta')
                                     <i title="Aberta" class="status-aberta"></i>        
@@ -72,7 +81,7 @@
                                     
                             @endswitch                              
                         </li>
-                        <li class="col7 col7-admin {{-- $isAdmin ? 'col5-admin' : ''--}}">
+                        <li class="w-10">
                             
                             {{-- Componente Botão Desassociar Vaga --}}
                            <x-button-desassociar-vaga :resume="$resume" />                            
@@ -228,3 +237,21 @@
 
     </article>
     <!-- Fim Vagas Associadas do candidato -->
+
+
+@push('css-custom')
+    <style>
+        .w-30{
+            width: 30% !important;
+        }
+        .w-10{
+            width: 10% !important;
+        }
+        .w-15{
+            width: 15% !important;
+        }
+        .w-5{
+            width: 5% !important;
+        }
+    </style>
+@endpush

@@ -518,9 +518,9 @@
                         $idadeDiff = $dataNascimento ? \Carbon\Carbon::parse($dataNascimento)->diff(\Carbon\Carbon::now()) : null;
                         $idadeFormatada = $idadeDiff ? $idadeDiff->format('%y anos e %m meses') : 'N/A';
 
-                        //Verifica se a idade é maior que 22 anos e 8 meses
+                        //Verifica se a idade é maior que 22 anos e 7 meses
                         $idadeEmMeses = $idadeDiff ? ($idadeDiff->y * 12 + $idadeDiff->m) : 0;
-                        $limiteEmMeses = (22 * 12) + 8;
+                        $limiteEmMeses = (22 * 12) + 7;
 
                         // dd($resume->created_at->format('d/m/Y'));
                     @endphp

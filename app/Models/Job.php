@@ -51,7 +51,8 @@ class Job extends Model
     // Relacionamento muitos para muitos com Resume
     public function resumes()
     {
-        return $this->belongsToMany(Resume::class, 'job_resume', 'job_id', 'resume_id');
+        return $this->belongsToMany(Resume::class, 'job_resume', 'job_id', 'resume_id')
+            ->withTimestamps();
 
     }
 
