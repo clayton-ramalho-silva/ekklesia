@@ -7,12 +7,13 @@
         <div class="table-container lista-processos-seletivos">
 
             <ul class="tit-lista">
-                <li class="col1">Empresa</li>
-                <li class="col2">Título</li>
-                <li class="col3">Vagas</li>                
-                <li class="col5">Recrutador</li>
-                <li class="col6">Status</li>
-                <li class="col6">Ações</li>
+                <li class="w-30">Empresa</li>
+                <li class="w-15">Título</li>
+                <li class="w-10">Dt. Associação</li>
+                <li class="w-15">Vagas</li>                
+                <li class="w-10">Recrutador</li>
+                <li class="w-10">Status</li>
+                <li class="w-10">Ações</li>
             </ul>
             
             
@@ -20,7 +21,7 @@
                 <?php $__currentLoopData = $vagasAssociadas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $job): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>                  
 
                     <ul data-bs-toggle="modal" data-bs-target="#modal-selection-<?php echo e($job->id); ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Processo Seletivo desta vaga">
-                        <li class="col1">
+                        <li class="w-30">
                             <?php if($job->company->logotipo): ?>
                                 <b>Empresa</b>
                                 <?php if(file_exists(public_path('documents/companies/images/'.$job->company->logotipo))): ?>
@@ -35,17 +36,26 @@
                                 <strong><?php echo e($job->company->nome_fantasia); ?></strong>
                             </span>
                         </li>
-                        <li class="col2">
+                        <li class="w-15">
                             <b>Título</b>
                             <?php echo e($job->setor); ?>
 
                         </li>
-                        <li class="col3" data-bs-toggle="tooltip" data-bs-placement="top" title="Preenchidas/Disponíveis">
+                        <li class="w-10">
+                            <b>Data Associação</b>
+                            <?php if($job->pivot->created_at): ?>
+                                <?php echo e($job->pivot->created_at->format('d/m/Y')); ?>
+
+                            <?php else: ?>
+                                <span class="text-muted">Não disponível</span>
+                            <?php endif; ?>
+                        </li>
+                        <li class="w-15" data-bs-toggle="tooltip" data-bs-placement="top" title="Preenchidas/Disponíveis">
                             <b>Vagas</b>
                             <?php echo e($job->filled_positions); ?> / <?php echo e($job->qtd_vagas); ?>
 
                         </li>                        
-                        <li class="col5">
+                        <li class="w-10">
                             <b>Recrutador</b>
                             <?php if(count($job->recruiters) <= 0): ?>
                             Nenhum recrutador associado
@@ -56,7 +66,7 @@
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             <?php endif; ?>
                         </li>
-                        <li class="col6">
+                        <li class="w-10">
                            <?php switch($job->status):
                                 case ('aberta'): ?>
                                     <i title="Aberta" class="status-aberta"></i>        
@@ -75,7 +85,7 @@
                                     
                             <?php endswitch; ?>                              
                         </li>
-                        <li class="col7 col7-admin ">
+                        <li class="w-10">
                             
                             
                            <?php if (isset($component)) { $__componentOriginalbbd144822bdd23d6312c1c263e9182cd = $component; } ?>
@@ -274,4 +284,21 @@ unset($__errorArgs, $__bag); ?>
 
     </article>
     <!-- Fim Vagas Associadas do candidato -->
-<?php /**PATH /home/case/Área de trabalho/2025/ldweb/Projeto asppe/painelasppe/resources/views/components/resume-jobs-table.blade.php ENDPATH**/ ?>
+
+
+<?php $__env->startPush('css-custom'); ?>
+    <style>
+        .w-30{
+            width: 30% !important;
+        }
+        .w-10{
+            width: 10% !important;
+        }
+        .w-15{
+            width: 15% !important;
+        }
+        .w-5{
+            width: 5% !important;
+        }
+    </style>
+<?php $__env->stopPush(); ?><?php /**PATH /home/case/Área de trabalho/2025/ldweb/Projeto asppe/painelasppe/resources/views/components/resume-jobs-table.blade.php ENDPATH**/ ?>
