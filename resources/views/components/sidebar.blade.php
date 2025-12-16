@@ -35,6 +35,15 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="{{ route('admin.igreja.index') }}"
+                    class="nav-link {{ Route::is('admin.igreja.index') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-church"></i>
+                    <p>Igrejas
+                        <span class="badge badge-warning right">{{ $IgrejaCount }}</span>
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="{{ route('admin.category.index') }}"
                     class="nav-link {{ Route::is('admin.category.index') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-list-alt"></i>

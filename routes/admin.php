@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\IgrejaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -23,7 +24,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
         Route::resource('subcategory',SubCateoryController::class);
         Route::resource('collection',CollectionController::class);
         Route::resource('product',ProductController::class);
+        Route::resource('igreja', IgrejaController::class);
+        
         Route::get('/get/subcategory',[ProductController::class,'getsubcategory'])->name('getsubcategory');
         Route::get('/remove-external-img/{id}',[ProductController::class,'removeImage'])->name('remove.image');
+        
     });
 });
