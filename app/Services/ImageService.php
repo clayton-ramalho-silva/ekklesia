@@ -13,18 +13,28 @@ class ImageService
         // Determine save path based on the type
         switch ($type) {
             case 'product':
-                $savePath = public_path('product-image/' . $filename);
+                $directory = public_path('product-image');
                 break;
             case 'collection':
-                $savePath = public_path('collection-image/' . $filename);
+                $directory = public_path('collection-image');
                 break;
             case 'slider':
-                $savePath = public_path('product-slider-images/' . $filename);
+                $directory = public_path('product-slider-images');
+                break;
+            case 'igreja':
+                $directory = public_path('images/igreja');
                 break;
             default:
-                $savePath = public_path('upload-image/' . $filename);
+                $directory = public_path('upload-image');
                 break;
         }
+
+        // Cria o diretório se não existir
+        if (!file_exists($directory)) {
+            mkdir($directory, 0755, true);
+        }
+
+        $savePath = $directory . '/' . $filename;
 
         imagewebp($compressedImage, $savePath, 45); // Adjust quality as needed
         imagedestroy($compressedImage);
