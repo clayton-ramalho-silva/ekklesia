@@ -24,6 +24,9 @@ class ImageService
             case 'igreja':
                 $directory = public_path('images/igreja');
                 break;
+            case 'membro':
+                $directory = public_path('images/membro');
+                break;
             default:
                 $directory = public_path('upload-image');
                 break;

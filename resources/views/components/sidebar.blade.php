@@ -44,6 +44,15 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="{{ route('admin.membro.index') }}"
+                    class="nav-link {{ Route::is('admin.membro.index') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>Membros
+                        <span class="badge badge-info right">{{ $MembroCount }}</span>
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="{{ route('admin.category.index') }}"
                     class="nav-link {{ Route::is('admin.category.index') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-list-alt"></i>

@@ -5,6 +5,7 @@ namespace App\View\Components;
 use App\Models\Category;
 use App\Models\Collection;
 use App\Models\Igreja;
+use App\Models\Membro;
 use App\Models\Product;
 use App\Models\SubCategory;
 use App\Models\User;
@@ -44,6 +45,9 @@ class Sidebar extends Component
 
         $IgrejaCount = Igreja::count(); 
         view()->share('IgrejaCount',$IgrejaCount);
+
+        $MembroCount = Membro::count(); 
+        view()->share('MembroCount',$MembroCount);        
     }
 
     /**
