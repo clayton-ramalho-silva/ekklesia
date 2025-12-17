@@ -39,8 +39,8 @@ class IgrejaController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {        
-        //dd('here');
+    {       
+        
         $request->validate([
             'nome' => 'required|string|max:255',
             'denominacao' => 'required|string|max:255',
