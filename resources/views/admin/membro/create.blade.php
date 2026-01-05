@@ -14,7 +14,10 @@
                             <label for="nome" class="form-label">Nome:*</label>
                             <input type="text" class="form-control" name="nome" required
                                 value="{{ old('nome') }}">
-                            <x-error>nome</x-error>
+                            @error('nome')
+                                <span class="text-danger">{{ $message }}</span>                                
+                            @enderror
+                            {{-- <x-error>nome</x-error> --}}
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -22,7 +25,10 @@
                             <label for="apelido" class="form-label">Apelido:</label>
                             <input type="text" class="form-control" name="apelido" 
                                 value="{{ old('apelido') }}">
-                            <x-error>apelido</x-error>
+                                @error('apelido')
+                                    
+                                @enderror
+                            {{-- <x-error>apelido</x-error> --}}
                         </div>
                     </div>
                     
@@ -37,7 +43,10 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <x-error>igreja_id</x-error>
+                            @error('igreja_id')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                            {{-- <x-error>igreja_id</x-error> --}}
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -50,7 +59,10 @@
                                 <option value="transferido" {{ old('status') == 'transferido' ? 'selected' : '' }}>Transferido</option>
                                 <option value="falecido" {{ old('status') == 'falecido' ? 'selected' : '' }}>Falecido</option>
                             </select>
-                            <x-error>status</x-error>
+                            @error('status')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                            {{-- <x-error>status</x-error> --}}
                         </div>
                     </div>
                     
@@ -59,7 +71,10 @@
                             <label for="data_nascimento" class="form-label">Data de Nascimento:</label>
                             <input type="date" class="form-control" name="data_nascimento" 
                                 value="{{ old('data_nascimento') }}">
-                            <x-error>data_nascimento</x-error>
+                            @error('data_nascimento')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                            {{-- <x-error>data_nascimento</x-error> --}}
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -71,7 +86,10 @@
                                 <option value="F" {{ old('sexo') == 'F' ? 'selected' : '' }}>Feminino</option>
                                 <option value="O" {{ old('sexo') == 'O' ? 'selected' : '' }}>Outro</option>
                             </select>
-                            <x-error>sexo</x-error>
+                             @error('sexo')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                            {{-- <x-error>sexo</x-error> --}}
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -84,7 +102,10 @@
                                 <option value="viúvo" {{ old('estado_civil') == 'viúvo' ? 'selected' : '' }}>Viúvo</option>
                                 <option value="divorciado" {{ old('estado_civil') == 'divorciado' ? 'selected' : '' }}>Divorciado</option>
                             </select>
-                            <x-error>estado_civil</x-error>
+                             @error('estado_civil')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                            {{-- <x-error>estado_civil</x-error> --}}
                         </div>
                     </div>
                     
@@ -93,7 +114,10 @@
                             <label for="cpf" class="form-label">CPF:</label>
                             <input type="text" class="form-control cpf-mask" name="cpf" 
                                 value="{{ old('cpf') }}" placeholder="000.000.000-00">
-                            <x-error>cpf</x-error>
+                             @error('cpf')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                                {{-- <x-error>cpf</x-error> --}}
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -101,7 +125,9 @@
                             <label for="rg" class="form-label">RG:</label>
                             <input type="text" class="form-control" name="rg" 
                                 value="{{ old('rg') }}">
-                            <x-error>rg</x-error>
+                            @error('rg')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -109,7 +135,9 @@
                             <label for="titulo_eleitor" class="form-label">Título de Eleitor:</label>
                             <input type="text" class="form-control" name="titulo_eleitor" 
                                 value="{{ old('titulo_eleitor') }}">
-                            <x-error>titulo_eleitor</x-error>
+                            @error('titulo_eleitor')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     
@@ -118,7 +146,9 @@
                             <label for="telefone" class="form-label">Telefone:</label>
                             <input type="text" class="form-control phone-mask" name="telefone" 
                                 value="{{ old('telefone') }}">
-                            <x-error>telefone</x-error>
+                             @error('telefone')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -126,7 +156,9 @@
                             <label for="email" class="form-label">E-mail:</label>
                             <input type="email" class="form-control" name="email" 
                                 value="{{ old('email') }}">
-                            <x-error>email</x-error>
+                             @error('email')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     
@@ -137,7 +169,9 @@
                                     {{ old('whatsapp_ativo') ? 'checked' : '' }}>
                                 <label class="form-check-label" for="whatsapp_ativo">WhatsApp Ativo</label>
                             </div>
-                            <x-error>whatsapp_ativo</x-error>
+                             @error('whatsapp_ativo')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -145,7 +179,9 @@
                             <label for="cep" class="form-label">CEP:</label>
                             <input type="text" class="form-control cep-mask" name="cep" 
                                 value="{{ old('cep') }}" placeholder="00000-000">
-                            <x-error>cep</x-error>
+                             @error('cep')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     
@@ -154,7 +190,9 @@
                             <label for="endereco" class="form-label">Endereço:</label>
                             <input type="text" class="form-control" name="endereco" 
                                 value="{{ old('endereco') }}">
-                            <x-error>endereco</x-error>
+                             @error('endereco')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -162,7 +200,9 @@
                             <label for="bairro" class="form-label">Bairro:</label>
                             <input type="text" class="form-control" name="bairro" 
                                 value="{{ old('bairro') }}">
-                            <x-error>bairro</x-error>
+                             @error('bairro')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     
@@ -171,7 +211,9 @@
                             <label for="cidade" class="form-label">Cidade:</label>
                             <input type="text" class="form-control" name="cidade" 
                                 value="{{ old('cidade') }}">
-                            <x-error>cidade</x-error>
+                            @error('cidade')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -188,7 +230,9 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <x-error>uf</x-error>
+                            @error('uf')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     
@@ -197,7 +241,9 @@
                             <label for="data_conversao" class="form-label">Data de Conversão:</label>
                             <input type="date" class="form-control" name="data_conversao" 
                                 value="{{ old('data_conversao') }}">
-                            <x-error>data_conversao</x-error>
+                            @error('data_conversao')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -205,7 +251,9 @@
                             <label for="data_batismo" class="form-label">Data de Batismo:</label>
                             <input type="date" class="form-control" name="data_batismo" 
                                 value="{{ old('data_batismo') }}">
-                            <x-error>data_batismo</x-error>
+                            @error('data_batismo')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -213,7 +261,9 @@
                             <label for="data_entrada_igreja" class="form-label">Data de Entrada na Igreja:</label>
                             <input type="date" class="form-control" name="data_entrada_igreja" 
                                 value="{{ old('data_entrada_igreja') }}">
-                            <x-error>data_entrada_igreja</x-error>
+                            @error('data_entrada_igreja')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     
@@ -221,7 +271,9 @@
                         <div class="form-group">
                             <label for="observacoes" class="form-label">Observações:</label>
                             <textarea class="form-control" name="observacoes" rows="3">{{ old('observacoes') }}</textarea>
-                            <x-error>observacoes</x-error>
+                            @error('observacoes')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     
@@ -231,7 +283,9 @@
                             <input type="file" class="form-control" name="foto_url" 
                                 accept="image/*">
                             <small class="form-text text-muted">Aceita imagens (JPG, PNG, etc.)</small>
-                            <x-error>foto_url</x-error>
+                            @error('foto_url')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     

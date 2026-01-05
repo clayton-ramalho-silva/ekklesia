@@ -7,6 +7,7 @@ use App\Models\Igreja;
 use Illuminate\Http\Request;
 use App\Services\ImageService;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class MembroController extends Controller
 {
@@ -40,9 +41,7 @@ class MembroController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        
-        //
+    {       // dd($request->all());
         $request->validate([
             'igreja_id' => 'required|exists:igrejas,id',
             'nome' => 'required|string|max:255',
@@ -50,11 +49,26 @@ class MembroController extends Controller
             'data_nascimento' => 'nullable|date',
             'sexo' => 'nullable|in:M,F,O',
             'estado_civil' => 'nullable|string|max:50',
-            'cpf' => 'nullable|string|max:14|unique:membros,cpf',
+            'cpf' => [
+                'nullable',
+                'string',
+                'max:14',
+                Rule::unique('membros')->where(function ($query) {
+                    return $query->whereNull('deleted_at');
+                }),
+            ],
             'rg' => 'nullable|string|max:20',
             'titulo_eleitor' => 'nullable|string|max:20',
             'telefone' => 'nullable|string|max:20',
-            'email' => 'nullable|string|email|max:255|unique:membros,email',
+            'email' => [
+                'nullable',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('membros')->where(function ($query) {
+                    return $query->whereNull('deleted_at');
+                }),
+            ],
             'whatsapp_ativo' => 'nullable|boolean',
             'endereco' => 'nullable|string',
             'bairro' => 'nullable|string|max:255',
@@ -67,12 +81,14 @@ class MembroController extends Controller
             'status' => 'required|in:ativo,inativo,visitante,transferido,falecido',
             'observacoes' => 'nullable|string',
             'foto_url' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        ]);        
 
         $baseSlug = Str::slug($request->nome);
         $uniqueSlug = $baseSlug;
         $counter = 1;
-        while (Membro::where('slug', $uniqueSlug)->exists()) {
+
+        // Verifica apenas registros não deletados
+        while (Membro::where('slug', $uniqueSlug)->whereNull('deleted_at')->exists()) {
             $uniqueSlug = $baseSlug . '-' . $counter;
             $counter++;
         }
