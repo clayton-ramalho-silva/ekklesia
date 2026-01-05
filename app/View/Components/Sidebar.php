@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Collection;
 use App\Models\Igreja;
 use App\Models\Membro;
+use App\Models\Ministerio;
 use App\Models\Product;
 use App\Models\SubCategory;
 use App\Models\User;
@@ -47,7 +48,10 @@ class Sidebar extends Component
         view()->share('IgrejaCount',$IgrejaCount);
 
         $MembroCount = Membro::count(); 
-        view()->share('MembroCount',$MembroCount);        
+        view()->share('MembroCount',$MembroCount);  
+
+        $MinisterioCount = Ministerio::count(); 
+        view()->share('MinisterioCount',$MinisterioCount);
     }
 
     /**

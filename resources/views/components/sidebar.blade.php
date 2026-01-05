@@ -8,6 +8,33 @@
         </li>
         @role('admin')
             <li class="nav-item">
+                <a href="{{ route('admin.igreja.index') }}"
+                    class="nav-link {{ Route::is('admin.igreja.index') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-church"></i>
+                    <p>Igrejas
+                        <span class="badge badge-warning right">{{ $IgrejaCount }}</span>
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.membro.index') }}"
+                    class="nav-link {{ Route::is('admin.membro.index') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>Membros
+                        <span class="badge badge-info right">{{ $MembroCount }}</span>
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.ministerio.index') }}"
+                    class="nav-link {{ Route::is('admin.ministerio.index') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-server"></i>
+                    <p>Ministérios
+                        <span class="badge badge-info right">{{ $MinisterioCount }}</span>
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="{{ route('admin.user.index') }}"
                     class="nav-link {{ Route::is('admin.user.index') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-user"></i>
@@ -33,26 +60,8 @@
                         <span class="badge badge-danger right">{{ $PermissionCount }}</span>
                     </p>
                 </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('admin.igreja.index') }}"
-                    class="nav-link {{ Route::is('admin.igreja.index') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-church"></i>
-                    <p>Igrejas
-                        <span class="badge badge-warning right">{{ $IgrejaCount }}</span>
-                    </p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('admin.membro.index') }}"
-                    class="nav-link {{ Route::is('admin.membro.index') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-users"></i>
-                    <p>Membros
-                        <span class="badge badge-info right">{{ $MembroCount }}</span>
-                    </p>
-                </a>
-            </li>
-            <li class="nav-item">
+            </li>            
+            {{-- <li class="nav-item">
                 <a href="{{ route('admin.category.index') }}"
                     class="nav-link {{ Route::is('admin.category.index') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-list-alt"></i>
@@ -87,7 +96,7 @@
                         <span class="badge badge-warning right">{{ $ProductCount }}</span>
                     </p>
                 </a>
-            </li>
+            </li> --}}
         @endrole
         <li class="nav-item">
             <a href="{{ route('admin.profile.edit') }}"
