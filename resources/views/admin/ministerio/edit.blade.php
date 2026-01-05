@@ -90,30 +90,36 @@
             </form>
         </div>
     </div>
+
+    
+    @section('js')
+        <script>
+            $(document).ready(function() {
+                $('.select2-membros').select2({
+                    placeholder: "Selecione os membros...",
+                    allowClear: true,
+                    width: '100%',
+                    // Opcional: ícone de usuário
+                    templateResult: formatMembro,
+                    templateSelection: formatMembro
+                });
+                
+                function formatMembro(membro) {
+                    if (!membro.id) return membro.text;
+                    let text = membro.text;
+                    if (text.includes('(Líder)')) {
+                        return $('<span><i class="fas fa-user-tie text-primary"></i> ' + text + '</span>');
+                    }
+                    return $('<span><i class="fas fa-user"></i> ' + text + '</span>');
+                }
+
+                console.log('Select2 initialized for membros select box.');
+            });
+            
+        </script>
+        
+    @endsection
 </x-admin>
 
-@push('js')
-<script>
-    $(document).ready(function() {
-        $('.select2-membros').select2({
-            placeholder: "Selecione os membros...",
-            allowClear: true,
-            width: '100%',
-            // Opcional: ícone de usuário
-            templateResult: formatMembro,
-            templateSelection: formatMembro
-        });
-        
-        function formatMembro(membro) {
-            if (!membro.id) return membro.text;
-            let text = membro.text;
-            if (text.includes('(Líder)')) {
-                return $('<span><i class="fas fa-user-tie text-primary"></i> ' + text + '</span>');
-            }
-            return $('<span><i class="fas fa-user"></i> ' + text + '</span>');
-        }
 
-        console.log('Select2 initialized for membros select box.');
-    });
-</script>
-@endpush
+

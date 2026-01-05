@@ -127,9 +127,12 @@ class MinisterioController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Desassociar membros antes de deletar o ministério
+               
         $ministerio = Ministerio::where('id', decrypt($id))->first();
+        $ministerio->membros()->detach();
         $ministerio->delete();
+        
         return redirect()->route('admin.ministerio.index')->with('success', 'Ministério deletado com sucesso.');
     }
 }

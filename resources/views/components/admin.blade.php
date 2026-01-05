@@ -180,6 +180,8 @@
     </script>
     <x-alert />
     @yield('js')
+    
+    
 </body>
 
 </html>
