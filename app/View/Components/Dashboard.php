@@ -4,6 +4,9 @@ namespace App\View\Components;
 
 use App\Models\Category;
 use App\Models\Collection;
+use App\Models\Igreja;
+use App\Models\Membro;
+use App\Models\Ministerio;
 use App\Models\Product;
 use App\Models\User;
 use Closure;
@@ -28,6 +31,15 @@ class Dashboard extends Component
         
         $collection = Collection::count();
         view()->share('collection',$collection);
+
+        $igrejas = Igreja::count();
+        view()->share('igrejas',$igrejas);
+
+        $membros = Membro::count();
+        view()->share('membros',$membros);
+
+        $ministerios = Ministerio::count();
+        view()->share('ministerios',$ministerios);
     }
 
     /**

@@ -4,51 +4,51 @@
             <div class="small-box bg-info">
                 <div class="inner">
                     <h3>{{ $user }}</h3>
-                    <p>Total Users</p>
+                    <p>Total Usuários</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-users"></i>
                 </div>
-                <a href="{{ route('admin.user.index') }}" class="small-box-footer">View <i
+                <a href="{{ route('admin.user.index') }}" class="small-box-footer">Ver todos <i
                         class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <div class="col-lg-3 col-6">
             <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>{{ $category }}</h3>
-                    <p>Total Categories</p>
+                    <h3>{{ $igrejas }}</h3>
+                    <p>Total Igrejas</p>
                 </div>
                 <div class="icon">
-                    <i class="fas fa-list-alt"></i>
+                    <i class="nav-icon fas fa-church"></i>
                 </div>
-                <a href="{{ route('admin.category.index') }}" class="small-box-footer">View <i
+                <a href="{{ route('admin.igreja.index') }}" class="small-box-footer">Ver todos <i
                         class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <div class="col-lg-3 col-6">
             <div class="small-box bg-primary">
                 <div class="inner">
-                    <h3>{{ $product }}</h3>
-                    <p>Total Products</p>
+                    <h3>{{ $membros }}</h3>
+                    <p>Total Membros</p>
                 </div>
                 <div class="icon">
-                    <i class="fas fas fa-th"></i>
+                    <i class="nav-icon fas fa-users"></i>
                 </div>
-                <a href="{{ route('admin.product.index') }}" class="small-box-footer">View <i
+                <a href="{{ route('admin.membro.index') }}" class="small-box-footer">Ver todos <i
                         class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <div class="col-lg-3 col-6">
             <div class="small-box bg-secondary">
                 <div class="inner">
-                    <h3>{{ $collection }}</h3>
-                    <p>Total Collections</p>
+                    <h3>{{ $ministerios }}</h3>
+                    <p>Total Ministerios</p>
                 </div>
                 <div class="icon">
-                    <i class="fas fas fa-file-pdf"></i>
+                    <i class="nav-icon fas fa-server"></i>
                 </div>
-                <a href="{{ route('admin.collection.index') }}" class="small-box-footer">View <i
+                <a href="{{ route('admin.ministerio.index') }}" class="small-box-footer">Ver todos <i
                         class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
