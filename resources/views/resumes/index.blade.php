@@ -1814,7 +1814,9 @@ p.badge{
     overflow-y: auto
 }
 
-
+.topo-main .buscar{
+    width: 35%
+}
 
 </style>
 @endpush

@@ -32,16 +32,36 @@ class ResumeController extends Controller
     public function index(Request $request)
     {
 
-        
+        // Busca rápida por nome - sem filtros e sem restrição de idade
+        if ($request->filled('form_busca')) {
+            $query = Resume::with([
+                    'informacoesPessoais:resume_id,data_nascimento,nome,cpf,cnh,tipo_cnh,nacionalidade,estado_civil,possui_filhos,filhos_sim,sexo,sexo_outro,pcd,pcd_sim,reservista,instagram,linkedin', 
+                    'contato:resume_id,logradouro,cidade,uf,email,telefone_celular,telefone_residencial,nome_contato', 
+                    'escolaridade:resume_id,escolaridade,escolaridade_outro,semestre,instituicao,superior_periodo,informatica,ingles'
+                ])
+                ->select('id','created_at','status','vagas_interesse','experiencia_profissional','foi_jovem_aprendiz','cras','fonte')
+                ->whereDoesntHave('interview')
+                ->whereHas('informacoesPessoais', function ($q) use ($request) {
+                    $q->where('nome', 'like', '%' . $request->form_busca . '%');
+                });
 
-        /**
-         * Filtros: gênero, cnh, cidade, idade, entrevistado
-         */
+            $form_busca = $request->form_busca;
+            $ordem = $request->get('ordem', 'desc');
+            
+            if (!in_array($ordem, ['asc', 'desc'])) {
+                $ordem = 'desc';
+            }
 
-        /** Todas as idades */
-        // $query = Resume::with(['informacoesPessoais', 'contato', 'escolaridade'])->whereDoesntHave('interview');
-        
-        //Abaixo de 23 anos.
+            $query->orderBy('created_at', $ordem);
+            $resumes = $query->paginate(50)->appends($request->all());
+            $cidades = $this->cidadeService->getCidades();
+            
+            return view('resumes.index', compact('resumes', 'form_busca', 'ordem', 'cidades'));
+        }
+      
+
+                
+        // Busca com filtros - mantém restrição de idade de 24 anos
         $query = Resume::with([
                 'informacoesPessoais:resume_id,data_nascimento,nome,cpf,cnh,tipo_cnh,nacionalidade,estado_civil,possui_filhos,filhos_sim,sexo,sexo_outro,pcd,pcd_sim,reservista,instagram,linkedin', 
                 'contato:resume_id,logradouro,cidade,uf,email,telefone_celular,telefone_residencial,nome_contato', 
@@ -52,23 +72,16 @@ class ResumeController extends Controller
             ->whereHas('informacoesPessoais', function ($q) {
                 $q->whereNotNull('data_nascimento')
                 //->whereRaw('TIMESTAMPDIFF(YEAR, data_nascimento, CURDATE()) < 23');
-                ->where('data_nascimento', '>=', now()->subYears(23)->toDateString());
+                ->where('data_nascimento', '>=', now()->subYears(24)->toDateString());
             });            
 
 
         $form_busca = '';
 
         // Agrupando filtros por relacionamentos: informacoesPessoais
-        $query->whereHas('informacoesPessoais', function ($q) use ($request){
+        $query->whereHas('informacoesPessoais', function ($q) use ($request){   
+
             
-
-            // Forumulario Busca rápida - nome candidato
-            if($request->filled('form_busca')){
-                $q->where('nome', 'like', '%' . $request->form_busca . '%');
-
-                $form_busca = $request->form_busca;
-            }
-
             // Aplica os filtros somente quando fornecidos
             // Filtro por nome - Busca pelo nome do candidato
             if($request->filled('nome')) {
@@ -227,25 +240,7 @@ class ResumeController extends Controller
                 $query->whereIn('status', $statusSelecionados);
             }
         }
-       
-
-        
-        // Filtro Formação/Escolaridade - múltiplas seleções
-        // if ($request->filled('escolaridade') && is_array($request->escolaridade)) {
-        //     $escolaridades = array_filter($request->escolaridade, function($item) {
-        //         return $item !== '' && $item !== 'Todos';
-        //     });
-            
-        //     if (!empty($escolaridades)) {
-        //         $query->whereHas('escolaridade', function($q) use ($escolaridades) {
-        //             $q->where(function($subQuery) use ($escolaridades) {
-        //                 foreach ($escolaridades as $escolaridade) {
-        //                     $subQuery->orWhereJsonContains('escolaridade', $escolaridade);
-        //                 }
-        //             });
-        //         });
-        //     }
-        // }
+      
 
         if ($request->filled('escolaridade') && is_array($request->escolaridade)) {
             $escolaridades = array_filter($request->escolaridade, fn($item) => 
@@ -269,7 +264,6 @@ class ResumeController extends Controller
                 });
             }
         }
-
         
         // Filtro Vagas Interesse
         if ($request->filled('vagas_interesse')) {
@@ -284,9 +278,6 @@ class ResumeController extends Controller
                 $query->whereJsonContains('experiencia_profissional', $exp);
             }
         }
-
-      
-       
 
          // Filtro Filtro data Resumes
 
@@ -312,17 +303,11 @@ class ResumeController extends Controller
         if($request->filled('data_max')){
             $query->whereDate('created_at', '<=', $request->data_max);
         } 
-       
-
-        
-
 
         //Filtro Já foi jovem aprendiz
         if ($request->filled('cras') && $request->cras !== "cras") {
             $query->where('cras', $request->cras);
-        }   
-
-        
+        }
 
         //NOVA FUNCIONALIDADE: Filtro de Ordenação
         $ordem = $request->get('ordem', 'desc'); // Por padrão será 'desc' (mais recente primeiro)
@@ -334,14 +319,11 @@ class ResumeController extends Controller
 
         $query->orderBy('created_at', $ordem);
 
-
         // Implementar paginação
         $resumes = $query->paginate(50)->appends($request->all()); // Ajustar o numero coforme necessário.  
         
         $cidades = $this->cidadeService->getCidades();
-        //$cidades = $this->getCidadesFromContact();
-        //dd($cidades);
-            
+                    
         return view('resumes.index', compact('resumes', 'form_busca','ordem', 'cidades'));
             
     }
@@ -364,19 +346,6 @@ class ResumeController extends Controller
 
         dd($jobs);
 
-
-
-
-
-        // if($user->role == 'admin'){
-        //     // Administrador vê todas as vagas com empresas associadas
-        //     $jobs = Job::with('company')->get();
-        // } else {
-        //     // O recrutador vê apenas vagas associadas a ele com as empresas
-        //     $jobs = Job::with('company')->whereHas('recruiters', function($query) use($user){
-        //         $query->where('recruiter_id', $user->id);
-        //     })->get();
-        // }
 
         return view('resumes.show', compact('resume', 'jobs'));
     }
