@@ -1698,7 +1698,9 @@ p.badge{
     overflow-y: auto
 }
 
-
+.topo-main .buscar{
+    width: 35%
+}
 
 </style>
 <?php $__env->stopPush(); ?>

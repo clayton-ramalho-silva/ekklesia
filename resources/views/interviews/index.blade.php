@@ -2217,6 +2217,10 @@ p.badge{
     height: 500px;
     overflow-y: auto
 }
+
+.topo-main .buscar{
+    width: 35%
+}
 </style>
 
 @endpush

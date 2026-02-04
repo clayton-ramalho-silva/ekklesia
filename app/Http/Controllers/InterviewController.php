@@ -32,31 +32,47 @@ class InterviewController extends Controller
     public function index(Request $request)
     {       
 
+        // Busca rápida por nome - sem filtros e sem restrição de idade
+        if ($request->filled('form_busca')) {
+            $query = Resume::with(['informacoesPessoais', 'contato', 'escolaridade', 'interview'])
+                ->whereHas('interview')
+                ->whereHas('informacoesPessoais', function($q) use ($request) {
+                    $q->where('nome', 'like', '%' . $request->form_busca . '%');
+                });
+
+            $form_busca = $request->form_busca;
+            $ordem = $request->get('ordem', 'desc');
+            
+            if (!in_array($ordem, ['asc', 'desc'])) {
+                $ordem = 'desc';
+            }
+
+            $query->orderBy(
+                Interview::select('created_at')
+                    ->whereColumn('interviews.resume_id', 'resumes.id')
+                    ->latest()
+                    ->limit(1),
+                $ordem
+            );
+
+            $resumes = $query->paginate(50)->appends($request->all());
+            $cidades = $this->cidadeService->getCidades();
+            
+            return view('interviews.index', compact('resumes', 'form_busca', 'ordem', 'cidades'));
+        }
+        
+
         //Abaixo de 23 anos.
         $query = Resume::with(['informacoesPessoais', 'contato', 'escolaridade', 'interview'])
             ->whereHas('interview')
             ->whereHas('informacoesPessoais', function ($q) {
                 $q->whereNotNull('data_nascimento')
                 //->whereRaw('TIMESTAMPDIFF(YEAR, data_nascimento, CURDATE()) < 23');
-                ->where('data_nascimento', '>=', now()->subYears(23)->toDateString());
+                ->where('data_nascimento', '>=', now()->subYears(24)->toDateString());
            });   
-           
-       
-            
- 
-   
-
-
+        
         // Forumulario Busca - nome candidato
-        $form_busca = '';
-        if($request->filled('form_busca')) {
-            
-            $query->whereHas('informacoesPessoais', function($q) use ($request) {
-                $q->where('nome', 'like', '%' . $request->form_busca . '%');
-            });
-
-            $form_busca = $request->form_busca;
-        }
+        $form_busca = '';     
 
 
          // Filtro por nome - Busca pelo nome do candidato
@@ -64,8 +80,6 @@ class InterviewController extends Controller
             $query->whereHas('informacoesPessoais', function($q) use ($request) {
                 $q->where('nome', 'like', '%' . $request->nome . '%');
             });
-
-            //dd($request->nome);
         }
 
         // Filtro por cpf - Busca pelo nome do candidato
@@ -113,11 +127,6 @@ class InterviewController extends Controller
         }
 
 
-        
-        // Filtro Status
-        // if ($request->filled('status') && $request->status !== "Todos") {            
-        //         $query->where('status', $request->status);            
-        // }
 
         if ($request->filled('status') && is_array($request->status)) {
             $statusSelecionados = array_filter($request->status, function($item) {
@@ -160,12 +169,7 @@ class InterviewController extends Controller
             }
         }
 
-        // Filtro CNH
-        // if ($request->filled('cnh') && $request->cnh !== "Todos") {
-        //     $query->whereHas('informacoesPessoais', function($q) use ($request) {
-        //         $q->where('cnh', $request->cnh);
-        //     });
-        // }
+        
 
         // Filtro CNH- múltiplas seleções
         if ($request->filled('cnh') && is_array($request->cnh)) {
@@ -198,12 +202,7 @@ class InterviewController extends Controller
             });
         }
 
-        // Filtro Reservista
-        // if ($request->filled('reservista') && $request->reservista !== "Todos") {
-        //     $query->whereHas('informacoesPessoais', function($q) use ($request) {
-        //         $q->where('reservista', $request->reservista);
-        //     });
-        // }
+      
 
         // Filtro Reservista- múltiplas seleções
         if ($request->filled('reservista') && is_array($request->reservista)) {
@@ -220,10 +219,7 @@ class InterviewController extends Controller
             }
         }
 
-        //Filtro Já foi jovem aprendiz
-        // if ($request->filled('foi_jovem_aprendiz') && $request->foi_jovem_aprendiz !== "Todos") {
-        //     $query->where('foi_jovem_aprendiz', $request->foi_jovem_aprendiz);
-        // }
+        
 
          // Filtro Já foi jovem aprendiz - múltiplas seleções
         if ($request->filled('foi_jovem_aprendiz') && is_array($request->foi_jovem_aprendiz)) {
@@ -240,12 +236,7 @@ class InterviewController extends Controller
             }
         }
 
-        // // Filtro Informatica
-        // if ($request->filled('informatica') && $request->informatica !== "Todos") {
-        //     $query->whereHas('escolaridade', function($q) use ($request) {
-        //         $q->where('informatica', $request->informatica);
-        //     });
-        // }
+      
 
         // Filtro Informatica - múltiplas seleções
         if ($request->filled('informatica') && is_array($request->informatica)) {
@@ -262,12 +253,7 @@ class InterviewController extends Controller
             }
         }
 
-        // Filtro Informatica
-        // if ($request->filled('ingles') && $request->ingles !== "Todos") {
-        //     $query->whereHas('escolaridade', function($q) use ($request) {
-        //         $q->where('ingles', $request->ingles);
-        //     });
-        // }
+       
 
         // Filtro Ingles - múltiplas seleções
         if ($request->filled('ingles') && is_array($request->ingles)) {
@@ -285,48 +271,7 @@ class InterviewController extends Controller
         }
 
 
-        // Filtro Formação/Escolaridade
-        // if ($request->filled('escolaridade') && $request->escolaridade !== "Todos") {
-        //     $query->whereHas('escolaridade', function($q) use ($request) {
-        //         $q->whereJsonContains('escolaridade', $request->escolaridade);
-        //     });
-        // }
-        
-        // Filtro Formação/Escolaridade - múltiplas seleções
-        // if ($request->filled('escolaridade') && is_array($request->escolaridade)) {
-        //     $escolaridades = array_filter($request->escolaridade, function($item) {
-        //         return $item !== '' && $item !== 'Todos';
-        //     });
-            
-        //     if (!empty($escolaridades)) {
-        //         $query->whereHas('escolaridade', function($q) use ($escolaridades) {
-        //             $q->where(function($subQuery) use ($escolaridades) {
-        //                 foreach ($escolaridades as $escolaridade) {
-        //                     $subQuery->orWhereJsonContains('escolaridade', $escolaridade);
-        //                 }
-        //             });
-        //         });
-        //     }
-        // }
-
-        // if ($request->filled('escolaridade') && is_array($request->escolaridade)) {
-        //     $escolaridades = array_filter($request->escolaridade, fn($item) => 
-        //         $item !== '' && $item !== 'Todos'
-        //     );
-            
-        //     if (!empty($escolaridades)) {
-        //         $query->whereHas('escolaridade', function($q) use ($escolaridades) {
-        //             $q->whereNotNull('escolaridade')
-        //             ->where('escolaridade', '!=', '')
-        //             ->where(function($subQuery) use ($escolaridades) {
-        //                 foreach ($escolaridades as $escolaridade) {
-        //                     $subQuery->orWhereJsonContains('escolaridade', $escolaridade);
-        //                 }
-        //             });
-        //         });
-        //     }
-        // }
-        
+      
 
         if ($request->filled('escolaridade') && is_array($request->escolaridade)) {
             $escolaridades = array_filter($request->escolaridade, fn($item) => 
@@ -366,12 +311,7 @@ class InterviewController extends Controller
             }
         }
 
-        // Filtro Cidade
-        // if ($request->filled('cidade') && $request->cidade !== "Todas") {
-        //     $query->whereHas('contato', function($q) use ($request) {
-        //         $q->where('cidade', 'like', '%'. $request->cidade . '%');
-        //     });
-        // }
+        
 
         // Filtro Cidade - múltiplas seleções
         if ($request->filled('cidade') && is_array($request->cidade)) {
@@ -436,24 +376,7 @@ class InterviewController extends Controller
             $query->whereDate('created_at', '<=', $request->data_max);
         }
 
-       //Controller - Filtro PCD
-        // if ($request->filled('pcd') && $request->pcd !== "Todos") {
-        //     $query->whereHas('informacoesPessoais', function($q) use ($request) {
-        //         if ($request->pcd === 'Não') {
-        //             // Se escolheu "Não", excluir os que têm "Sim, com laudo." e "Sim, sem laudo."
-        //             // Inclui registros com "Não", null, vazio ou outros valores
-        //             $q->where(function($subQuery) {
-        //                 $subQuery->whereNotIn('pcd', ['Sim, com laudo.', 'Sim, sem laudo.'])
-        //                         ->orWhereNull('pcd')
-        //                         ->orWhere('pcd', '');
-        //             });
-        //         } else {
-        //             // Para outras opções, mantém o comportamento original
-        //             $q->where('pcd', $request->pcd);
-        //         }
-        //     });
-        // }
-
+       
 
         // Filtro PCD - múltiplas seleções
         if ($request->filled('pcd') && is_array($request->pcd)) {
@@ -494,14 +417,7 @@ class InterviewController extends Controller
         }
         
 
-        //$interviews = Interview::all();
-
-        // $query->with([
-        //     'informacoesPessoais',
-        //     'contato',
-        //     'interview',
-        //     'escolaridade'
-        // ]);
+        
 
         //NOVA FUNCIONALIDADE: Filtro de Ordenação
          $ordem = $request->get('ordem', 'desc');
@@ -520,7 +436,7 @@ class InterviewController extends Controller
 
         $resumes = $query->paginate(50)->appends($request->all());
         // Implementar paginação
-        //$resumes = $query->paginate(50); // Ajustar o numero coforme necessário.
+        
 
 
         $cidades = $this->cidadeService->getCidades();

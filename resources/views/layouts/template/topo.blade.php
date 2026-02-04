@@ -18,12 +18,19 @@
             ];
             //$shouldHideSearch = $isEditRoute || 'interviews.interviewResume';
             $shouldHideSearch = $isEditRoute || in_array($rota, $additionalHideRoutes);
+
+            $placeholderBusca = '';
+            if ($rota === 'resumes.index' || $rota === 'interviews.index') {
+                $placeholderBusca = 'Busca por nome (sem restrição de idade)';
+            } else {
+                $placeholderBusca = 'Buscar';
+            }
         @endphp
 
         @if (!$shouldHideSearch)
             <form action="{{ route($rota) }}" class="formulario-busca">
                 <input type="hidden" name="form-path" value="">
-                <input type="text" name="form_busca" value="{{ isset($form_busca) && $form_busca !== '' ?  $form_busca : ''}}" placeholder="Buscar">
+                <input type="text" name="form_busca" value="{{ isset($form_busca) && $form_busca !== '' ?  $form_busca : ''}}" placeholder="{{ $placeholderBusca }}"/>
                     <button>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                     </button>
