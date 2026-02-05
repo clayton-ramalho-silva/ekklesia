@@ -1,6 +1,6 @@
 <div class="menu-responsivo">
 
-    <a href="/" class="logo">ASPPE - Sistema</a>
+    <a href="/" class="logo">Ekklesia - Sistema</a>
 
     <span class="btMenuRes"><b></b></span>
 

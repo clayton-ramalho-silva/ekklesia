@@ -1,6 +1,6 @@
 <div class="menu-site">
 
-    <a href="/" class="logo">ASPPE - Sistema</a>
+    <a href="/" class="logo">Ekklesia - Sistema</a>
    
 
     <span class="btMenu"><b></b></span>
