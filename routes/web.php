@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Exports\CandidatesByJobExport;
 use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\MembrosController;
+use App\Http\Controllers\MinisterioController;
 use App\Http\Controllers\PublicResumeController;
 use App\Http\Controllers\ResumeImportController;
 use App\Http\Controllers\SelectionController;
@@ -65,6 +67,12 @@ Route::middleware(['auth', 'perf.monitor'])->group(function(){
     Route::post('/resumes/storeHistory/{resumebId}',[ResumeController::class, 'storeHistory'])->name('resumes.storeHistory');
     Route::get('/resumes/deleteTeste', [ResumeController::class, 'deleteTeste']);
     Route::resource('resumes', ResumeController::class);
+
+    //Membros
+    Route::resource('membros', MembrosController::class);
+
+    //Ministerios
+    Route::resource('ministerios', MinisterioController::class);
     
     // Interviews
     Route::get('/interviews/resume/showDev/{resumeId}',[InterviewController::class, 'showDev'])->name('interviews.showDev');
